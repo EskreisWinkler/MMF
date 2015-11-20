@@ -10,7 +10,7 @@
 . /etc/profile
 #module load packages/matlab/r2013a
 
-matlab -nodisplay -nojvm < test.m
+matlab -nodisplay -nojvm < hyper_param_search.m
 
 echo "Code has finished running." | mail -s "Alert" "jeskreiswinkler@gmail.com"
 
