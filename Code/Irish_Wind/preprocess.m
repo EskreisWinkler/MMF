@@ -60,8 +60,8 @@ end
 % FIRST TRY EXCLUDING MULINGAR FROM TEST DATA;
 TRAIN_DATA = IWD_m(IWD_m(:,1)~=7,2:end);
 TEST_DATA  = IWD_m(IWD_m(:,1)==7,2:end);
-global TRAIN_DATA;
-global TEST_DATA;
+%global TRAIN_DATA;
+%global TEST_DATA;
 
 save('wind_data.mat','TRAIN_DATA','TEST_DATA')
 
