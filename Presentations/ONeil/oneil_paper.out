@@ -1,0 +1,10 @@
+\BOOKMARK [2][]{Outline0.1}{What is a Gaussian Process?}{}% 1
+\BOOKMARK [3][]{Outline0.1.1.6}{Computational Bottleneck}{Outline0.1}% 2
+\BOOKMARK [2][]{Outline0.2}{Options for "Accelerated" Methods: Direct and Indirect}{}% 3
+\BOOKMARK [2][]{Outline0.3}{Suggested Approach for HODLR Matrices}{}% 4
+\BOOKMARK [3][]{Outline0.3.1.8}{What is a HODLR matrix?}{Outline0.3}% 5
+\BOOKMARK [3][]{Outline0.3.2.11}{Matrix Inversion}{Outline0.3}% 6
+\BOOKMARK [3][]{Outline0.3.3.12}{Computing Determinant}{Outline0.3}% 7
+\BOOKMARK [3][]{Outline0.3.4.13}{Algorithm for computing the factorization}{Outline0.3}% 8
+\BOOKMARK [3][]{Outline0.3.5.14}{Numerical Results}{Outline0.3}% 9
+\BOOKMARK [2][]{Outline0.4}{Conclusions}{}% 10

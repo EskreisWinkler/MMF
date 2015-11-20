@@ -1,0 +1,11 @@
+\beamer@endinputifotherversion {3.33pt}
+\beamer@sectionintoc {1}{What is a Gaussian Process?}{3}{0}{1}
+\beamer@subsectionintoc {1}{1}{Computational Bottleneck}{6}{0}{1}
+\beamer@sectionintoc {2}{Options for "Accelerated" Methods: Direct and Indirect}{7}{0}{2}
+\beamer@sectionintoc {3}{Suggested Approach for HODLR Matrices}{8}{0}{3}
+\beamer@subsectionintoc {3}{1}{What is a HODLR matrix?}{8}{0}{3}
+\beamer@subsectionintoc {3}{2}{Matrix Inversion}{11}{0}{3}
+\beamer@subsectionintoc {3}{3}{Computing Determinant}{12}{0}{3}
+\beamer@subsectionintoc {3}{4}{Algorithm for computing the factorization}{13}{0}{3}
+\beamer@subsectionintoc {3}{5}{Numerical Results}{14}{0}{3}
+\beamer@sectionintoc {4}{Conclusions}{15}{0}{4}
