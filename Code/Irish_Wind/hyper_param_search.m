@@ -25,4 +25,6 @@ parfor i = 1:num_restarts
     fval_store(i) = fval;
 end
 
-save('wind_params','theta_store','fval_store')
+n = round(rand(1)*1000);
+file_name = sprintf('wind_params_%d',n);
+save(file_name,'theta_store','fval_store')
