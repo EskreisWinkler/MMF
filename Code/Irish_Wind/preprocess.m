@@ -63,7 +63,7 @@ TEST_DATA  = IWD_m(IWD_m(:,1)==7,2:end);
 global TRAIN_DATA;
 global TEST_DATA;
 
-save('wind_data.mat','TRAIN_DATA','TEST_DATA')
+
 
 
 figure(2)
@@ -90,3 +90,4 @@ ylabel('Wind Speed')
 plot(TEST_DATA(:,3),TEST_DATA(:,end),'LineWidth',2)
 hold off
 legend('Avg of Others', 'True Speed')
+save('wind_data.mat','TRAIN_DATA','TEST_DATA','m')
