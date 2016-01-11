@@ -3,3 +3,4 @@
 \beamer@subsectionintoc {1}{1}{Computational Bottleneck}{6}{0}{1}
 \beamer@sectionintoc {2}{Potential for MMF to Help}{7}{0}{2}
 \beamer@sectionintoc {3}{Application: Irish Wind Data}{9}{0}{3}
+\beamer@sectionintoc {4}{Conclusion}{15}{0}{4}

@@ -1,0 +1,5 @@
+KONDOR TO DO LIST
+
+- I have shown that reasonable predictions can be made using a GP.
+- A slow ingredient is the parameter search (even on just the monthly data) so we want to consider the evaluation of fminsearch using a marginal likelihood function that incorporates MMF.
+- Once this process is sped up, compare the relative performance of the regular procedure to the MMF one.
