@@ -1,6 +1,8 @@
-function[LL] = LL_calc(theta)
-global x;
-global y;
+function[LL] = LL_calc(theta,x,y)
+% theta:    a vector of parameters for the kernel matrix
+% x:        the data. There should be as many rows of x as there are of y
+% y:        the response.
+
 
 n=length(x);
 K = make_rbf(x,theta);
