@@ -3,7 +3,6 @@ function[LL] = LL_calc(theta,x,y)
 % x:        the data. There should be as many rows of x as there are of y
 % y:        the response.
 
-
 n=length(x);
 K = make_rbf(x,theta);
 
