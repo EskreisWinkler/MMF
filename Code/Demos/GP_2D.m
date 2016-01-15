@@ -1,16 +1,6 @@
 %function[] = GP_2D(params)
-params.num_dp = 25;
-params.bdry = 7;
-params.noise_factor = 1;
-params.n_iters = 3;
-params.n_restarts = 5;
-params.t_o = [5 0.25 0.5 0.5];
-params.k = 2;
-params.ndensestages = 1;
-params.fraction = 0.6;
-params.maxclustersize = 100;
-params.bypass=3;
-params.minclustersize = 1;
+params = GP_params();
+params.num_dp = sqrt(params.num_dp);
 
 addpath('../GP_functions/')
 % Now link to the location of the MMF code for MMFC
@@ -29,7 +19,7 @@ for col = 1:params.num_dp
     end
 end
 
-y = m+randn(size(m))*params.noise_factor;
+y = m+randn(size(m))*params.data_noise;
 
 % Observe the effect of the noise and assess the data being modelled.
 figure(1)
@@ -53,26 +43,26 @@ end
 print('GP_2Db','-djpeg','-noui')
 
 
-store.th = zeros(params.n_restarts,length(params.t_o));
-store.th_mmf = zeros(params.n_restarts,length(params.t_o));
-store.t_o = zeros(params.n_restarts,length(params.t_o));
+store.th = zeros(params.n_restarts,length(params.t_o_2D));
+store.th_mmf = zeros(params.n_restarts,length(params.t_o_2D));
+%store.t_o = zeros(params.n_restarts,length(params.t_o));
 
 
 for i = 1:params.n_restarts
-    t_cur = -1*ones(size(params.t_o));
+    t_cur = -1*ones(size(params.t_o_2D));
     while sum(t_cur<0)>0
-    	t_cur = params.t_o + randn(1,length(params.t_o)).*params.t_o*1;
+    	t_cur = params.t_o_2D + randn(1,length(params.t_o_2D)).*params.t_o_2D*1;
     end
-    store.t_o(i,:) = t_cur;
+    %store.t_o(i,:) = t_cur;
     [th_mmf, fval_mmf] = fminsearch(@(theta) LL_calc(theta',d',e',1,params), t_cur,optimset('Display','iter','MaxIter',params.n_iters));
     [th, fval] = fminsearch(@(theta) LL_calc(theta',d',e',0,params), t_cur,optimset('Display','iter','MaxIter',params.n_iters));
     if sum(th_mmf<0)>0
-        store.th_mmf(i,:) = nan(size(params.t_o));
+        store.th_mmf(i,:) = nan(size(params.t_o_2D));
     else
     	store.th_mmf(i,:) = th_mmf;
     end
     if sum(th<0)>0
-        store.th(i,:) = nan(size(params.t_o));
+        store.th(i,:) = nan(size(params.t_o_2D));
     else
         store.th(i,:) = th;
     end
@@ -122,3 +112,7 @@ for cur_plot = 1:g_num_dp
     end
 end
 print('GP_2Db','-djpeg','-noui')
+
+figure(3)
+plot(e_pred,e_pred_mmf,'o')
+print('GP_2Dc','-djpeg','-noui')
