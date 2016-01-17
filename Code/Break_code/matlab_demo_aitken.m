@@ -1,7 +1,7 @@
 function[elapsed_time,Ns] = matlab_demo(k,ndensestages,fraction)
 
 % This is the local path to the most recent version of MMF's matlab directory.
-addpath('~/mmfc/v4/src/matlab/')
+addpath('/net/wallace/ga/eskreiswinkler/mmfc/v4/src/matlab/')
 
 
 Ns = linspace(100,500,10);
