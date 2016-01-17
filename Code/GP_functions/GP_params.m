@@ -2,7 +2,7 @@ function[params] =GP_params()
 
 % Demo parameters
 params.num_dp = 625;
-params.bdry = 7;
+params.bdry = 3;
 params.data_noise = 10;
 params.restart_noise = 1.5;
 params.n_iters = 3;
