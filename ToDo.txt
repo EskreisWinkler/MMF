@@ -1,0 +1,5 @@
+KONDOR TO DO LIST
+
+FOR TOMORROW:
+	- Attempt to compile MMF code on aitken machine
+	- Copy ONeil chart for MMF.
