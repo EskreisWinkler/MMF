@@ -3,3 +3,7 @@ KONDOR TO DO LIST
 FOR TOMORROW:
 	- Attempt to compile MMF code on aitken machine
 	- Copy ONeil chart for MMF.
+		- include a chart of MMF parameters as predictors of accuracy/timing
+	- is this analogous to a message passing algorithm?
+	- testing behavior of mmf on kayley graph to see if we recover something that looks like FFT
+	- useful for community detection?
