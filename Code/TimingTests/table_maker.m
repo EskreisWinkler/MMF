@@ -1,9 +1,11 @@
-function[assemb] = table_maker()
+function[vars,table] = table_maker()
 addpath('../GP_functions/')
+addpath('~/MMF_project/mmfc/v4/src/matlab/')
 % Set up to imitate the test run by ONeil
 
-n = [1e4 2e4 5e4 1e5 2e5 5e5 1e6];
-n = [1e3 2e3 3e3 4e3 5e3 6e3];
+n = [1e4 2e4 5e4 1e5 2e5 5e5 1e6]';
+n = round(log(n));
+
 assemb = zeros(size(n));
 factor = assemb;
 solve = factor;
@@ -18,4 +20,19 @@ for ind = 1:length(n)
 	tic()
 	K = make_rbf(x,params.t_o_1D); 	
 	assemb(ind) = toc();
+	tic()
+	K_mmf = MMF(K, params);
+	factor(ind) = toc();
+	tic()
+	d = K_mmf.determinant();
+	det(ind) = toc();
+	K_mmf_inv = K_mmf;
+	tic()
+	K_mmf_inv.invert()
+	solve(ind) = toc();
+	error(ind) = K_mmf.froberror();
 end
+
+vars = {'Assembly Time','Factoring Time','Inversion Time','Determinant Computation Time','Matrix Error'};
+table = [assemb factor solve det error];
+
