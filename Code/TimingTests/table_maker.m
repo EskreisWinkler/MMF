@@ -1,10 +1,10 @@
-function[vars,table] = table_maker()
 addpath('../GP_functions/')
-addpath('~/MMF_project/mmfc/v4/src/matlab/')
+%addpath('~/MMF_project/mmfc/v4/src/matlab/')
+addpath('~/galton_home/mmfc/v4/src/matlab/')
 % Set up to imitate the test run by ONeil
 
 n = [1e4 2e4 5e4 1e5 2e5 5e5 1e6]';
-n = round(log(n));
+n = n/100;
 
 assemb = zeros(size(n));
 factor = assemb;
@@ -35,4 +35,8 @@ end
 
 vars = {'Assembly Time','Factoring Time','Inversion Time','Determinant Computation Time','Matrix Error'};
 table = [assemb factor solve det error];
+
+n = 1;
+file_name = sprintf('table_store_%d',n);
+save(file_name,'vars','table')
 
