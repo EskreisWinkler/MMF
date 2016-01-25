@@ -37,6 +37,6 @@ vars = {'Assembly Time','Factoring Time','Inversion Time','Determinant Computati
 table = [assemb factor solve det error];
 
 n = 1;
-file_name = sprintf('table_store_%d',n);
-save(file_name,'vars','table')
+file_name = sprintf('store_%d',n);
+save(file_name,'vars','table','n')
 
