@@ -5,6 +5,7 @@ addpath('~/galton_home/mmfc/v4/src/matlab/')
 
 n = [1e4 2e4 5e4 1e5 2e5 5e5 1e6]';
 n = n/100;
+n = 100;
 
 assemb = zeros(size(n));
 factor = assemb;
@@ -37,6 +38,6 @@ vars = {'Assembly Time','Factoring Time','Inversion Time','Determinant Computati
 table = [assemb factor solve det error];
 
 n = 1;
-file_name = sprintf('store_%d',n);
+file_name = sprintf('storet_%d',n);
 save(file_name,'vars','table','n')
 
