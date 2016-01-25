@@ -1,0 +1,157 @@
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2013 The MathWorks, Inc.
+                    R2013a (8.1.0.604) 64-bit (glnxa64)
+                             February 15, 2013
+
+
+	This is a Classroom License for instructional use only.
+	Research and commercial use is prohibited.
+ 
+To get started, type one of these: helpwin, helpdesk, or demo.
+For product information, visit www.mathworks.com.
+ 
+>> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >>      1
+
+0.01936s: Computing core matrix, n= 10
+0.01964s: Total Error = 4569.64218
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     2
+
+0.05740s: Computing core matrix, n= 20
+0.05760s: Total Error = 16239.64398
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     3
+
+0.18501s: Computing core matrix, n= 48
+0.18550s: Total Error = 89244.62570
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     4
+
+2.25125s: Computing core matrix, n= 103
+2.25425s: Total Error = 169484.15010
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     5
+
+25.45124s: Computing core matrix, n= 225
+25.45676s: Total Error = 245882.40507
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     6
+
+834.60390s: Computing core matrix, n= 700
+834.64923s: Total Error = 252434.29501
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     7
+
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2013 The MathWorks, Inc.
+                    R2013a (8.1.0.604) 64-bit (glnxa64)
+                             February 15, 2013
+
+
+	This is a Classroom License for instructional use only.
+	Research and commercial use is prohibited.
+ 
+To get started, type one of these: helpwin, helpdesk, or demo.
+For product information, visit www.mathworks.com.
+ 
+>> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >>      1
+
+0.86632s: Computing core matrix, n= 100
+0.86746s: Total Error = 212689.80064
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     2
+
+34.03745s: Computing core matrix, n= 233
+34.04310s: Total Error = 197754.69668
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     3
+
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2013 The MathWorks, Inc.
+                    R2013a (8.1.0.604) 64-bit (glnxa64)
+                             February 15, 2013
+
+
+	This is a Classroom License for instructional use only.
+	Research and commercial use is prohibited.
+ 
+To get started, type one of these: helpwin, helpdesk, or demo.
+For product information, visit www.mathworks.com.
+ 
+>> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >>      1
+
+0.00994s: Computing core matrix, n= 11
+0.01010s: Total Error = 4964.42433
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     2
+
+0.06397s: Computing core matrix, n= 20
+0.06419s: Total Error = 17021.90478
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     3
+
+0.23448s: Computing core matrix, n= 46
+0.23490s: Total Error = 97564.34171
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     4
+
+2.87797s: Computing core matrix, n= 99
+2.87991s: Total Error = 181488.10371
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     5
+
+209.08114s: Computing core matrix, n= 222
+209.08875s: Total Error = 205759.64271
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     6
+
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2013 The MathWorks, Inc.
+                    R2013a (8.1.0.604) 64-bit (glnxa64)
+                             February 15, 2013
+
+
+	This is a Classroom License for instructional use only.
+	Research and commercial use is prohibited.
+ 
+To get started, type one of these: helpwin, helpdesk, or demo.
+For product information, visit www.mathworks.com.
+ 
+>> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >>      1
+
+0.01730s: Computing core matrix, n= 10
+0.01764s: Total Error = 4489.28995
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+>> >> >> >> >> >> >> >> >> 
