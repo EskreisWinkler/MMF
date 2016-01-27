@@ -4,7 +4,7 @@ addpath('~/galton_home/mmfc/v4/src/matlab/')
 % Set up to imitate the test run by ONeil
 
 n = [1e4 2e4 5e4 1e5 2e5 5e5 1e6]';
-n = n/250;
+n = n/125;
 
 assemb = zeros(size(n));
 factor = assemb;

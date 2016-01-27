@@ -6,7 +6,7 @@ addpath('~/galton_home/mmfc/v4/src/matlab/')
 n = [1e4 2e4 5e4 1e5 2e5 5e5 1e6]';
 n = n/250;
 
-grid_var = 'fraction';
+grid_var = 'minclustersize';
 
 table.assemb = zeros(size(n));
 table.factor = table.assemb;
@@ -15,10 +15,10 @@ table.det = table.solve;
 table.error = table.det;
 
 params = GP_params();
-grid = [0.1 0.3 0.5 0.7 0.9];
+grid = [1 2 4 8 10];
 table_store = cell(length(grid),1);
 for grid_i = 1:length(grid)
-    params.fraction = grid(grid_i);
+    params.minclustersize = grid(grid_i);
     for ind = 1:length(n)
         disp(ind)
         cur_n = n(ind);
