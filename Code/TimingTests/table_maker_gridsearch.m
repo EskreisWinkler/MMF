@@ -17,7 +17,7 @@ table.error = table.det;
 params = GP_params();
 grid = [0.1 0.3 0.5 0.7 0.9];
 table_store = cell(length(grid),1);
-for grid_i = 1:length(frac_vals)
+for grid_i = 1:length(grid)
     params.fraction = grid(grid_i);
     for ind = 1:length(n)
         disp(ind)
