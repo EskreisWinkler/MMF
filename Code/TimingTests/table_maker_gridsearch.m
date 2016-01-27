@@ -45,5 +45,5 @@ vars = {'Assembly Time','Factoring Time','Inversion Time','Determinant Computati
 
 d = 1;
 file_name = sprintf('gstore_%s_%d',grid_var,d);
-save(file_name,'vars','table','n')
+save(file_name,'vars','table_store','n','grid')
 
