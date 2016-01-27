@@ -4,7 +4,7 @@ addpath('~/galton_home/mmfc/v4/src/matlab/')
 % Set up to imitate the test run by ONeil
 
 n = [1e4 2e4 5e4 1e5 2e5 5e5 1e6]';
-n = n/1000;
+n = n/250;
 
 assemb = zeros(size(n));
 factor = assemb;
@@ -37,6 +37,6 @@ vars = {'Assembly Time','Factoring Time','Inversion Time','Determinant Computati
 table = [assemb factor solve det error];
 
 d = 1;
-file_name = sprintf('storet_%d',d);
+file_name = sprintf('tstore_general_%d',d);
 save(file_name,'vars','table','n')
 
