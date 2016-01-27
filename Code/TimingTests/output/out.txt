@@ -155,3 +155,815 @@ WARNING: Cmatrix copied.
 WARNING: Cmatrix copied.
 WARNING: Cmatrix copied.
 >> >> >> >> >> >> >> >> >> 
+                            < M A T L A B (R) >
+                  Copyright 1984-2013 The MathWorks, Inc.
+                    R2013a (8.1.0.604) 64-bit (glnxa64)
+                             February 15, 2013
+
+
+	This is a Classroom License for instructional use only.
+	Research and commercial use is prohibited.
+ 
+To get started, type one of these: helpwin, helpdesk, or demo.
+For product information, visit www.mathworks.com.
+ 
+>> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >>      1
+
+0.01071s: Computing core matrix, n= 5
+0.01103s: Total Error = 578.79052
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     2
+
+0.02853s: Computing core matrix, n= 8
+0.02872s: Total Error = 3162.29791
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     3
+
+0.06460s: Computing core matrix, n= 19
+0.06478s: Total Error = 18582.57328
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     4
+
+0.11172s: Computing core matrix, n= 39
+0.11209s: Total Error = 55250.72498
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     5
+
+0.60209s: Computing core matrix, n= 79
+0.60363s: Total Error = 161640.71569
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     6
+
+30.84108s: Computing core matrix, n= 231
+30.85260s: Total Error = 164493.67269
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     7
+
+290.10273s: Computing core matrix, n= 514
+290.13643s: Total Error = 152066.70509
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+>> >> >> >> >> >> >> >> >> 
+                            < M A T L A B (R) >
+                  Copyright 1984-2013 The MathWorks, Inc.
+                    R2013a (8.1.0.604) 64-bit (glnxa64)
+                             February 15, 2013
+
+
+	This is a Classroom License for instructional use only.
+	Research and commercial use is prohibited.
+ 
+To get started, type one of these: helpwin, helpdesk, or demo.
+For product information, visit www.mathworks.com.
+ 
+>> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> 
+                            < M A T L A B (R) >
+                  Copyright 1984-2013 The MathWorks, Inc.
+                    R2013a (8.1.0.604) 64-bit (glnxa64)
+                             February 15, 2013
+
+
+	This is a Classroom License for instructional use only.
+	Research and commercial use is prohibited.
+ 
+To get started, type one of these: helpwin, helpdesk, or demo.
+For product information, visit www.mathworks.com.
+ 
+>> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> 
+                            < M A T L A B (R) >
+                  Copyright 1984-2013 The MathWorks, Inc.
+                    R2013a (8.1.0.604) 64-bit (glnxa64)
+                             February 15, 2013
+
+
+	This is a Classroom License for instructional use only.
+	Research and commercial use is prohibited.
+ 
+To get started, type one of these: helpwin, helpdesk, or demo.
+For product information, visit www.mathworks.com.
+ 
+>> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >>      1
+
+0.01752s: Computing core matrix, n= 34
+0.01789s: Total Error = 87.60150
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     2
+
+0.05430s: Computing core matrix, n= 67
+0.05478s: Total Error = 282.71988
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     3
+
+0.10405s: Computing core matrix, n= 165
+0.10543s: Total Error = 2366.93514
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     4
+
+0.28000s: Computing core matrix, n= 332
+0.28270s: Total Error = 6792.46711
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     5
+
+2.42144s: Computing core matrix, n= 684
+2.43690s: Total Error = 2735.11948
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     6
+
+30.44074s: Computing core matrix, n= 1751
+30.50319s: Total Error = 6712.36837
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     7
+
+689.18733s: Computing core matrix, n= 3630
+689.52421s: Total Error = 7065.50762
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     1
+
+1446.80964s: Computing core matrix, n= 21
+1446.80984s: Total Error = 326.09994
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     2
+
+1446.81723s: Computing core matrix, n= 41
+1446.81755s: Total Error = 872.69498
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     3
+
+1446.84086s: Computing core matrix, n= 100
+1446.84132s: Total Error = 7037.51584
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     4
+
+1446.91841s: Computing core matrix, n= 200
+1446.92018s: Total Error = 24460.20425
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     5
+
+1447.89233s: Computing core matrix, n= 415
+1447.89883s: Total Error = 33709.89934
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     6
+
+1468.98450s: Computing core matrix, n= 1086
+1469.01741s: Total Error = 33493.13235
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     7
+
+1833.50718s: Computing core matrix, n= 2450
+1833.67076s: Total Error = 36397.39066
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     1
+
+2070.48326s: Computing core matrix, n= 11
+2070.48348s: Total Error = 445.14966
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     2
+
+2070.49045s: Computing core matrix, n= 21
+2070.49069s: Total Error = 2067.65328
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     3
+
+2070.50372s: Computing core matrix, n= 51
+2070.50395s: Total Error = 15916.69110
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     4
+
+2070.55191s: Computing core matrix, n= 102
+2070.55241s: Total Error = 41160.50447
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     5
+
+2071.08587s: Computing core matrix, n= 207
+2071.08786s: Total Error = 110326.86340
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     6
+
+2102.01342s: Computing core matrix, n= 550
+2102.02956s: Total Error = 43580.16092
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     7
+
+2439.14217s: Computing core matrix, n= 1141
+2439.18264s: Total Error = 126194.27443
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     1
+
+2464.11387s: Computing core matrix, n= 5
+2464.11407s: Total Error = 590.69927
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     2
+
+2464.12030s: Computing core matrix, n= 8
+2464.12049s: Total Error = 2529.78339
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     3
+
+2464.13321s: Computing core matrix, n= 20
+2464.13336s: Total Error = 18948.65050
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     4
+
+2464.18134s: Computing core matrix, n= 39
+2464.18162s: Total Error = 67636.99196
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     5
+
+2464.33236s: Computing core matrix, n= 77
+2464.33300s: Total Error = 202200.68783
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     6
+
+2486.32990s: Computing core matrix, n= 223
+2486.33404s: Total Error = 249453.92020
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     7
+
+2716.17247s: Computing core matrix, n= 514
+2716.21118s: Total Error = 248495.39652
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     1
+
+2718.69518s: Computing core matrix, n= 2
+2718.69536s: Total Error = 520.85342
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     2
+
+2718.70088s: Computing core matrix, n= 2
+2718.70106s: Total Error = 2888.39086
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     3
+
+2718.71728s: Computing core matrix, n= 3
+2718.71740s: Total Error = 16863.77588
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     4
+
+2718.75786s: Computing core matrix, n= 5
+2718.75803s: Total Error = 49414.42609
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     5
+
+2719.50899s: Computing core matrix, n= 11
+2719.50942s: Total Error = 226859.02002
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     6
+
+2736.02784s: Computing core matrix, n= 32
+2736.02935s: Total Error = 1271073.74454
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     7
+
+2960.02951s: Computing core matrix, n= 103
+2960.05108s: Total Error = 1205221.58044
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+>> >> >> >> >> >> >> >> 
+                            < M A T L A B (R) >
+                  Copyright 1984-2013 The MathWorks, Inc.
+                    R2013a (8.1.0.604) 64-bit (glnxa64)
+                             February 15, 2013
+
+
+	This is a Classroom License for instructional use only.
+	Research and commercial use is prohibited.
+ 
+To get started, type one of these: helpwin, helpdesk, or demo.
+For product information, visit www.mathworks.com.
+ 
+>> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >>      1
+
+0.00749s: Computing core matrix, n= 4
+0.00775s: Total Error = 1615.66852
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     2
+
+0.02595s: Computing core matrix, n= 8
+0.02618s: Total Error = 7261.47786
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     3
+
+0.05603s: Computing core matrix, n= 19
+0.05618s: Total Error = 48242.59298
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     4
+
+0.12739s: Computing core matrix, n= 39
+0.12776s: Total Error = 196891.94499
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     5
+
+0.26293s: Computing core matrix, n= 77
+0.26384s: Total Error = 795610.58214
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     6
+
+12.29086s: Computing core matrix, n= 216
+12.29650s: Total Error = 4989545.52840
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     7
+
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2013 The MathWorks, Inc.
+                    R2013a (8.1.0.604) 64-bit (glnxa64)
+                             February 15, 2013
+
+
+	This is a Classroom License for instructional use only.
+	Research and commercial use is prohibited.
+ 
+To get started, type one of these: helpwin, helpdesk, or demo.
+For product information, visit www.mathworks.com.
+ 
+>> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >>      1
+
+0.00390s: Computing core matrix, n= 5
+0.00413s: Total Error = 578.79052
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     2
+
+0.02301s: Computing core matrix, n= 8
+0.02325s: Total Error = 2790.99081
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     3
+
+0.05415s: Computing core matrix, n= 20
+0.05437s: Total Error = 17694.89562
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     4
+
+0.11693s: Computing core matrix, n= 39
+0.11730s: Total Error = 45464.39561
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     5
+
+0.60724s: Computing core matrix, n= 80
+0.60892s: Total Error = 148151.16290
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     6
+
+7.83262s: Computing core matrix, n= 202
+7.83726s: Total Error = 436920.04374
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     7
+
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2013 The MathWorks, Inc.
+                    R2013a (8.1.0.604) 64-bit (glnxa64)
+                             February 15, 2013
+
+
+	This is a Classroom License for instructional use only.
+	Research and commercial use is prohibited.
+ 
+To get started, type one of these: helpwin, helpdesk, or demo.
+For product information, visit www.mathworks.com.
+ 
+>> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >>      1
+
+0.02044s: Computing core matrix, n= 5
+0.02063s: Total Error = 578.79052
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     2
+
+0.03125s: Computing core matrix, n= 8
+0.03137s: Total Error = 2791.39770
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     3
+
+0.06784s: Computing core matrix, n= 19
+0.06814s: Total Error = 17970.21403
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     4
+
+0.24246s: Computing core matrix, n= 38
+0.24276s: Total Error = 48966.77239
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     5
+
+0.81466s: Computing core matrix, n= 78
+0.81549s: Total Error = 178024.83680
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     6
+
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2013 The MathWorks, Inc.
+                    R2013a (8.1.0.604) 64-bit (glnxa64)
+                             February 15, 2013
+
+
+	This is a Classroom License for instructional use only.
+	Research and commercial use is prohibited.
+ 
+To get started, type one of these: helpwin, helpdesk, or demo.
+For product information, visit www.mathworks.com.
+ 
+>> >> >> >> >> >> >> >> >> >> >> >> >> >> >> >>      1
+
+0.00799s: Computing core matrix, n= 9
+0.00829s: Total Error = 2845.56958
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     2
+
+0.05331s: Computing core matrix, n= 16
+0.05344s: Total Error = 12291.93195
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     3
+
+0.19031s: Computing core matrix, n= 38
+0.19064s: Total Error = 58509.52785
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     4
+
+16.65687s: Computing core matrix, n= 81
+16.65868s: Total Error = 216704.21340
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     5
+
+197.74897s: Computing core matrix, n= 224
+197.75907s: Total Error = 108207.15947
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     7
+
+72.01873s: Computing core matrix, n= 172
+72.02394s: Total Error = 314184.72542
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     6
+
+531.00421s: Computing core matrix, n= 527
+531.07316s: Total Error = 312712.13855
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     1
+
+533.87124s: Computing core matrix, n= 2
+533.87138s: Total Error = 602.41422
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     2
+
+533.88049s: Computing core matrix, n= 3
+533.88064s: Total Error = 2923.71376
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     3
+
+533.89851s: Computing core matrix, n= 7
+533.89867s: Total Error = 20290.33817
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     4
+
+533.95154s: Computing core matrix, n= 13
+533.95179s: Total Error = 67357.33187
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     5
+
+534.38116s: Computing core matrix, n= 25
+534.58327s: Total Error = 254155.12973
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     6
+
+563.19057s: Computing core matrix, n= 70
+563.19284s: Total Error = 1188712.57810
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     7
+
+632.10353s: Computing core matrix, n= 559
+632.20591s: Total Error = 19836401.60011
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     1
+
+635.63458s: Computing core matrix, n= 5
+635.63473s: Total Error = 513.75004
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     2
+
+635.64120s: Computing core matrix, n= 8
+635.64153s: Total Error = 2596.34088
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     3
+
+635.65471s: Computing core matrix, n= 20
+635.65489s: Total Error = 12945.92290
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     4
+
+635.70280s: Computing core matrix, n= 38
+635.70314s: Total Error = 74122.42776
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     5
+
+635.96987s: Computing core matrix, n= 79
+635.97061s: Total Error = 198783.79465
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     6
+
+659.61302s: Computing core matrix, n= 222
+659.61823s: Total Error = 210682.61231
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     7
+
+593.23403s: Computing core matrix, n= 505
+593.29166s: Total Error = 245869.13311
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     7
+
+748.23984s: Computing core matrix, n= 510
+748.26865s: Total Error = 214858.63817
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     1
+
+750.83220s: Computing core matrix, n= 5
+750.83236s: Total Error = 524.55229
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     2
+
+750.83696s: Computing core matrix, n= 8
+750.83712s: Total Error = 3086.18775
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     3
+
+750.85468s: Computing core matrix, n= 20
+750.85492s: Total Error = 19752.57432
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     4
+
+751.02106s: Computing core matrix, n= 38
+751.02151s: Total Error = 51437.42451
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     5
+
+752.03118s: Computing core matrix, n= 81
+752.03260s: Total Error = 133503.90011
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     6
+
+811.34759s: Computing core matrix, n= 225
+811.35169s: Total Error = 154958.00074
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     7
+
+
+843.78239s: Computing core matrix, n= 1
+843.78254s: Total Error = 571.46917
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     2
+
+843.79196s: Computing core matrix, n= 2
+843.79226s: Total Error = 2599.00466
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     3
+
+843.81412s: Computing core matrix, n= 3
+843.81432s: Total Error = 17632.41118
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     4
+
+843.85803s: Computing core matrix, n= 5
+843.85823s: Total Error = 66307.63304
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     5
+
+844.01417s: Computing core matrix, n= 8
+844.01441s: Total Error = 227492.31058
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     6
+
+850.22365s: Computing core matrix, n= 20
+850.22474s: Total Error = 1242136.94272
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     7
+
+949.71891s: Computing core matrix, n= 528
+949.77317s: Total Error = 163226.63573
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     1
+
+952.57377s: Computing core matrix, n= 5
+952.57391s: Total Error = 170.41918
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     2
+
+952.58577s: Computing core matrix, n= 8
+952.58606s: Total Error = 1196.07007
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     3
+
+952.61261s: Computing core matrix, n= 20
+952.61282s: Total Error = 5752.16186
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     4
+
+952.70243s: Computing core matrix, n= 39
+952.70280s: Total Error = 12014.95189
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     5
+
+953.46272s: Computing core matrix, n= 82
+953.46412s: Total Error = 8629.37941
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     6
+
+972.04750s: Computing core matrix, n= 238
+972.05296s: Total Error = 16161.86694
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+WARNING: Cmatrix copied.
+     7
+
