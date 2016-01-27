@@ -33,8 +33,6 @@ for f_i = 1:length(table_store)
     plot(n, table_store{f_i}.factor)
     hold off
 end
-l = cellstr(num2str(grid', 'grid=-%d'))
-legend(l);
 
 subplot(5,1,3)
 title('Solve')
@@ -43,8 +41,6 @@ for f_i = 1:length(table_store)
     plot(n, table_store{f_i}.solve)
     hold off
 end
-l = cellstr(num2str(grid', 'grid=-%d'))
-legend(l);
 
 subplot(5,1,4)
 title('Det')
@@ -53,8 +49,6 @@ for f_i = 1:length(table_store)
     plot(n, table_store{f_i}.det)
     hold off
 end
-l = cellstr(num2str(grid', 'grid=-%d'))
-legend(l);
 
 subplot(5,1,5)
 title('Error')
@@ -63,5 +57,4 @@ for f_i = 1:length(table_store)
     plot(n, table_store{f_i}.error)
     hold off
 end
-l = cellstr(num2str(grid', 'grid=-%d'))
-legend(l);
+
