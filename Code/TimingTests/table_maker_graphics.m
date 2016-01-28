@@ -13,7 +13,7 @@ end
 
 % consider the trends in fraction by table-features.
 
-load gstore_fraction_1.mat;
+load gstore_minclustersize_1.mat;
 
 figure(2)
 subplot(5,1,1)
@@ -23,7 +23,7 @@ for f_i = 1:length(table_store)
     plot(n, table_store{f_i}.assemb)
     hold off
 end
-l = cellstr(num2str(grid', 'grid=-%d'))
+l = cellstr(num2str(grid', 'grid=-%d'));
 legend(l);
 
 subplot(5,1,2)
