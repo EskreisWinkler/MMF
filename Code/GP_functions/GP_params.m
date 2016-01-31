@@ -17,4 +17,4 @@ params.ndensestages = 1;
 params.fraction = 0.7;
 params.maxclustersize = 100;
 params.bypass=3;
-params.minclustersize = 1;
+params.minclustersize = 4;

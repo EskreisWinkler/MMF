@@ -1,7 +1,7 @@
 % First code to be used to visualize the trends for the base "general" file
 % with no grid to it.
 
-load tstore_general_1.mat;
+load tstore_general_d0.mat;
 
 figure(1)
 for i = 1:length(vars)
@@ -13,7 +13,7 @@ end
 
 % consider the trends in fraction by table-features.
 
-load gstore_minclustersize_1.mat;
+load gstore_minclustersize_d0.mat;
 
 figure(2)
 subplot(5,1,1)
