@@ -4,7 +4,7 @@ addpath('~/galton_home/mmfc/v4/src/matlab/')
 % Set up to imitate the test run by ONeil
 
 n = [1e4 2e4 5e4 1e5 2e5 5e5 1e6]';
-d = 1000;
+d = 100;
 n = n/d;
 
 
@@ -12,7 +12,7 @@ n = n/d;
 % minclustersize -- 2
 % k -- 3
 % ndensestages -- 4
-var_num = 1;
+var_num = 4;
 switch var_num
     case 1
         grid_var = 'fraction';
