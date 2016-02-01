@@ -4,8 +4,8 @@ addpath('~/galton_home/mmfc/v4/src/matlab/')
 % Set up to imitate the test run by ONeil
 
 n = [1e4 2e4 5e4 1e5 2e5 5e5 1e6]';
-d = 100;
-n = n/d;
+div = 100;
+n = n/div;
 
 
 % fraction -- 1
@@ -75,7 +75,6 @@ end
 
 vars = {'Assembly Time','Factoring Time','Inversion Time','Determinant Computation Time','Matrix Error'};
 
-d = 1;
-file_name = sprintf('gstore_%s_d%d',grid_var,d);
+file_name = sprintf('gstore_%s_d%d',grid_var,div);
 save(file_name,'vars','table_store','n','grid')
 

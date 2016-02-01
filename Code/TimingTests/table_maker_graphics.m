@@ -1,7 +1,7 @@
 % First code to be used to visualize the trends for the base "general" file
 % with no grid to it.
 
-load tstore_general_d0.mat;
+load tstore_general_d10.mat;
 
 figure(1)
 for i = 1:length(vars)
