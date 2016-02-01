@@ -37,6 +37,6 @@ end
 vars = {'Assembly Time','Factoring Time','Inversion Time','Determinant Computation Time','Matrix Error'};
 table = [assemb factor solve det error];
 
-file_name = sprintf('tstore_general_d%d',div);
+file_name = sprintf('Data/tstore_general_d%d',div);
 save(file_name,'vars','table','n')
 

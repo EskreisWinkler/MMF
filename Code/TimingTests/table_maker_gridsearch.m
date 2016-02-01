@@ -75,6 +75,6 @@ end
 
 vars = {'Assembly Time','Factoring Time','Inversion Time','Determinant Computation Time','Matrix Error'};
 
-file_name = sprintf('gstore_%s_d%d',grid_var,div);
+file_name = sprintf('Data/gstore_%s_d%d',grid_var,div);
 save(file_name,'vars','table_store','n','grid')
 
