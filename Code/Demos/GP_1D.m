@@ -9,7 +9,7 @@ addpath('~/MMF_project/mmfc/v4/src/matlab/')
 x = linspace(-params.bdry,params.bdry,params.num_dp);
 % Define a function here
 %m = -20*(x<=0)+20*(x>=0);
-m = 5*cos(2*x)+x.^2;
+m = 25*cos(2*x)+x.^2+10*x;
 
 % The received data $y$ is the true function with noise.
 y = m + randn(size(m))*params.data_noise;
