@@ -13,7 +13,7 @@ end
 
 % consider the trends in fraction by table-features.
 
-load Data/gstore_ndensestages_d100.mat;
+load Data/gstore_fraction_d400.mat;
 
 figure(2)
 subplot(5,1,1)
