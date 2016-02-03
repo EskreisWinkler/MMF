@@ -13,8 +13,8 @@ load full_wind_data.mat
 theta = zeros(size(TRAIN_DATA,2)+1,1);
 
 n.l = length(theta)-2;
-n.iter = 1;
-n.restarts = 20;
+n.iter = 5;
+n.restarts = 1;
 
 theta_o_store = zeros(n.restarts, length(theta));
 theta_o_store(:,1) = rand(n.restarts,1)*(lims(1,2)-lims(1,1))+lims(1,1);
