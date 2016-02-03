@@ -10,10 +10,12 @@ function[marg_likely] = marginal_likelihood_fminsearch(theta)
 load full_wind_data.mat
 X = TRAIN_DATA(:,1:(end-1));
 T = TRAIN_DATA(:,end);
-%sample = size(X,1);
-sample = round(size(X,1)/2);
-X = X(1:sample,:);
-T= T(1:sample);
+n = size(X,1);
+inds = randperm(n);
+perc = 0.001;
+sample = inds(1:round(perc*n));
+X = X(sample,:);
+T= T(sample);
 
 if size(X,2)<size(X,1)
     X=X';

@@ -13,7 +13,7 @@ load full_wind_data.mat
 theta = zeros(size(TRAIN_DATA,2)+1,1);
 
 n.l = length(theta)-2;
-n.iter = 20;
+n.iter = 1;
 n.restarts = 20;
 
 theta_o_store = zeros(n.restarts, length(theta));
@@ -32,5 +32,5 @@ end
 
 c = clock;
 num = mod(round(c(6)*1000000),10000);
-file_name = sprintf('Data/wind_params_%d',num);
+file_name = sprintf('Data/params_%d',num);
 save(file_name,'theta_store','fval_store')
