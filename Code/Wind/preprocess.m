@@ -55,11 +55,20 @@ for i = 1:n.stations
         repmat(IW_LOC(station_id(i),2),n.days,1), IWD(:,3+i)];
 end
 
+% normalize DATA (non-RESPONSE) parts of the data matrix
+for col = 2:(size(IWD_new,2)-1)
+   IWD_new(:,col) = (IWD_new(:,col) -  mean(IWD_new(:,col)));
+   IWD_new(:,col) = IWD_new(:,col)/max(abs(IWD_new(:,col)));
+end
+
 % FIRST TRY EXCLUDING MULINGAR FROM TEST DATA;
 TRAIN_DATA = IWD_new(IWD_new(:,1)~=7,1:end);
 TEST_DATA  = IWD_new(IWD_new(:,1)==7,1:end);
 %global TRAIN_DATA;
 %global TEST_DATA;
+
+
+
 
 save('full_wind_data.mat','TRAIN_DATA','TEST_DATA','n')
 
@@ -88,7 +97,7 @@ m = m/(n.stations-1);
 
 figure(3)
 hold on
-plot(1:n.days,m, 'LineWidth',1)
+plot(TRAIN_DATA(inds,temp_ind),m, 'LineWidth',1)
 xlabel('DayID')
 ylabel('Wind Speed')
 plot(TEST_DATA(:,temp_ind),TEST_DATA(:,end),'LineWidth',1);

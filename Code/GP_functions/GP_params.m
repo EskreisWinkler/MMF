@@ -12,9 +12,9 @@ params.t_o_2D = [3 0.25 0.25 0.5];
 params.rel_grid_size = 0.75;
 
 % MMF parameters
-params.k = 2;
-params.ndensestages = 1;
+params.k = 3; % check
+params.ndensestages = 2; % check
 params.fraction = 0.7;
-params.maxclustersize = 100;
-params.bypass=3;
-params.minclustersize = 4;
+params.maxclustersize = 100; 
+params.bypass=3; 
+params.minclustersize = 4; % check

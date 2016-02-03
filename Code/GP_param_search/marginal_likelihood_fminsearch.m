@@ -7,33 +7,38 @@ function[marg_likely] = marginal_likelihood_fminsearch(theta)
 %%%%% depending on the dimension of the datapoints p
 %%% IS_MMF is a binary variable indicating whether or not K is already an
 %%%%% MMF object
-load wind_data.mat
+load full_wind_data.mat
 X = TRAIN_DATA(:,1:(end-1));
-T = TRAIN_DATA(:,end)';
-K = make_rbf(X',theta');
-is_MMF=0;
-n=size(X,2);
+T = TRAIN_DATA(:,end);
+sample = size(X,1);
+%sample = 200;
+X = X(1:sample,:);
+T= T(1:sample);
 
+if size(X,2)<size(X,1)
+    X=X';
+end
+if size(theta,2)>size(theta,1)
+    theta=theta';
+end
+K = make_rbf(X,theta);
+is_MMF=1;
+n=size(X,2);
 if is_MMF
-    params.k=2;
-    params.ndensestages=1;
-    params.fraction=0.9;
+    params = GP_params();
     fprintf('Computing MMF factorization\n')
     K_mmf = MMF(K,params);
-    %D = K.determinant(); % once this is fixed I can take out the next two slow steps.
-    fprintf('Computing MMF full form\n')
-    F = K_mmf.fullForm();
-    D = det(F{end});
+    D = K_mmf.determinant(); % once this is fixed I can take out the next two slow steps.
     K_mmf.invert();
     alpha = K_mmf.hit(T);
     alpha(isnan(alpha)) =0;
-    marg_likely = 0.5*T*alpha+0.5*log(D)+0.5*n*log(2*pi)/2 + sum(theta<0.001)*10e30...
+    marg_likely = 0.5*T'*alpha+0.5*log(D)+0.5*n*log(2*pi)/2 + sum(theta<0.001)*10e30...
         +sum(theta>200)*10e30;
     if isnan(marg_likely)
-        keyboard;
+        marg_likely = Inf;
     end
 else
-    marg_likely = 0.5*T*(K\T')+0.5*log(det(K))+0.5*n*log(2*pi) + sum(theta<0.001)*10e30...
+    marg_likely = 0.5*T'*(K\T)+0.5*log(det(K))+0.5*n*log(2*pi) + sum(theta<0.001)*10e30...
         +sum(theta>200)*10e30;
 end
 
