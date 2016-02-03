@@ -6,7 +6,6 @@ addpath('../GP_param_search/','../GP_functions')
 %addpath('~/MMF_project/mmfc/v4/src/matlab/')
 addpath('~/galton_home/mmfc/v4/src/matlab/')
 % TRY OUT 20+1 STARTING POSITIONS
-num_restarts = 20;
 
 lims = [0.25 1; 0.05 1; 0.25 1];
 
@@ -15,21 +14,23 @@ theta = zeros(size(TRAIN_DATA,2)+1,1);
 
 n.l = length(theta)-2;
 n.iter = 20;
+n.restarts = 20;
 
-theta_o_store = zeros(num_restarts, length(theta));
-theta_o_store(:,1) = rand(num_restarts,1)*(lims(1,2)-lims(1,1))+lims(1,1);
-theta_o_store(:,2) = rand(num_restarts,1)*(lims(2,2)-lims(2,1))+lims(2,1);
-theta_o_store(:,3:end) = rand(num_restarts,n.l)*(lims(3,2)-lims(3,1))+lims(3,1);
+theta_o_store = zeros(n.restarts, length(theta));
+theta_o_store(:,1) = rand(n.restarts,1)*(lims(1,2)-lims(1,1))+lims(1,1);
+theta_o_store(:,2) = rand(n.restarts,1)*(lims(2,2)-lims(2,1))+lims(2,1);
+theta_o_store(:,3:end) = rand(n.restarts,n.l)*(lims(3,2)-lims(3,1))+lims(3,1);
 
 theta_store = zeros(size(theta_o_store));
-fval_store = zeros(num_restarts,1);
-for i = 1:num_restarts
+fval_store = zeros(n.restarts,1);
+for i = 1:n.restarts
     %[theta, fval] = fminsearch(@marginal_likelihood_fminsearch, theta_o_store(i,:));
     [theta, fval] = fminsearch(@marginal_likelihood_fminsearch, theta_o_store(i,:),optimset('Display','iter','MaxIter',n.iter));
     theta_store(i,:) = theta;
     fval_store(i) = fval;
 end
 
-num = round(rand(1)*1000);
+c = clock;
+num = mod(round(c(6)*1000000),10000);
 file_name = sprintf('Data/wind_params_%d',num);
 save(file_name,'theta_store','fval_store')
