@@ -16,7 +16,7 @@ perc = 0.01;
 sample = inds(1:round(perc*n));
 X = X(sample,:);
 T= T(sample);
-
+keyboard
 if size(X,2)<size(X,1)
     X=X';
 end
