@@ -8,13 +8,16 @@ addpath('~/galton_home/mmfc/v4/src/matlab/')
 % TRY OUT 20+1 STARTING POSITIONS
 
 lims = [0.25 1; 0.05 1; 0.25 1];
+perc = 0.005;
+global perc;
+exec = sprintf('load Data/full_wind_data_%d',perc*1000);
+eval(exec)
 
-load full_wind_data.mat
-theta = zeros(size(TRAIN_DATA,2)+1,1);
+theta = zeros(size(X,2)+1,1);
 
 n.l = length(theta)-2;
-n.iter = 5;
-n.restarts = 1;
+n.iter = 10;
+n.restarts = 5;
 
 theta_o_store = zeros(n.restarts, length(theta));
 theta_o_store(:,1) = rand(n.restarts,1)*(lims(1,2)-lims(1,1))+lims(1,1);
@@ -32,5 +35,5 @@ end
 
 c = clock;
 num = mod(round(c(6)*1000000),10000);
-file_name = sprintf('Data/params_%d',num);
+file_name = sprintf('Data/params_p%d_%d',perc*1000,num);
 save(file_name,'theta_store','fval_store')

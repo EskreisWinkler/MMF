@@ -104,3 +104,15 @@ plot(TEST_DATA(:,temp_ind),TEST_DATA(:,end),'LineWidth',1);
 hold off
 legend('Avg of Others', 'True Speed');
 
+
+perc = 1;
+load Data/full_wind_data.mat
+X = TRAIN_DATA(:,1:(end-1));
+T = TRAIN_DATA(:,end);
+n = size(X,1);
+inds = randperm(n);
+sample = inds(1:round(perc*n));
+X = X(sample,:);
+T= T(sample);
+exec = sprintf('save(''Data/bbbfull_wind_data_%d'',''X'',''T'')',perc*1000);
+eval(exec)

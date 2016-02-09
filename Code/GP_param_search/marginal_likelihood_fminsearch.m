@@ -1,4 +1,5 @@
 function[marg_likely] = marginal_likelihood_fminsearch(theta)
+% function[marg_likely] = marginal_likelihood_fminsearch(theta)
 %%% X is the predictors. If they are of dimension p and there are n of
 %%%%% them, then X \in \mathbb{R}^{p\times n}
 %%% Y is the target values
@@ -7,16 +8,11 @@ function[marg_likely] = marginal_likelihood_fminsearch(theta)
 %%%%% depending on the dimension of the datapoints p
 %%% IS_MMF is a binary variable indicating whether or not K is already an
 %%%%% MMF object
-load full_wind_data.mat
-X = TRAIN_DATA(:,1:(end-1));
-T = TRAIN_DATA(:,end);
-n = size(X,1);
-inds = randperm(n);
-perc = 0.01;
-sample = inds(1:round(perc*n));
-X = X(sample,:);
-T= T(sample);
 
+global perc;
+exec = sprintf('load Data/full_wind_data_%d',perc*1000);
+eval(exec)
+X = X(:,2:end);
 if size(X,2)<size(X,1)
     X=X';
 end
