@@ -5,11 +5,9 @@
 addpath('../GP_param_search/','../GP_functions')
 %addpath('~/MMF_project/mmfc/v4/src/matlab/')
 addpath('~/galton_home/mmfc/v4/src/matlab/')
-% TRY OUT 20+1 STARTING POSITIONS
 
 lims = [0.25 1; 0.05 1; 0.25 1];
-perc = 0.50;
-global perc;
+perc = perc_assign;
 exec = sprintf('load Data/full_wind_data_%d',perc*1000);
 eval(exec)
 

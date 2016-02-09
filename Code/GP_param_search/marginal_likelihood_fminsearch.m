@@ -9,7 +9,7 @@ function[marg_likely] = marginal_likelihood_fminsearch(theta)
 %%% IS_MMF is a binary variable indicating whether or not K is already an
 %%%%% MMF object
 
-global perc;
+perc = perc_assign;
 exec = sprintf('load Data/full_wind_data_%d',perc*1000);
 eval(exec)
 X = X(:,2:end);
