@@ -12,11 +12,11 @@ X = TRAIN_DATA(:,1:(end-1));
 T = TRAIN_DATA(:,end);
 n = size(X,1);
 inds = randperm(n);
-perc = 0.01;
+perc = 0.005;
 sample = inds(1:round(perc*n));
 X = X(sample,:);
 T= T(sample);
-keyboard
+
 if size(X,2)<size(X,1)
     X=X';
 end
