@@ -15,7 +15,7 @@ theta = zeros(size(X,2)+1,1);
 
 n.l = length(theta)-2;
 n.iter = 10;
-n.restarts = 5;
+n.restarts = 20;
 
 theta_o_store = zeros(n.restarts, length(theta));
 theta_o_store(:,1) = rand(n.restarts,1)*(lims(1,2)-lims(1,1))+lims(1,1);
@@ -34,4 +34,4 @@ end
 c = clock;
 num = mod(round(c(6)*1000000),10000);
 file_name = sprintf('Data/params_p%d_%d',perc*1000,num);
-save(file_name,'theta_store','fval_store')
+save(file_name,'theta_store','fval_store','perc')
