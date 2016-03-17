@@ -72,7 +72,6 @@ TEST_DATA  = IWD_new(IWD_new(:,1)==7,1:end);
 
 save('full_wind_data.mat','TRAIN_DATA','TEST_DATA','n')
 
-
 figure(2)
 hold on
 temp_ind = 5;
@@ -105,7 +104,7 @@ hold off
 legend('Avg of Others', 'True Speed');
 
 
-perc = 1;
+perc = 0.05;
 load Data/full_wind_data.mat
 X = TRAIN_DATA(:,1:(end-1));
 T = TRAIN_DATA(:,end);
@@ -114,5 +113,9 @@ inds = randperm(n);
 sample = inds(1:round(perc*n));
 X = X(sample,:);
 T= T(sample);
-exec = sprintf('save(''Data/bbbfull_wind_data_%d'',''X'',''T'')',perc*1000);
+exec = sprintf('save(''Data/full_wind_data_%d'',''X'',''T'')',perc*1000);
+eval(exec)
+
+TRAIN_DATA = [X T];
+exec = sprintf('csvwrite(''Data/TRAIN_%dp.csv'',TRAIN_DATA)',perc*100);
 eval(exec)

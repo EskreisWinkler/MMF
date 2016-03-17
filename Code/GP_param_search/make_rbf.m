@@ -2,7 +2,7 @@ function [ K ] = make_rbf(X,theta,X2)
 % X \in \mathbb{R}^{p\times n}
 % theta = [sigma_f^2 sigma_m^2 l_1,...l_p] \in \mathbb{R}^{p+2\times 1}
 % X2 (if exists) \in \mathbb{R}^{m \times p}
-
+keyboard
 sigma_f_sq = theta(1);
 sigma_n_sq = theta(2);
 l = theta(3:end);
