@@ -1,5 +1,5 @@
 % First choose a dataset
-on_galton = 1;
+on_galton = 0;
 if on_galton == 0
     addpath('/Users/jeskreiswinkler/Drive/15fall/Kondor/SSL/Buffalo')
     addpath('/Users/jeskreiswinkler/Drive/15fall/Kondor/SSL/Benchmarks')
@@ -15,7 +15,7 @@ elseif on_galton == 1;
     addpath('/net/wallace/ga/eskreiswinkler/mmfc/v4/src/matlab')
 end
 
-dataset_name = 'digit1';
+dataset_name = 'digit1';run=1;
 eval(sprintf('load Data/%s.mat',dataset_name))
 switch dataset_name
     case 'digit1'
@@ -51,7 +51,7 @@ n_obs = 10;
 observed_grid = round(linspace(2,97, n_obs));
 n = length(y);
 n_classes = length(ids);
-n_draws = 5;
+n_draws = 3;
 n_fracs = 4;
 frac_grid = linspace(0.25,0.99,n_fracs);
 
@@ -136,7 +136,7 @@ for cur_obs = 1:length(observed_grid)
     end
 end
 
-save(sprintf('Data/%s_obs%d_draws%d_frac%d.mat',dataset_name, n_obs, n_draws, n_fracs),'KM_store_mmf','KM_store')
+save(sprintf('Data/%s_obs%d_draws%d_frac%d_%d.mat',dataset_name, n_obs, n_draws, n_fracs,run),'KM_store_mmf','KM_store')
 
 if make_plots == 1
     plot(observed_grid,mean(KM_store,1))
