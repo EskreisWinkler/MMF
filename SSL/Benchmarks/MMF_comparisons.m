@@ -23,8 +23,8 @@ switch dataset_name
     case 'coil'
         sigma = 93;
         y2 = -1*(y<=2)+1*(y>=3);
-        clear y2;
         y = y2;
+        clear y2;
     case 'usps'
         sigma = 733;
     case 'text'
@@ -100,7 +100,7 @@ for cur_obs = 1:length(observed_grid)
         fprintf('Computing MMF factorization\n')
         params = GP_params;
         for cur_frac = 1:n_fracs
-            fprintf('Obs inds: %0.2f, Draw: %0.2f, Fraction: %0.2f\n',cur_obs/length(observed_grid),cur_draw/n_draws,cur_frac/n_fracs)
+            fprintf('Obs inds: %d (%d), Draw: %d (%d), Fraction: %d (%d)\n',cur_obs,length(observed_grid),cur_draw,n_draws,cur_frac,n_fracs)
             
             params.fraction = frac_grid(cur_frac);
             
