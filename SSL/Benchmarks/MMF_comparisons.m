@@ -1,5 +1,6 @@
+function[] = MMF_comparisons(dataset_name,run)
 % First choose a dataset
-on_galton = 0;
+on_galton = 1;
 if on_galton == 0
     addpath('/Users/jeskreiswinkler/Drive/15fall/Kondor/SSL/Buffalo')
     addpath('/Users/jeskreiswinkler/Drive/15fall/Kondor/SSL/Benchmarks')
@@ -15,7 +16,7 @@ elseif on_galton == 1;
     addpath('/net/wallace/ga/eskreiswinkler/mmfc/v4/src/matlab')
 end
 
-dataset_name = 'digit1';run=1;
+%dataset_name = 'coil';run=2;
 eval(sprintf('load Data/%s.mat',dataset_name))
 switch dataset_name
     case 'digit1'
@@ -47,12 +48,12 @@ ids = unique(y);
 
 
 % First simply copy the Lafferty plot
-n_obs = 10;
+n_obs = 1;
 observed_grid = round(linspace(2,97, n_obs));
 n = length(y);
 n_classes = length(ids);
-n_draws = 3;
-n_fracs = 4;
+n_draws = 1;
+n_fracs = 1;
 frac_grid = linspace(0.25,0.99,n_fracs);
 
 KM_store = zeros(n_draws, n_obs);
