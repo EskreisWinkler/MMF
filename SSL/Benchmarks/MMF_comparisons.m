@@ -1,4 +1,4 @@
-function[] = MMF_comparisons(dataset_name,run)
+function[] = MMF_comparisons(dataset_ind,run)
 % First choose a dataset
 on_galton = 1;
 if on_galton == 0
@@ -16,21 +16,29 @@ elseif on_galton == 1;
     addpath('/net/wallace/ga/eskreiswinkler/mmfc/v4/src/matlab')
 end
 
-%dataset_name = 'coil';run=2;
-eval(sprintf('load Data/%s.mat',dataset_name))
-switch dataset_name
-    case 'digit1'
+switch dataset_ind
+    case 1
+        dataset_name = 'digit1';
+        eval(sprintf('load Data/%s.mat',dataset_name))
         sigma = 756;
-    case 'coil'
+    case 2
+        dataset_name = 'coil';
+        eval(sprintf('load Data/%s.mat',dataset_name))
         sigma = 93;
         y2 = -1*(y<=2)+1*(y>=3);
         y = y2;
         clear y2;
-    case 'usps'
+    case 3
+        dataset_name = 'usps';
+        eval(sprintf('load Data/%s.mat',dataset_name))
         sigma = 733;
-    case 'text'
+    case 4
+        dataset_name = 'text';
+        eval(sprintf('load Data/%s.mat',dataset_name))
         sigma = 6772;
-    case 'secstr'
+    case 5
+        dataset_name = 'secstr';
+        eval(sprintf('load Data/%s.mat',dataset_name))
         sigma = 6;
         % if we want to only look at a subsample because of the austere
         % size;
