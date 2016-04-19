@@ -1,8 +1,12 @@
 %function[] = Zhu_figure_maker(sigma)
 addpath('/Users/jeffreywinkler/Google_Drive/15fall/Kondor/DiffKernel/Buffalo/Data')
+addpath('/phddata/eskreiswinkler/galton_home/MMF/DiffKernel/Buffalo/Data/')
 addpath('/Users/jeffreywinkler/MMF_project/mmfc/v4/src/matlab/')
+addpath('/phddata/eskreiswinkler/galton_home/mmfc/v4/src/matlab/')
 addpath('/Users/jeffreywinkler/Google_Drive/15fall/Kondor/Code/GP_param_search/',...
     '/Users/jeffreywinkler/Google_Drive/15fall/Kondor/Code/GP_functions/')
+addpath('/phddata/eskreiswinkler/galton_home/MMF/Code/GP_param_search/')
+addpath('/phddata/eskreiswinkler/galton_home/MMF/Code/GP_functions/')
 
 
 images = importdata('X.csv');
@@ -17,8 +21,9 @@ observed_grid = round(linspace(2,97, n_obs));
 n_classes = length(unique(labels));
 n_draws = 5;
 sigma=380;
-n_fracs = 5;
+n_fracs = 6;
 frac_grid = linspace(0,0.5,n_fracs);
+frac_grid=frac_grid(1:2);
 
 EM_store = zeros(n_draws, n_obs);
 KM_store = zeros(n_draws, n_obs);
@@ -52,7 +57,7 @@ for cur_obs = 1:length(observed_grid)
         % Compare to MMF
         fprintf('Computing MMF factorization\n')
         params = GP_params;
-        for cur_frac = 1:n_fracs
+        for cur_frac = 1:length(frac_grid)
             params.fraction = frac_grid(cur_frac);
             M_inv = MMF(L(unobserved_inds,unobserved_inds),params);
             M_inv.invert();
@@ -94,7 +99,7 @@ end
 % plot(observed_grid,mean(KM_store_mmf{5},1))
 % hold off
 
-save('ZhuFigMaker_obs10_draws5_frac5.mat','KM_store_mmf','KM_store','EM_store_mmf','EM_store')
+save('Data/ZhuFigMaker_obs10_draws5_frac0102.mat','KM_store_mmf','KM_store','EM_store_mmf','EM_store')
 
 
 
