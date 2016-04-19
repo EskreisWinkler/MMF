@@ -1,8 +1,8 @@
 
-addpath('/Users/jeffreywinkler/Google_Drive/15fall/Kondor/DiffKernel/Buffalo/Data')
-addpath('/Users/jeffreywinkler/MMF_project/mmfc/v4/src/matlab/')
-addpath('/Users/jeffreywinkler/Google_Drive/15fall/Kondor/Code/GP_param_search/',...
-    '/Users/jeffreywinkler/Google_Drive/15fall/Kondor/Code/GP_functions/')
+addpath('/Users/jeskreiswinkler/Drive/15fall/Kondor/SSL/Buffalo/Data')
+addpath('/Users/jeskreiswinkler/mmfc/v4/src/matlab/')
+addpath('/Users/jeskreiswinkler/Drive/15fall/Kondor/GP/GP_param_search/',...
+    '/Users/jeskreiswinkler/Drive/15fall/Kondor/GP/GP_functions/')
 
 images = importdata('X.csv');
 labels = importdata('Y.txt');
@@ -14,15 +14,13 @@ labels = labels(logical(select));
 
 n = length(labels);
 
-num_sampled = n;
-sample = randsample(n,min([n,num_sampled]),0);
-data = images(sample,:);
-response = labels(sample);
+data = images;
+response = labels;
 sigma = 1000;
-n_sample = length(response);
+n = length(response);
 
 num_observed = 100;
-observed = randsample(n_sample,min(n_sample,num_observed),0);
+observed = randsample(n_sample,min(n,num_observed),0);
 unobserved = setdiff(1:n_sample,observed);
 figure(2)
 histogram(response(unobserved))
@@ -46,7 +44,7 @@ K(1:num_view,1:num_view)
 
 
 %E_inv = V'*diag(exp(-1*beta*diag(P)))*V;
-E_inv = V'*diag(log(diag(P)))*V;
+%E_inv = V'*diag(log(diag(P)))*V;
 
 D = diag(sum(K-diag(diag(K)),1));
 W = K - diag(diag(K));

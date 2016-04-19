@@ -1,4 +1,4 @@
-%function[] = Zhu_figure_maker(sigma)
+%function[] = Zhu_figure_maker2(sigma)
 addpath('/Users/jeffreywinkler/Google_Drive/15fall/Kondor/DiffKernel/Buffalo/Data')
 addpath('/Users/jeffreywinkler/MMF_project/mmfc/v4/src/matlab/')
 addpath('/Users/jeffreywinkler/Google_Drive/15fall/Kondor/Code/GP_param_search/',...

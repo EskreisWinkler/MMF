@@ -7,6 +7,7 @@ function[K] = make_ker(data,n,sigma)
 % Data is n X p
 
 n1sq = sum(data.^2,1);
+%keyboard
 D = (ones(n,1)*n1sq)' + ones(n,1)*n1sq -2*(data')*data;
 K = exp(-D/(2*sigma^2));
 

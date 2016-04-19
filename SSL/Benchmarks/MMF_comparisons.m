@@ -4,7 +4,7 @@ addpath('/Users/jeskreiswinkler/Drive/15fall/Kondor/SSL/Benchmarks')
 addpath('/Users/jeskreiswinkler/Drive/15fall/Kondor/GP/GP_param_search/',...
     '/Users/jeskreiswinkler/Drive/15fall/Kondor/GP/GP_functions/')
 dataset_name = 'digit1';
-eval(sprintf('load %s.mat',dataset_name))
+eval(sprintf('load Data/%s.mat',dataset_name))
 switch dataset_name
     case 'digit1'
         sigma = 756;
@@ -40,8 +40,8 @@ observed_grid = round(linspace(2,97, n_obs));
 n = length(y);
 n_classes = length(ids);
 n_draws = 5;
-n_fracs = 1;
-frac_grid = linspace(0.1,0.5,n_fracs);
+n_fracs = 4;
+frac_grid = linspace(0.25,0.99,n_fracs);
 
 KM_store = zeros(n_draws, n_obs);
 KM_store_mmf = cell(n_fracs,1);
@@ -100,7 +100,7 @@ for cur_obs = 1:length(observed_grid)
             % realign indices
             [~, j] = min(f_u_mmf);
             min_lab = km(j);
-            max_lab = setdiff([1:2], min_lab);
+            max_lab = setdiff(1:2, min_lab);
             f_u_KM_mmf = ids(1)*(km==min_lab)+ ids(2)*(km==max_lab);
             KM_store_mmf{cur_frac}(cur_draw,cur_obs) = sum(f_u_KM_mmf == y(unobserved_inds))/length(unobserved_inds);
         end
@@ -124,6 +124,14 @@ for cur_obs = 1:length(observed_grid)
     end
 end
 
-save(sprintf('%s_obs10_draws5_frac5.mat',dataset_name),'KM_store_mmf','KM_store')
+save(sprintf('Data/%s_obs%d_draws%d_frac%d.mat',dataset_name, n_obs, n_draws, n_fracs),'KM_store_mmf','KM_store')
 
-
+if make_plots == 1
+    plot(observed_grid,mean(KM_store,1))
+    hold on
+    plot(observed_grid,mean(KM_store_mmf{1},1))
+    plot(observed_grid,mean(KM_store_mmf{2},1))
+    plot(observed_grid,mean(KM_store_mmf{3},1))
+    plot(observed_grid,mean(KM_store_mmf{4},1))
+    hold off
+end

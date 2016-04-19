@@ -3,7 +3,7 @@ addpath('/Users/jeskreiswinkler/Drive/15fall/Kondor/SSL/Buffalo')
 addpath('/Users/jeskreiswinkler/Drive/15fall/Kondor/SSL/Benchmarks')
 addpath('/Users/jeskreiswinkler/Drive/15fall/Kondor/GP/GP_param_search/',...
     '/Users/jeskreiswinkler/Drive/15fall/Kondor/GP/GP_functions/')
-load secstr.mat;
+load Data/secstr.mat;
 k = 15;
 sig_min = 1;
 sig_max = 15;
