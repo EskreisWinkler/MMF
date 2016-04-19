@@ -1,8 +1,20 @@
 % First choose a dataset
-addpath('/Users/jeskreiswinkler/Drive/15fall/Kondor/SSL/Buffalo')
-addpath('/Users/jeskreiswinkler/Drive/15fall/Kondor/SSL/Benchmarks')
-addpath('/Users/jeskreiswinkler/Drive/15fall/Kondor/GP/GP_param_search/',...
-    '/Users/jeskreiswinkler/Drive/15fall/Kondor/GP/GP_functions/')
+on_galton = 1;
+if on_galton == 0
+    addpath('/Users/jeskreiswinkler/Drive/15fall/Kondor/SSL/Buffalo')
+    addpath('/Users/jeskreiswinkler/Drive/15fall/Kondor/SSL/Benchmarks')
+    addpath('/Users/jeskreiswinkler/Drive/15fall/Kondor/GP/GP_param_search/',...
+        '/Users/jeskreiswinkler/Drive/15fall/Kondor/GP/GP_functions/')
+    addpath('/Users/jeskreiswinkler/mmfc/v4/src/matlab')
+elseif on_galton == 1;
+    
+    addpath('/net/wallace/ga/eskreiswinkler/MMF/SSL/Buffalo')
+    addpath('/net/wallace/ga/eskreiswinkler/MMF/SSL/Benchmarks')
+    addpath('/net/wallace/ga/eskreiswinkler/MMF/GP/GP_param_search/',...
+        '/net/wallace/ga/eskreiswinkler/MMF/GP/GP_functions/')
+    addpath('/net/wallace/ga/eskreiswinkler/mmfc/v4/src/matlab')
+end
+
 dataset_name = 'digit1';
 eval(sprintf('load Data/%s.mat',dataset_name))
 switch dataset_name
