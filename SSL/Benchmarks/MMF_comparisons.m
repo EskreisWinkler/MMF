@@ -5,8 +5,31 @@ addpath('/Users/jeskreiswinkler/Drive/15fall/Kondor/GP/GP_param_search/',...
     '/Users/jeskreiswinkler/Drive/15fall/Kondor/GP/GP_functions/')
 dataset_name = 'digit1';
 eval(sprintf('load %s.mat',dataset_name))
+switch dataset_name
+    case 'digit1'
+        sigma = 756;
+    case 'coil'
+        sigma = 93;
+        y2 = -1*(y<=2)+1*(y>=3);
+        clear y2;
+        y = y2;
+    case 'usps'
+        sigma = 733;
+    case 'text'
+        sigma = 6772;
+    case 'secstr'
+        sigma = 6;
+        % if we want to only look at a subsample because of the austere
+        % size;
+        s = randsample(size(T,1),3000,0);
+        X=double(T(s,:));
+        y2 = -1*(y(s)<1)+y(s);
+        y=y2;
+        clear y2;
+    otherwise
+        fprintf('This jawn is messed up\n')
+end
 
-sigma = 756;
 make_plots = 0;
 ids = unique(y);
 
