@@ -56,12 +56,12 @@ ids = unique(y);
 
 
 % First simply copy the Lafferty plot
-n_obs = 1;
+n_obs = 10;
 observed_grid = round(linspace(2,97, n_obs));
 n = length(y);
 n_classes = length(ids);
-n_draws = 1;
-n_fracs = 1;
+n_draws = 3;
+n_fracs = 4;
 frac_grid = linspace(0.25,0.99,n_fracs);
 
 KM_store = zeros(n_draws, n_obs);
