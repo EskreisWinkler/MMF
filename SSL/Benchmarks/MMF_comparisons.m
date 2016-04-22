@@ -42,7 +42,7 @@ switch dataset_ind
         sigma = 6;
         % if we want to only look at a subsample because of the austere
         % size;
-        s = randsample(size(T,1),3000,0);
+        s = randsample(size(T,1),5000,0);
         X=double(T(s,:));
         y2 = -1*(y(s)<1)+y(s);
         y=y2;
@@ -69,7 +69,6 @@ KM_store_mmf = cell(n_fracs,1);
 for cur_frac = 1:n_fracs
     KM_store_mmf{cur_frac} = zeros(n_draws, n_obs);
 end
-
 
 
 for cur_obs = 1:length(observed_grid)
@@ -99,11 +98,11 @@ for cur_obs = 1:length(observed_grid)
         if make_plots == 1
             figure(1)
             subplot(1,3,1)
-            plot(f_u,f_u_DK,'o')
+            plot(f_u,f_u_mmf,'o')
             subplot(1,3,2)
             hist(f_u,30)
             subplot(1,3,3)
-            hist(f_u_DK,50)
+            hist(f_u_mmf,50)
         end
         % Compare to MMF
         fprintf('Computing MMF factorization\n')
@@ -114,9 +113,10 @@ for cur_obs = 1:length(observed_grid)
             params.fraction = frac_grid(cur_frac);
             
             M_inv = MMF(L_u,params);
+            
             M_inv.invert();
-            L_pre = W(unobserved_inds,observed_inds)*f_o;
-            f_u_mmf = M_inv.hit(L_pre);
+            f_u_mmf = M_inv.hit(W(unobserved_inds,observed_inds)*f_o);
+            f_u_mmf_CMN = f_u_mmf .* repmat(q./sum(f_u), n-n_observed, 1);
             km = kmeans(f_u_mmf,length(ids));
             % realign indices
             [~, j] = min(f_u_mmf);
