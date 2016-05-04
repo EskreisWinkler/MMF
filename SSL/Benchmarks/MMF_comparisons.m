@@ -1,6 +1,6 @@
 function[] = MMF_comparisons(dataset_ind,run)
 % First choose a dataset
-on_galton = 1;
+on_galton = 0;
 if on_galton == 0
     addpath('/Users/jeskreiswinkler/Drive/15fall/Kondor/SSL/Buffalo')
     addpath('/Users/jeskreiswinkler/Drive/15fall/Kondor/SSL/Benchmarks')
@@ -172,4 +172,4 @@ for cur_obs = 1:length(grid.observed)
     end
 end
 
-save(sprintf('Data/%s_obs%d_draws%d_frac%d_%d.mat',dataset_name, n_obs, n_draws, n_fracs,run),'KM_store_mmf','KM_store')
+save(sprintf('Data/%s_obs%d_draws%d_frac%d_%d.mat',dataset_name, num.obs, num.draws, num.fracs,run),'KM_store_mmf','KM_store')
