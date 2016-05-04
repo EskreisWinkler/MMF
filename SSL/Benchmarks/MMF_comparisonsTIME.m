@@ -187,4 +187,6 @@ for cur_obs = 1:length(grid.observed)
     end
 end
 
-save(sprintf('Data/%s_obs%d_draws%d_frac%d_%d.mat',dataset_name, num.obs, num.draws, num.fracs,run),'KM_store_mmf','KM_nn_store_mmf','KM_store','KM_nn_store')
+save(sprintf('Data/%s_obs%d_draws%d_frac%d_%d.mat',dataset_name, num.obs, ...
+    num.draws, num.fracs,run),'KM_store_mmf','KM_nn_store_mmf','KM_store',...
+    'KM_nn_store','time_store','time_nn_store','time_store_mmf','time_nn_store_mmf')
