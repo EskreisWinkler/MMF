@@ -53,45 +53,60 @@ end
 
 make_plots = 0;
 ids = unique(y);
+num.pts = length(y);
+num.classes = length(ids);
+num.obs = 10;
+grid.observed = round(linspace(2,97, num.obs));
+num.draws = 3;
+num.fracs = 10;
+grid.fracs = linspace(0.01,0.99,num.fracs);
+num.nn = 50;
 
-
-% First simply copy the Lafferty plot
-n_obs = 10;
-observed_grid = round(linspace(2,97, n_obs));
-n = length(y);
-n_classes = length(ids);
-n_draws = 5;
-n_fracs = 10;
-frac_grid = linspace(0.01,0.99,n_fracs);
-
-KM_store = zeros(n_draws, n_obs);
-KM_store_mmf = cell(n_fracs,1);
-for cur_frac = 1:n_fracs
-    KM_store_mmf{cur_frac} = zeros(n_draws, n_obs);
+KM_store = zeros(num.draws, num.obs);
+KM_nn_store = zeros(num.draws, num.obs);
+KM_store_mmf = cell(num.fracs,1);
+KM_nn_store_mmf = cell(num.fracs,1);
+for cur_frac = 1:num.fracs
+    KM_store_mmf{cur_frac} = zeros(num.draws, num.obs);
+    KM_nn_store_mmf{cur_frac}=zeros(num.draws, num.obs);
 end
 
 
-for cur_obs = 1:length(observed_grid)
-    n_observed = observed_grid(cur_obs);
+for cur_obs = 1:length(grid.observed)
+    num.observed = grid.observed(cur_obs);
     for cur_draw = 1:n_draws;
         % enter loop to select the observations
         good_draw = false;
         while good_draw == false
-            observed_inds = randsample(1:length(y),n_observed);
-            good_draw = length(unique(y(observed_inds)))==n_classes;
+            observed_inds = randsample(1:num.pts,num.observed);
+            good_draw = length(unique(y(observed_inds)))==num.classes;
         end
-        unobserved_inds = setdiff(1:length(y),observed_inds);
+        unobserved_inds = setdiff(1:num.pts,observed_inds);
         
-        K = make_ker(X',length(y),sigma);
+        K = make_ker(X',num.pts,sigma);
+        K_nn = zeros(size(K));
+        for row  = 1:num.pts
+            % first find the lower bound:
+            m = K(row,:);
+            c = sort(K(row,:));
+            c = c(length(c)-num.nn-1);
+            K_nn(row,m>c) = 1;
+        end
         
         W = K - diag(diag(K));
-        D = diag(sum(W,1));
+        W_nn = K_nn - diag(diag(K_nn));
+        
+        D = diag(sum(W,2));
+        D_nn = diag(sum(W_nn,2));
+        
         L_u = D(unobserved_inds,unobserved_inds)-W(unobserved_inds,unobserved_inds);
+        L_u_nn = D_nn(unobserved_inds,unobserved_inds)-W_nn(unobserved_inds,unobserved_inds);
         
         f_o = y(observed_inds);
         f_u = L_u\W(unobserved_inds,observed_inds)*f_o;
+        f_u_nn = L_u_nn\W_nn(unobserved_inds,observed_inds)*f_o;
         q = sum(f_o)+1; % the unnormalized class proportion estimate from labeled data, with Laplace smoothing
-        f_u_CMN = f_u .* repmat(q./sum(f_u), n-n_observed, 1);
+        %f_u_CMN = f_u .* repmat(q./sum(f_u), num.pts-num.observed, 1);
         %[V, D] = eig(L(unobserved_inds,unobserved_inds));
         %f_u = V*diag(1./diag(D))*V'*W(unobserved_inds,observed_inds)*f_o;
         %f_u_DK = V*diag(exp(-1.6*diag(D)))*V'*W(unobserved_inds,observed_inds)*f_o;
@@ -107,52 +122,54 @@ for cur_obs = 1:length(observed_grid)
         % Compare to MMF
         fprintf('Computing MMF factorization\n')
         params = GP_params;
-        for cur_frac = 1:n_fracs
-            fprintf('Obs inds: %d (%d), Draw: %d (%d), Fraction: %d (%d)\n',cur_obs,length(observed_grid),cur_draw,n_draws,cur_frac,n_fracs)
+        for cur_frac = 1:num.fracs
+            fprintf('Obs inds: %d (%d), Draw: %d (%d), Fraction: %d (%d)\n',cur_obs,length(grid.observed),cur_draw,num.draws,cur_frac,num.fracs)
             
-            params.fraction = frac_grid(cur_frac);
+            params.fraction = grid.fracs(cur_frac);
             
             M_inv = MMF(L_u,params);
+            M_nn_inv = MMF(L_u_nn,params);
             
             M_inv.invert();
+            M_nn_inv.invert();
+            
             f_u_mmf = M_inv.hit(W(unobserved_inds,observed_inds)*f_o);
-            f_u_mmf_CMN = f_u_mmf .* repmat(q./sum(f_u), n-n_observed, 1);
-            km = kmeans(f_u_mmf,length(ids));
+            f_u_nn_mmf = M_nn_inv.hit(W_nn(unobserved_inds,observed_inds)*f_o);
+            %f_u_mmf_CMN = f_u_mmf .* repmat(q./sum(f_u), num.pts-num.observed, 1);
+            km = kmeans(f_u_mmf,num.classes);
             % realign indices
             [~, j] = min(f_u_mmf);
             min_lab = km(j);
-            max_lab = setdiff(1:2, min_lab);
+            max_lab = setdiff(1:num.classes, min_lab);
             f_u_KM_mmf = ids(1)*(km==min_lab)+ ids(2)*(km==max_lab);
-            KM_store_mmf{cur_frac}(cur_draw,cur_obs) = sum(f_u_KM_mmf == y(unobserved_inds))/length(unobserved_inds);
+            
+            km = kmeans(f_u_nn_mmf,num.classes);
+            % realign indices
+            [~, j] = min(f_u_nn_mmf);
+            min_lab = km(j);
+            max_lab = setdiff(1:num.classes, min_lab);
+            f_u_nn_KM_mmf = ids(1)*(km==min_lab)+ ids(2)*(km==max_lab);
+            KM_store_mmf{cur_frac}(cur_draw,cur_obs) = sum(f_u_KM_mmf == y(unobserved_inds))/(num.pts-num.observed);
+            KM_nn_store_mmf{cur_frac}(cur_draw,cur_obs) = sum(f_u_nn_KM_mmf == y(unobserved_inds))/(num.pts-num.observed);
         end
         % Use k means
-        km = kmeans(f_u,length(ids));
+        km = kmeans(f_u,num.classes);
         % realign indices
         [~, j] = min(f_u);
         min_lab = km(j);
-        max_lab = setdiff(1:length(ids), min_lab);
+        max_lab = setdiff(1:num.classes, min_lab);
         f_u_KM = ids(1)*(km==min_lab)+ ids(2)*(km==max_lab);
         
+        km = kmeans(f_u_nn,num.classes);
+        % realign indices
+        [~, j] = min(f_u_nn);
+        min_lab = km(j);
+        max_lab = setdiff(1:num.classes, min_lab);
+        f_u_nn_KM = ids(1)*(km==min_lab)+ ids(2)*(km==max_lab);
         
-        %km = kmeans(f_u_DK,length(ids));
-        %[~, j] = min(f_u_DK);
-        %min_lab = km(j);
-        %max_lab = setdiff(1:length(ids), min_lab);
-        %f_u_DK_KM = ids(1)*(km==min_lab)+ ids(2)*(km==max_lab);
-        
-        KM_store(cur_draw,cur_obs) = sum(f_u_KM == y(unobserved_inds))/length(unobserved_inds);
-        %KM_store_DK(cur_draw,cur_obs) = sum(f_u_DK_KM ==labels(unobserved_inds))/length(unobserved_inds);
+        KM_store(cur_draw,cur_obs) = sum(f_u_KM == y(unobserved_inds))/(num.pts-num.observed);
+        KM_nn_store(cur_draw,cur_obs) = sum(f_u_nn_KM == y(unobserved_inds))/(num.pts-num.observed);
     end
 end
 
 save(sprintf('Data/%s_obs%d_draws%d_frac%d_%d.mat',dataset_name, n_obs, n_draws, n_fracs,run),'KM_store_mmf','KM_store')
-
-if make_plots == 1
-    plot(observed_grid,mean(KM_store,1))
-    hold on
-    plot(observed_grid,mean(KM_store_mmf{1},1))
-    plot(observed_grid,mean(KM_store_mmf{2},1))
-    plot(observed_grid,mean(KM_store_mmf{3},1))
-    plot(observed_grid,mean(KM_store_mmf{4},1))
-    hold off
-end
