@@ -74,7 +74,7 @@ end
 
 for cur_obs = 1:length(grid.observed)
     num.observed = grid.observed(cur_obs);
-    for cur_draw = 1:n_draws;
+    for cur_draw = 1:num.draws;
         % enter loop to select the observations
         good_draw = false;
         while good_draw == false
