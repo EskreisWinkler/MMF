@@ -1,4 +1,4 @@
-function[] = MMF_comparisons(dataset_ind,run)
+function[] = MMF_comparisonsTIME(dataset_ind,run)
 % First choose a dataset
 on_galton = 1;
 if on_galton == 0
@@ -63,12 +63,19 @@ grid.fracs = linspace(0.01,0.99,num.fracs);
 num.nn = 50;
 
 KM_store = zeros(num.draws, num.obs);
+time_store = zeros(num.draws, num.obs);
 KM_nn_store = zeros(num.draws, num.obs);
+time_nn_store = zeros(num.draws, num.obs);
 KM_store_mmf = cell(num.fracs,1);
+time_store_mmf = cell(num.fracs,1);
 KM_nn_store_mmf = cell(num.fracs,1);
+time_nn_store_mmf = cell(num.fracs,1);
+
 for cur_frac = 1:num.fracs
     KM_store_mmf{cur_frac} = zeros(num.draws, num.obs);
-    KM_nn_store_mmf{cur_frac}=zeros(num.draws, num.obs);
+    time_store_mmf{cur_frac} = zeros(num.draws, num.obs);
+    KM_nn_store_mmf{cur_frac} = zeros(num.draws, num.obs);
+    time_nn_store_mmf{cur_frac} = zeros(num.draws, num.obs);
 end
 
 
@@ -103,8 +110,12 @@ for cur_obs = 1:length(grid.observed)
         L_u_nn = D_nn(unobserved_inds,unobserved_inds)-W_nn(unobserved_inds,unobserved_inds);
         
         f_o = y(observed_inds);
+        tic();
         f_u = L_u\W(unobserved_inds,observed_inds)*f_o;
+        time_store(cur_draw,cur_obs) = toc();
+        tic();
         f_u_nn = L_u_nn\W_nn(unobserved_inds,observed_inds)*f_o;
+        time_nn_store(cur_draw,cur_obs) = toc();
         q = sum(f_o)+1; % the unnormalized class proportion estimate from labeled data, with Laplace smoothing
         %f_u_CMN = f_u .* repmat(q./sum(f_u), num.pts-num.observed, 1);
         %[V, D] = eig(L(unobserved_inds,unobserved_inds));
@@ -127,14 +138,18 @@ for cur_obs = 1:length(grid.observed)
             
             params.fraction = grid.fracs(cur_frac);
             
+            tic();
             M_inv = MMF(L_u,params);
-            M_nn_inv = MMF(L_u_nn,params);
-            
             M_inv.invert();
-            M_nn_inv.invert();
-            
             f_u_mmf = M_inv.hit(W(unobserved_inds,observed_inds)*f_o);
+            time_store_mmf{cur_frac}(cur_draw,cur_obs)=toc();
+            
+            tic();
+            M_nn_inv = MMF(L_u_nn,params);
+            M_nn_inv.invert();
             f_u_nn_mmf = M_nn_inv.hit(W_nn(unobserved_inds,observed_inds)*f_o);
+            time_nn_store_mmf{cur_frac}(cur_draw,cur_obs)=toc();
+            
             %f_u_mmf_CMN = f_u_mmf .* repmat(q./sum(f_u), num.pts-num.observed, 1);
             km = kmeans(f_u_mmf,num.classes);
             % realign indices

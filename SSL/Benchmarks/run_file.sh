@@ -10,7 +10,7 @@
 . /etc/profile
 #module load packages/matlab/r2013a
 
-matlab -nodisplay -nojvm -r 'MMF_comparisons(4,3); exit;'
+matlab -nodisplay -nojvm -r 'MMF_comparisons(1,1); exit;'
 
 echo "Code has finished running." | mail -s "Alert" "jeskreiswinkler@gmail.com"
 
