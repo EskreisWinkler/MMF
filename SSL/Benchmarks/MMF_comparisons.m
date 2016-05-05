@@ -1,5 +1,6 @@
 function[] = MMF_comparisons(dataset_ind,run)
 % First choose a dataset
+rng('shuffle')
 on_galton = 1;
 if on_galton == 0
     addpath('/Users/jeskreiswinkler/Drive/15fall/Kondor/SSL/Buffalo')
