@@ -1,6 +1,6 @@
 run_vec = 1:5;
 n_obs = 10;
-n_draws=1;
+n_draws=3;
 n_fracs=10;
 dataset_name = 'digit1';
 for cur_run = run_vec
