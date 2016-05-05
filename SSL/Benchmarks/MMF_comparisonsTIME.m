@@ -1,5 +1,6 @@
 function[] = MMF_comparisonsTIME(dataset_ind,run)
 % First choose a dataset
+rng('shuffle')
 on_galton = 1;
 if on_galton == 0
     addpath('/Users/jeskreiswinkler/Drive/15fall/Kondor/SSL/Buffalo')
@@ -78,6 +79,8 @@ for cur_frac = 1:num.fracs
     time_nn_store_mmf{cur_frac} = zeros(num.draws, num.obs);
 end
 
+K = make_ker(X',num.pts,sigma);
+K_nn = zeros(size(K));
 
 for cur_obs = 1:length(grid.observed)
     num.observed = grid.observed(cur_obs);
@@ -90,8 +93,6 @@ for cur_obs = 1:length(grid.observed)
         end
         unobserved_inds = setdiff(1:num.pts,observed_inds);
         
-        K = make_ker(X',num.pts,sigma);
-        K_nn = zeros(size(K));
         for row  = 1:num.pts
             % first find the lower bound:
             m = K(row,:);

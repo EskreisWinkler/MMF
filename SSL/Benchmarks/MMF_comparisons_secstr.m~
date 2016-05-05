@@ -107,8 +107,13 @@ for cur_obs = 1:length(grid.observed)
             M_nn_inv.invert();
             f_u_nn_mmf = M_nn_inv.hit(W_nn(unobserved_inds,observed_inds)*f_o);
             time_nn_store_mmf{cur_frac}(cur_draw,cur_obs) = toc();
-            
             %f_u_mmf_CMN = f_u_mmf .* repmat(q./sum(f_u), num.pts-num.observed, 1);
+            km = kmeans(f_u_mmf,num.classes);
+            % realign indices
+            [~, j] = min(f_u_mmf);
+            min_lab = km(j);
+            max_lab = setdiff(1:num.classes, min_lab);
+            f_u_KM_mmf = ids(1)*(km==min_lab)+ ids(2)*(km==max_lab);
             
             km = kmeans(f_u_nn_mmf,num.classes);
             % realign indices
@@ -116,10 +121,17 @@ for cur_obs = 1:length(grid.observed)
             min_lab = km(j);
             max_lab = setdiff(1:num.classes, min_lab);
             f_u_nn_KM_mmf = ids(1)*(km==min_lab)+ ids(2)*(km==max_lab);
-            
+            KM_store_mmf{cur_frac}(cur_draw,cur_obs) = sum(f_u_KM_mmf == y(unobserved_inds))/(num.pts-num.observed);
             KM_nn_store_mmf{cur_frac}(cur_draw,cur_obs) = sum(f_u_nn_KM_mmf == y(unobserved_inds))/(num.pts-num.observed);
         end
         % Use k means
+        km = kmeans(f_u,num.classes);
+        % realign indices
+        [~, j] = min(f_u);
+        min_lab = km(j);
+        max_lab = setdiff(1:num.classes, min_lab);
+        f_u_KM = ids(1)*(km==min_lab)+ ids(2)*(km==max_lab);
+        
         km = kmeans(f_u_nn,num.classes);
         % realign indices
         [~, j] = min(f_u_nn);
@@ -127,10 +139,9 @@ for cur_obs = 1:length(grid.observed)
         max_lab = setdiff(1:num.classes, min_lab);
         f_u_nn_KM = ids(1)*(km==min_lab)+ ids(2)*(km==max_lab);
         
+        KM_store(cur_draw,cur_obs) = sum(f_u_KM == y(unobserved_inds))/(num.pts-num.observed);
         KM_nn_store(cur_draw,cur_obs) = sum(f_u_nn_KM == y(unobserved_inds))/(num.pts-num.observed);
     end
 end
 
-save(sprintf('Data/%s_percData%d_obs%d_draws%d_frac%d_%d.mat',dataset_name, perc_data, num.obs,...
-    num.draws, num.fracs,run),'KM_nn_store','KM_nn_store_mmf','time_nn_store',...
-    'time_nn_store_mmf')
+save(sprintf('Data/%s_obs%d_draws%d_frac%d_%d.mat',dataset_name, n_obs, n_draws, n_fracs,run),'KM_store_mmf','KM_store')
