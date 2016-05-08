@@ -3,8 +3,8 @@
 #$ -cwd
 ##$ -j y
 #$ -S /bin/bash
-#$ -o output/out_secstr.txt
-#$ -e output/err_secstr.txt
+#$ -o output/out_TIME.txt
+#$ -e output/err_TIME.txt
 ##$ -t 1-10
 #
 . /etc/profile
