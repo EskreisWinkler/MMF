@@ -19,19 +19,19 @@ dataset_name = 'secstr';
 eval(sprintf('load Data/%s.mat',dataset_name))
 
 nn = 100;
-Knn = sparse(size(T,1),size(T,1),(nn*1.5)*size(T,1));
+Knn = spalloc(size(T,1),size(T,1),(nn*1.5)*size(T,1));
 t = zeros(1,size(T,1));
-for dp = 1:1000%size(T,1)
+for dp = 1:size(T,1)
     tic();
     cur_dp = repmat(T(dp,:),size(T,1),1);
     d = sqrt(sum((cur_dp - T).^2,2));
     d_sort = sort(d);   
-    threshold = d_sort(nn_rem);
+    threshold = d_sort(nn);
     Knn(dp,d<=threshold) = 1;
     t(dp) = toc();
 end
 
 h = plot(1:dp,cumsum(t(1:dp)));
-saveas(h,sprintf('%s_ktimer.jpg',dataset_name));
+saveas(h,sprintf('Data/%s_kmat_timer.jpg',dataset_name));
 
-save(sprintf('%s_kmat.mat',dataset_name),'Knn');
+save(sprintf('Data/%s_kmat.mat',dataset_name),'Knn');
