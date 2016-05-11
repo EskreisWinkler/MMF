@@ -115,7 +115,8 @@ for cur_obs = 1:length(grid.observed)
         f_u = L_u\W(unobserved_inds,observed_inds)*f_o;
         time_store(cur_draw,cur_obs) = toc();
         tic();
-        f_u_nn = L_u_nn\W_nn(unobserved_inds,observed_inds)*f_o;
+        L_u_nn_inv = inv(L_u_nn);
+        f_u_nn = L_u_nn_inv*W_nn(unobserved_inds,observed_inds)*f_o;
         time_nn_store(cur_draw,cur_obs) = toc();
         q = sum(f_o)+1; % the unnormalized class proportion estimate from labeled data, with Laplace smoothing
         %f_u_CMN = f_u .* repmat(q./sum(f_u), num.pts-num.observed, 1);

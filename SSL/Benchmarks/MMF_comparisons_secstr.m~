@@ -17,7 +17,7 @@ elseif on_galton == 1;
 end
 
 dataset_name    = 'secstr';
-c = sprintf('load Data/%s_kmat_p%d.mat',dataset_name,perc_data);
+c = sprintf('Data/%s_kmat_p%d.mat',dataset_name,perc_data);
 eval(c);
 
 make_plots = 0;
@@ -26,7 +26,7 @@ num.pts = length(y);
 num.classes = length(ids);
 num.obs = 10;
 
-grid.observed = round(linspace(num.classes,round(0.02*num.pts), num.obs));
+grid.observed = round(linspace(,round(0.02*num.pts), num.obs));
 num.draws = 3;
 num.fracs = 10;
 grid.fracs = linspace(0.01,0.99,num.fracs);
@@ -56,11 +56,11 @@ for cur_obs = 1:length(grid.observed)
         end
         unobserved_inds = setdiff(1:num.pts,observed_inds);
         
-        Lnn_u = Dnn(unobserved_inds,unobserved_inds)-Wnn(unobserved_inds,unobserved_inds);
+        L_u_nn = D_nn(unobserved_inds,unobserved_inds)-W_nn(unobserved_inds,unobserved_inds);
         
         f_o = y(observed_inds);
         tic();
-        f_u_nn = Lnn_u\Wnn(unobserved_inds,observed_inds)*f_o;
+        f_u_nn = L_u_nn\W_nn(unobserved_inds,observed_inds)*f_o;
         time_nn_store(cur_draw,cur_obs) = toc();
         %q = sum(f_o)+1; % the unnormalized class proportion estimate from labeled data, with Laplace smoothing
         %f_u_CMN = f_u .* repmat(q./sum(f_u), num.pts-num.observed, 1);
@@ -85,9 +85,9 @@ for cur_obs = 1:length(grid.observed)
             params.fraction = grid.fracs(cur_frac);
             
             tic();
-            Mnn_inv = MMF(Lnn_u,params);
-            Mnn_inv.invert();
-            f_u_nn_mmf = Mnn_inv.hit(Wnn(unobserved_inds,observed_inds)*f_o);
+            M_nn_inv = MMF(L_u_nn,params);
+            M_nn_inv.invert();
+            f_u_nn_mmf = M_nn_inv.hit(W_nn(unobserved_inds,observed_inds)*f_o);
             time_nn_store_mmf{cur_frac}(cur_draw,cur_obs) = toc();
             
             %f_u_mmf_CMN = f_u_mmf .* repmat(q./sum(f_u), num.pts-num.observed, 1);
@@ -97,11 +97,9 @@ for cur_obs = 1:length(grid.observed)
             [~, j] = min(f_u_nn_mmf);
             min_lab = km(j);
             max_lab = setdiff(1:num.classes, min_lab);
-            f_u_nn_KM_mmf = repmat(ids(1),length(km),1).*(km==min_lab) + ...
-                repmat(ids(2),length(km),1).*(km==max_lab);
+            f_u_nn_KM_mmf = ids(1)*(km==min_lab)+ ids(2)*(km==max_lab);
             
-            KM_nn_store_mmf{cur_frac}(cur_draw,cur_obs) = ...
-                sum(f_u_nn_KM_mmf == y(unobserved_inds))/(num.pts-num.observed);
+            KM_nn_store_mmf{cur_frac}(cur_draw,cur_obs) = sum(f_u_nn_KM_mmf == y(unobserved_inds))/(num.pts-num.observed);
         end
         % Use k means
         km = kmeans(f_u_nn,num.classes);
