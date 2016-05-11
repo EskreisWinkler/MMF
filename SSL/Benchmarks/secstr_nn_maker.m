@@ -15,8 +15,14 @@ elseif on_galton == 1;
     addpath('/net/wallace/ga/eskreiswinkler/mmfc/v4/src/matlab')
 end
 
+perc_data = 80;
+
+
 dataset_name = 'secstr';
 eval(sprintf('load Data/%s.mat',dataset_name))
+
+s = randsample(size(T,1),round(perc_data*size(T,1)/100));
+T = T(s,:);
 
 nn = 100;
 Knn = spalloc(size(T,1),size(T,1),(nn*1.5)*size(T,1));
@@ -34,4 +40,4 @@ end
 h = plot(1:dp,cumsum(t(1:dp)));
 saveas(h,sprintf('Data/%s_kmat_timer.jpg',dataset_name));
 
-save(sprintf('Data/%s_kmat.mat',dataset_name),'Knn');
+save(sprintf('Data/%s_kmat_p%d.mat',dataset_name,perc_data),'Knn');
