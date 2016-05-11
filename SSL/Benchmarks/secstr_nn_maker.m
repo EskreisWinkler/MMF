@@ -15,9 +15,6 @@ elseif on_galton == 1;
     addpath('/net/wallace/ga/eskreiswinkler/mmfc/v4/src/matlab')
 end
 
-perc_data = 80;
-
-
 dataset_name = 'secstr';
 eval(sprintf('load Data/%s.mat',dataset_name))
 

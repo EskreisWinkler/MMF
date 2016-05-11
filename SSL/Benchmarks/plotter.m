@@ -1,8 +1,8 @@
 run_vec = 1:5;
 n_obs = 10;
-n_draws=3;
+n_draws=5;
 n_fracs=10;
-dataset_name = 'usps';
+dataset_name = 'secstr';
 nn = 1;
 for cur_run = run_vec
     s = sprintf('load Data/%s_obs%d_draws%d_frac%d_%d.mat',dataset_name,n_obs,n_draws,n_fracs,cur_run);
