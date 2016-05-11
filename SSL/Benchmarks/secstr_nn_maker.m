@@ -37,4 +37,7 @@ end
 h = plot(1:dp,cumsum(t(1:dp)));
 saveas(h,sprintf('Data/%s_kmat_timer.jpg',dataset_name));
 
-save(sprintf('Data/%s_kmat_p%d.mat',dataset_name,perc_data),'Knn');
+y2 = y;
+y = y2(s);
+clear y2;
+save(sprintf('Data/%s_kmat_p%d.mat',dataset_name,perc_data),'Knn','y');
