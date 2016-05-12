@@ -1,7 +1,7 @@
 function[] = MMF_comparisons_secstr(run,perc_data)
 % First choose a dataset
 rng('shuffle')
-on_galton = 1;
+on_galton = 0;
 if on_galton == 0
     addpath('/Users/jeskreiswinkler/Drive/15fall/Kondor/SSL/Buffalo')
     addpath('/Users/jeskreiswinkler/Drive/15fall/Kondor/SSL/Benchmarks')
@@ -109,7 +109,9 @@ for cur_obs = 1:length(grid.observed)
         [~, j] = min(f_u_nn);
         min_lab = km(j);
         max_lab = setdiff(1:num.classes, min_lab);
-        f_u_nn_KM = ids(1)*(km==min_lab)+ ids(2)*(km==max_lab);
+        keyboard
+        f_u_nn_KM = repmat(ids(1),length(km),1).*(km==min_lab)+ ...
+            repmat(ids(2),length(km),1).*(km==max_lab);
         
         KM_nn_store(cur_draw,cur_obs) = sum(f_u_nn_KM == y(unobserved_inds))/(num.pts-num.observed);
     end
