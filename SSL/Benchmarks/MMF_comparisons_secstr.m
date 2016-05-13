@@ -1,7 +1,7 @@
 function[] = MMF_comparisons_secstr(run,perc_data)
 % First choose a dataset
 rng('shuffle')
-on_galton = 0;
+on_galton = 1;
 if on_galton == 0
     addpath('/Users/jeskreiswinkler/Drive/15fall/Kondor/SSL/Buffalo')
     addpath('/Users/jeskreiswinkler/Drive/15fall/Kondor/SSL/Benchmarks')
@@ -35,11 +35,15 @@ num.nn = 50;
 KM_nn_store = zeros(num.draws, num.obs);
 time_nn_store = zeros(num.draws, num.obs);
 KM_nn_store_mmf = cell(num.fracs,1);
+KM_nn_store_mmf_s=cell(num.fracs,1);
 time_nn_store_mmf = cell(num.fracs,1);
+time_nn_store_mmf_s=cell(num.fracs,1);
 
 for cur_frac = 1:num.fracs
     KM_nn_store_mmf{cur_frac}=zeros(num.draws, num.obs);
+    KM_nn_store_mmf_s{cur_frac}=zeros(num.draws, num.obs);
     time_nn_store_mmf{cur_frac} = zeros(num.draws, num.obs);
+    time_nn_store_mmf_s{cur_frac}=zeros(num.draws, num.obs);
 end
 
 Wnn = Knn - diag(diag(Knn));
@@ -59,8 +63,11 @@ for cur_obs = 1:length(grid.observed)
         Lnn_u = Dnn(unobserved_inds,unobserved_inds)-Wnn(unobserved_inds,unobserved_inds);
         
         f_o = y(observed_inds);
+        
+        v = Wnn(unobserved_inds,observed_inds)*f_o;
+        
         tic();
-        f_u_nn = Lnn_u\Wnn(unobserved_inds,observed_inds)*f_o;
+        f_u_nn = Lnn_u\v;
         time_nn_store(cur_draw,cur_obs) = toc();
         %q = sum(f_o)+1; % the unnormalized class proportion estimate from labeled data, with Laplace smoothing
         %f_u_CMN = f_u .* repmat(q./sum(f_u), num.pts-num.observed, 1);
@@ -85,10 +92,14 @@ for cur_obs = 1:length(grid.observed)
             params.fraction = grid.fracs(cur_frac);
             
             tic();
-            Mnn_inv = MMF(Lnn_u,params);
+            Mnn = MMF(Lnn_u,params);
+            b = toc();
+            
+            Mnn_inv = Mnn;
+            tic();
             Mnn_inv.invert();
             f_u_nn_mmf = Mnn_inv.hit(Wnn(unobserved_inds,observed_inds)*f_o);
-            time_nn_store_mmf{cur_frac}(cur_draw,cur_obs) = toc();
+            time_nn_store_mmf{cur_frac}(cur_draw,cur_obs) = toc()+b;
             
             %f_u_mmf_CMN = f_u_mmf .* repmat(q./sum(f_u), num.pts-num.observed, 1);
             
@@ -102,6 +113,21 @@ for cur_obs = 1:length(grid.observed)
             
             KM_nn_store_mmf{cur_frac}(cur_draw,cur_obs) = ...
                 sum(f_u_nn_KM_mmf == y(unobserved_inds))/(num.pts-num.observed);
+            
+            v = Wnn(unobserved_inds,observed_inds)*f_o;
+            tic();
+            f_u_nn_mmf_s = Mnn.solve(v);
+            time_nn_store_mmf_s{cur_frac}(cur_draw,cur_obs) = toc()+b;
+          
+            km = kmeans(f_u_nn_mmf_s,num.classes);
+            % realign indices
+            [~, j] = min(f_u_nn_mmf);
+            min_lab = km(j);
+            max_lab = setdiff(1:num.classes, min_lab);
+            f_u_nn_KM_mmf_s = repmat(ids(1),length(km),1).*(km==min_lab) + ...
+                repmat(ids(2),length(km),1).*(km==max_lab);
+            KM_nn_store_mmf_s{cur_frac}(cur_draw,cur_obs) = ...
+                sum(f_u_nn_KM_mmf_s == y(unobserved_inds))/(num.pts-num.observed);
         end
         % Use k means
         km = kmeans(f_u_nn,num.classes);
@@ -109,7 +135,7 @@ for cur_obs = 1:length(grid.observed)
         [~, j] = min(f_u_nn);
         min_lab = km(j);
         max_lab = setdiff(1:num.classes, min_lab);
-        keyboard
+        
         f_u_nn_KM = repmat(ids(1),length(km),1).*(km==min_lab)+ ...
             repmat(ids(2),length(km),1).*(km==max_lab);
         
