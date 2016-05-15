@@ -101,8 +101,6 @@ for cur_obs = 1:length(grid.observed)
             f_u_nn_mmf = Mnn_inv.hit(Wnn(unobserved_inds,observed_inds)*f_o);
             time_nn_store_mmf{cur_frac}(cur_draw,cur_obs) = toc()+b;
             
-            %f_u_mmf_CMN = f_u_mmf .* repmat(q./sum(f_u), num.pts-num.observed, 1);
-            
             km = kmeans(f_u_nn_mmf,num.classes);
             % realign indices
             [~, j] = min(f_u_nn_mmf);
