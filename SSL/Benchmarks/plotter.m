@@ -1,8 +1,8 @@
-run_vec = 1:5;
+run_vec = 1:2;
 n_obs = 10;
-n_draws=5;
+n_draws=3;
 n_fracs=10;
-dataset_name = 'secstr';
+dataset_name = 'digit1';
 nn = 1;
 for cur_run = run_vec
     s = sprintf('load Data/%s_obs%d_draws%d_frac%d_%d.mat',dataset_name,n_obs,n_draws,n_fracs,cur_run);
@@ -42,6 +42,7 @@ if nn==0
 end
 
 if nn==1
+    figure(1)
     observed_grid = round(linspace(2,97, n_obs));
     plot(observed_grid,mean(KM_main_nn,1),'LineWidth',3)
     
@@ -55,9 +56,9 @@ if nn==1
         %plot(observed_grid,KM_main_mmf{f_ind},'o')
         hold off
     end
-    title('Secstr dataset - MMF Compression results')
     legend('Original','1%','12%','23%','34%','45%','55%','66%','77%','88%','99%')
 end
+title(sprintf('%s dataset - MMF Compression results',dataset_name))
 
 if nn == 1
     for cur_run = run_vec
@@ -82,6 +83,7 @@ end
 
 if nn==1
     observed_grid = round(linspace(2,97, n_obs));
+    figure(2)
     plot(observed_grid,mean(time_main_nn,1),'LineWidth',3)
     
     for f_ind = 1:size(time_main_mmf,1)
@@ -94,7 +96,7 @@ if nn==1
         %plot(observed_grid,KM_main_mmf{f_ind},'o')
         hold off
     end
-    title('Secstr dataset - MMF Compression results')
+    title(sprintf('%s dataset - MMF Compression results',dataset_name))
     legend('Original','1%','12%','23%','34%','45%','55%','66%','77%','88%','99%')
 end
 
