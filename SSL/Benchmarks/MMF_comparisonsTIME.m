@@ -59,7 +59,7 @@ num.classes = length(ids);
 num.obs = 10;
 grid.observed = round(linspace(2,97, num.obs));
 num.draws = 3;
-num.fracs = 1;
+num.fracs = 10;
 grid.fracs = linspace(0.01,0.99,num.fracs);
 num.nn = 50;
 
