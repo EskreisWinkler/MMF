@@ -160,8 +160,8 @@ for cur_obs = 1:length(grid.observed)
             f_u_mmf_s = Mnn.solve(v);
             time_store_mmf_s{cur_frac}(cur_draw,cur_obs) = toc()+b;
             
-            km = kmeans(f_u_mmf_s,num.classes);
-            % realign indices
+%            km = kmeans(f_u_mmf_s,num.classes);
+%            % realign indices
 %             [~, j] = min(f_u_mmf_s);
 %             min_lab = km(j);
 %             max_lab = setdiff(1:num.classes, min_lab);
