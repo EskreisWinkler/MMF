@@ -1,8 +1,8 @@
-run_vec = 1:3;
+run_vec = 1;
 n_obs = 10;
 n_draws=3;
 n_fracs=10;
-perc_data = 5;
+perc_data = 1;
 dataset_name = 'secstr';
 for cur_run = run_vec
     s = sprintf('load Data/%s_percData%d_obs%d_draws%d_frac%d_%d.mat',dataset_name,perc_data, n_obs,n_draws,n_fracs,cur_run);

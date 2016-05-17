@@ -65,13 +65,18 @@ num.nn = 50;
 
 KM_store = zeros(num.draws, num.obs);
 time_store = zeros(num.draws, num.obs);
+KM_store2 = zeros(num.draws, num.obs);
 KM_store_mmf = cell(num.fracs,1);
 KM_store_mmf_s = cell(num.fracs,1);
+KM_store_mmf2 = cell(num.fracs,1);
+KM_store_mmf_s2 = cell(num.fracs,1);
 time_store_mmf = cell(num.fracs,1);
 time_store_mmf_s = cell(num.fracs,1);
 for cur_frac = 1:num.fracs
     KM_store_mmf{cur_frac} = zeros(num.draws, num.obs);
     KM_store_mmf_s{cur_frac} = zeros(num.draws, num.obs);
+    KM_store_mmf2{cur_frac} = zeros(num.draws, num.obs);
+    KM_store_mmf_s2{cur_frac} = zeros(num.draws, num.obs);
     time_store_mmf{cur_frac} = zeros(num.draws, num.obs);
     time_store_mmf_s{cur_frac} = zeros(num.draws, num.obs);
 end
@@ -97,7 +102,9 @@ for cur_obs = 1:length(grid.observed)
             good_draw = length(unique(y(observed_inds)))==num.classes;
         end
         unobserved_inds = setdiff(1:num.pts,observed_inds);
-
+        
+        p = sum(y(unobserved_inds)==ids(1))/length(y(unobserved_inds));
+        
         Wnn = Knn - diag(diag(Knn));
         Dnn = diag(sum(Wnn,2));
         Lnn_u = Dnn(unobserved_inds,unobserved_inds)-Wnn(unobserved_inds,unobserved_inds);
@@ -131,7 +138,7 @@ for cur_obs = 1:length(grid.observed)
             Mnn_inv = Mnn;
             tic();
             Mnn_inv.invert();
-            f_u_mmf = M_inv.hit(v);
+            f_u_mmf = Mnn_inv.hit(v);
             time_store_mmf{cur_frac}(cur_draw,cur_obs)=toc()+b;
             
             km = kmeans(f_u_mmf,num.classes);
@@ -141,14 +148,18 @@ for cur_obs = 1:length(grid.observed)
             max_lab = setdiff(1:num.classes, min_lab);
             f_u_KM_mmf = repmat(ids(1),length(km),1).*(km==min_lab) + ...
                 repmat(ids(2),length(km),1).*(km==max_lab);
+            th = prctile(f_u_mmf,p*100);
+            f_u_KM_mmf2 = ids(1)*(f_u_mmf<=th)+ ids(2)*(f_u_mmf>th);
             
             KM_store_mmf{cur_frac}(cur_draw,cur_obs) = ...
                 sum(f_u_KM_mmf == y(unobserved_inds))/(num.pts-num.observed);
+            KM_store_mmf2{cur_frac}(cur_draw,cur_obs) = ...
+                sum(f_u_KM_mmf2 == y(unobserved_inds))/(num.pts-num.observed);
             
             tic();
             f_u_mmf_s = Mnn.solve(v);
             time_store_mmf_s{cur_frac}(cur_draw,cur_obs) = toc()+b;
-          
+            
             km = kmeans(f_u_mmf_s,num.classes);
             % realign indices
             [~, j] = min(f_u_mmf_s);
@@ -156,8 +167,12 @@ for cur_obs = 1:length(grid.observed)
             max_lab = setdiff(1:num.classes, min_lab);
             f_u_KM_mmf_s = repmat(ids(1),length(km),1).*(km==min_lab) + ...
                 repmat(ids(2),length(km),1).*(km==max_lab);
+            th = prctile(f_u_mmf_s,p*100);
+            f_u_KM_mmf_s2 = ids(1)*(f_u_mmf_s<=th)+ ids(2)*(f_u_mmf_s>th);
             KM_store_mmf_s{cur_frac}(cur_draw,cur_obs) = ...
                 sum(f_u_KM_mmf_s == y(unobserved_inds))/(num.pts-num.observed);
+            KM_store_mmf_s2{cur_frac}(cur_draw,cur_obs) = ...
+                sum(f_u_KM_mmf_s2 == y(unobserved_inds))/(num.pts-num.observed);
         end
         % Use k means
         km = kmeans(f_u,num.classes);
@@ -166,11 +181,15 @@ for cur_obs = 1:length(grid.observed)
         min_lab = km(j);
         max_lab = setdiff(1:num.classes, min_lab);
         f_u_KM = ids(1)*(km==min_lab)+ ids(2)*(km==max_lab);
+        th = prctile(f_u,p*100);
+        f_u_KM2 = ids(1)*(f_u<=th)+ ids(2)*(f_u>th);
         
         KM_store(cur_draw,cur_obs) = sum(f_u_KM == y(unobserved_inds))/(num.pts-num.observed);
+        KM_store2(cur_draw,cur_obs) = sum(f_u_KM2 == y(unobserved_inds))/(num.pts-num.observed);
     end
 end
 
 save(sprintf('Data/%s_obs%d_draws%d_frac%d_%d.mat',dataset_name, num.obs, ...
-    num.draws, num.fracs,run),'KM_store_mmf','KM_store','KM_store_mmf',...
-    'KM_store_mmf_s','time_store','time_store_mmf','time_store_mmf_s')
+    num.draws, num.fracs,run),'KM_store','KM_store_mmf','KM_store_mmf_s',...
+    'time_store','time_store_mmf','time_store_mmf_s',...
+    'KM_store2','KM_store_mmf2','KM_store_mmf_s2')
