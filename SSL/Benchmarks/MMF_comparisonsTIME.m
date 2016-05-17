@@ -135,56 +135,55 @@ for cur_obs = 1:length(grid.observed)
             Mnn = MMF(Lnn_u,params);
             b = toc();
             
-            Mnn_inv = Mnn;
-            tic();
-            Mnn_inv.invert();
-            f_u_mmf = Mnn_inv.hit(v);
-            time_store_mmf{cur_frac}(cur_draw,cur_obs)=toc()+b;
-            
-%             km = kmeans(f_u_mmf,num.classes);
-%             % realign indices
-%             [~, j] = min(f_u_mmf);
-%             min_lab = km(j);
-%             max_lab = setdiff(1:num.classes, min_lab);
-%             f_u_KM_mmf = repmat(ids(1),length(km),1).*(km==min_lab) + ...
-%                 repmat(ids(2),length(km),1).*(km==max_lab);
-            th = prctile(f_u_mmf,p*100);
-            f_u_KM_mmf2 = ids(1)*(f_u_mmf<=th)+ ids(2)*(f_u_mmf>th);
-            
-%            KM_store_mmf{cur_frac}(cur_draw,cur_obs) = ...
-%                sum(f_u_KM_mmf == y(unobserved_inds))/(num.pts-num.observed);
-            KM_store_mmf2{cur_frac}(cur_draw,cur_obs) = ...
-                sum(f_u_KM_mmf2 == y(unobserved_inds))/(num.pts-num.observed);
-            
             tic();
             f_u_mmf_s = Mnn.solve(v);
             time_store_mmf_s{cur_frac}(cur_draw,cur_obs) = toc()+b;
             
-%            km = kmeans(f_u_mmf_s,num.classes);
-%            % realign indices
-%             [~, j] = min(f_u_mmf_s);
-%             min_lab = km(j);
-%             max_lab = setdiff(1:num.classes, min_lab);
-%             f_u_KM_mmf_s = repmat(ids(1),length(km),1).*(km==min_lab) + ...
-%                 repmat(ids(2),length(km),1).*(km==max_lab);
+            %            km = kmeans(f_u_mmf_s,num.classes);
+            %            % realign indices
+            %             [~, j] = min(f_u_mmf_s);
+            %             min_lab = km(j);
+            %             max_lab = setdiff(1:num.classes, min_lab);
+            %             f_u_KM_mmf_s = repmat(ids(1),length(km),1).*(km==min_lab) + ...
+            %                 repmat(ids(2),length(km),1).*(km==max_lab);
             th = prctile(f_u_mmf_s,p*100);
             f_u_KM_mmf_s2 = ids(1)*(f_u_mmf_s<=th)+ ids(2)*(f_u_mmf_s>th);
-%             KM_store_mmf_s{cur_frac}(cur_draw,cur_obs) = ...
-%                 sum(f_u_KM_mmf_s == y(unobserved_inds))/(num.pts-num.observed);
+            %             KM_store_mmf_s{cur_frac}(cur_draw,cur_obs) = ...
+            %                 sum(f_u_KM_mmf_s == y(unobserved_inds))/(num.pts-num.observed);
             KM_store_mmf_s2{cur_frac}(cur_draw,cur_obs) = ...
                 sum(f_u_KM_mmf_s2 == y(unobserved_inds))/(num.pts-num.observed);
+            
+            tic();
+            Mnn.invert();
+            f_u_mmf = Mnn.hit(v);
+            time_store_mmf{cur_frac}(cur_draw,cur_obs)=toc()+b;
+            
+            %             km = kmeans(f_u_mmf,num.classes);
+            %             % realign indices
+            %             [~, j] = min(f_u_mmf);
+            %             min_lab = km(j);
+            %             max_lab = setdiff(1:num.classes, min_lab);
+            %             f_u_KM_mmf = repmat(ids(1),length(km),1).*(km==min_lab) + ...
+            %                 repmat(ids(2),length(km),1).*(km==max_lab);
+            th = prctile(f_u_mmf,p*100);
+            f_u_KM_mmf2 = ids(1)*(f_u_mmf<=th)+ ids(2)*(f_u_mmf>th);
+            
+            %            KM_store_mmf{cur_frac}(cur_draw,cur_obs) = ...
+            %                sum(f_u_KM_mmf == y(unobserved_inds))/(num.pts-num.observed);
+            KM_store_mmf2{cur_frac}(cur_draw,cur_obs) = ...
+                sum(f_u_KM_mmf2 == y(unobserved_inds))/(num.pts-num.observed);            
         end
         % Use k means
-%         km = kmeans(f_u,num.classes);
-%         % realign indices
-%         [~, j] = min(f_u);
-%         min_lab = km(j);
-%         max_lab = setdiff(1:num.classes, min_lab);
-%         f_u_KM = ids(1)*(km==min_lab)+ ids(2)*(km==max_lab);
+        %         km = kmeans(f_u,num.classes);
+        %         % realign indices
+        %         [~, j] = min(f_u);
+        %         min_lab = km(j);
+        %         max_lab = setdiff(1:num.classes, min_lab);
+        %         f_u_KM = ids(1)*(km==min_lab)+ ids(2)*(km==max_lab);
         th = prctile(f_u,p*100);
         f_u_KM2 = ids(1)*(f_u<=th)+ ids(2)*(f_u>th);
         
-%        KM_store(cur_draw,cur_obs) = sum(f_u_KM == y(unobserved_inds))/(num.pts-num.observed);
+        %        KM_store(cur_draw,cur_obs) = sum(f_u_KM == y(unobserved_inds))/(num.pts-num.observed);
         KM_store2(cur_draw,cur_obs) = sum(f_u_KM2 == y(unobserved_inds))/(num.pts-num.observed);
     end
 end
