@@ -63,7 +63,7 @@ num.fracs = 10;
 grid.fracs = linspace(0.01,0.99,num.fracs);
 num.nn = 50;
 
-KM_store = zeros(num.draws, num.obs);
+%KM_store = zeros(num.draws, num.obs);
 time_store = zeros(num.draws, num.obs);
 KM_store2 = zeros(num.draws, num.obs);
 KM_store_mmf = cell(num.fracs,1);
