@@ -153,5 +153,5 @@ for cur_obs = 1:length(grid.observed)
     end
 end
 
-save(sprintf('Data/%s_obs%d_draws%d_frac%d_%d.mat',dataset_name, num.obs,num.draws, num.fracs,run),...
+save(sprintf('Data/GPR_%s_obs%d_draws%d_frac%d_%d.mat',dataset_name, num.obs,num.draws, num.fracs,run),...
     'KM_store','KM_store_mmf','time_store','time_store_mmf')
