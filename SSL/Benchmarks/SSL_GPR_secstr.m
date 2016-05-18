@@ -95,14 +95,13 @@ for cur_obs = 1:length(grid.observed)
             
             tic();
             K = MMF(Lap,params);
-            K.invert();
             
             K_star = zeros(num.pts,length(observed_inds));
             e = zeros(num.pts,1);
             for i = 1:length(observed_inds)
                 e = e*0;
                 e(observed_inds(i))=1;
-                K_star(:,i) = K.hit(e);
+                K_star(:,i) = K.solve(e);
             end
             
             f_u_mmf = K_star(unobserved_inds,:)*(K_star(observed_inds,:)\f_o);
