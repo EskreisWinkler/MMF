@@ -92,7 +92,9 @@ for cur_frac = 1:num.fracs
         case 'inv'
             K = MMF(Lap,params);
             fprintf('Computing MMF inverse for frac %d (%d) \n', cur_frac,num.fracs)
-            K.invert();
+       	    %K.delete();
+	    %keyboard;
+	     K.invert();
         case 'diffusion'
             K = MMF(-1*num.beta*Lap,params);
             fprintf('Computing MMF exponential for frac %d (%d) \n', cur_frac,num.fracs)
@@ -130,6 +132,7 @@ for cur_frac = 1:num.fracs
                 sum(f_u_hat_mmf == y(unobserved_inds))/(num.pts-num.observed);
         end
     end
+	K.delete();
 end
 
 
