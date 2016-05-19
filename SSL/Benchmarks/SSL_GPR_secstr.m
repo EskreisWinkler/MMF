@@ -28,7 +28,7 @@ eval(c);
 
 num.draws = 3;
 fprintf('Defining the conditions for experiment \n')
-c = sprintf('load Data/Conditions_%s_draws%d_p%d_run%d.mat', ...
+c = sprintf('load Data/cond/Conditions_%s_draws%d_p%d_run%d.mat', ...
     dataset_name, num.draws,perc_data, run);
 eval(c);
 
@@ -149,7 +149,7 @@ else
 end
 
 
-
+fprintf('Everything is done, saving file \n') 
 save(sprintf('Data/GPR_%s_percData%d_obs%d_draws%d_frac%d_regType%d_%d.mat',...
     dataset_name, perc_data, num.obs,num.draws, frac, reg_cat, run),...
     'res_store','time_store')
