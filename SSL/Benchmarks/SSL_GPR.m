@@ -1,4 +1,4 @@
-function[] = SSL_spd(dataset_ind, run)
+function[] = SSL_GPR(dataset_ind, run)
 % First choose a dataset
 rng('shuffle')
 server = 0;
@@ -63,6 +63,8 @@ num.pts = length(y);
 num.classes = length(ids);
 num.obs = 10;
 grid.observed = round(linspace(2,97, num.obs));
+grid.observed = grid.observed(end);
+num.obs = length(grid.observed);
 num.draws = 3;
 grid.fracs = [0.66 0.99];
 num.fracs = length(grid.fracs);
@@ -120,11 +122,14 @@ for cur_frac = 1:num.fracs
     % assume for now we are just doing an inverse regularization
     
     params.dcore = round((1-grid.fracs(cur_frac))*num.pts);
-    params.nsparsestages = max(1,ceil((log(params.dcore) - log(num.pts))/log(1-params.fraction)));
+    %params.nsparsestages = max(1,ceil((log(params.dcore) - log(num.pts))/log(1-params.fraction)));
+    params.nsparsestages = 1;
     params.nclusters = -ceil(num.pts/params.maxclustersize);
     
     tic();
     K = MMF(Lap,params);
+    K.invert();
+            
     mmf_compute = toc();
     
     for cur_draw = 1:num.draws
@@ -136,10 +141,11 @@ for cur_frac = 1:num.fracs
             f_o = y(observed_inds);
             
             tic();
+
             K_star = zeros(num.pts,length(observed_inds));
             for i = 1:length(observed_inds)
                 e = zeros(num.pts,1); e(observed_inds(i))=1;
-                K_star(:,i) = K.solve(e);
+                K_star(:,i) = K.hit(e);
             end
             
             f_u_mmf = K_star(unobserved_inds,:)*(K_star(observed_inds,:)\f_o);
@@ -154,33 +160,31 @@ for cur_frac = 1:num.fracs
     end
 end
 
+tic();
+K = pinv(Lap);
+inv_comp = toc();
 
 for cur_draw = 1:num.draws
     for cur_obs = 1:num.obs
         observed_inds = conditions{cur_draw}{cur_obs};
+        num.observed = length(observed_inds);
         unobserved_inds = setdiff(1:num.pts,observed_inds);
         p = sum(y(unobserved_inds)==ids(1))/length(y(unobserved_inds));
         
         f_o = y(observed_inds);
         
-        tic();
-        K_star = zeros(num.pts,length(observed_inds));
-        for i = 1:length(observed_inds)
-            e = zeros(num.pts,1); e(observed_inds(i))=1;
-            K_star(:,i) = Lap\e;
-        end
+        tic()
         
-        f_u = K_star(unobserved_inds,:)*(K_star(observed_inds,:)\f_o);
+        f_u = K(unobserved_inds,observed_inds)*(K(observed_inds,observed_inds)\f_o);
         
         th = prctile(f_u,p*100);
-        f_u_hat = ids(1)*(f_u<=th)+ ids(2)*(f_u>th);
-        time_store(cur_draw,cur_obs) = toc();
+        f_u_hat = ids(1).*(f_u<=th)+ ids(2).*(f_u>th);
+        time_store(cur_draw,cur_obs) = toc()+inv_comp;
         
         res_store(cur_draw,cur_obs) = ...
             sum(f_u_hat == y(unobserved_inds))/(num.pts-num.observed);
     end
 end
-
 
 save(sprintf('Data/GPR_%s_obs%d_draws%d_frac%d_%d.mat',dataset_name, num.obs,num.draws, num.fracs,run),...
     'res_store','res_store_mmf','time_store','time_store_mmf')
