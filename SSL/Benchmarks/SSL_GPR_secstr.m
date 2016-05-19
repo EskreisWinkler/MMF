@@ -1,4 +1,4 @@
-function[] = SSL_GPR_secstr(perc_data,reg_cat,run)
+function[] = SSL_GPR_secstr(perc_data,reg_cat,frac,run)
 % First choose a dataset
 rng('shuffle')
 server = 2;
@@ -26,27 +26,21 @@ dataset_name    = 'secstr';
 c = sprintf('load Data/%s_kmat_p%d.mat',dataset_name,perc_data);
 eval(c);
 
-% make_plots = 0;
+num.draws = 3;
+fprintf('Defining the conditions for experiment \n')
+c = sprintf('load Data/Conditions_%s_draws%d_p%d_run%d.mat', ...
+    dataset_name, num.draws,perc_data, run);
+eval(c);
+
 ids = unique(y);
 num.pts = length(y);
 num.classes = length(ids);
-num.obs = 10;
+num.obs = length(conditions{1});
 
-grid.observed = round(linspace(num.classes,round(0.02*num.pts), num.obs));
-num.draws = 3;
-grid.fracs = [0.95 0.98 0.99];
-num.fracs = length(grid.fracs);
 num.beta = 0.01;
 
 res_store = zeros(num.draws, num.obs);
 time_store = zeros(num.draws, num.obs);
-res_store_mmf = cell(num.fracs,1);
-time_store_mmf = cell(num.fracs,1);
-
-for cur_frac = 1:num.fracs
-    res_store_mmf{cur_frac}=zeros(num.draws, num.obs);
-    time_store_mmf{cur_frac} = zeros(num.draws, num.obs);
-end
 
 W_Lap = Knn - diag(diag(Knn));
 D_Lap = diag(sum(W_Lap,2));
@@ -62,28 +56,48 @@ switch reg_cat
         fprintf('This is a pursuit to nowhere\n')
 end
 
-fprintf('Defining the conditions for experiment \n')
-% assign conditions
-conditions = cell(num.draws,1);
-for cur_draw = 1:num.draws
-    conditions{cur_draw} = cell(length(grid.observed),1);
-    for cur_obs = 1:length(grid.observed)
-        num.observed = grid.observed(cur_obs);
-        good_draw = false;
-        while good_draw == false
-            observed_inds = randsample(1:num.pts,num.observed);
-            good_draw = length(unique(y(observed_inds)))==num.classes;
-        end
-        conditions{cur_draw}{cur_obs} = observed_inds;
-    end
-end
 
-% first do MMF runs and then compare it to the baseline
-params = GP_params;
-for cur_frac = 1:num.fracs
-    fprintf('Computing MMF for frac %d (%d) \n', cur_frac,num.fracs)
-    % assume for now we are just doing an inverse regularization
-    params.dcore = round((1-grid.fracs(cur_frac))*num.pts);
+
+if frac == 0
+    fprintf('Computing baseline kernel \n')
+    tic();
+    switch reg_type
+        case 'inv'
+            K = Lap\eye(size(Lap,1));
+        case 'diffusion'
+            [V, D] = eigs(Lap,size(Lap,1)-1);
+            K = V*diag(exp(-1*num.beta*diag(D)))*V';
+    end
+    ker_comp = toc();
+    
+    fprintf('Computing baseline predictions \n')
+    for cur_draw = 1:num.draws
+        for cur_obs = 1:num.obs
+            observed_inds = conditions{cur_draw}{cur_obs};
+            num.observed = length(observed_inds);
+            unobserved_inds = setdiff(1:num.pts,observed_inds);
+            p = sum(y(unobserved_inds)==ids(1))/length(y(unobserved_inds));
+            
+            f_o = y(observed_inds);
+            
+            tic();
+            
+            f_u = K(unobserved_inds,observed_inds)*(K(observed_inds,observed_inds)\f_o);
+            
+            th = prctile(f_u,p*100);
+            f_u_hat = ids(1).*(f_u<=th)+ ids(2).*(f_u>th);
+            time_store(cur_draw,cur_obs) = toc()+ker_comp;
+            
+            res_store(cur_draw,cur_obs) = ...
+                sum(f_u_hat == y(unobserved_inds))/(num.pts-num.observed);
+        end
+    end
+else
+    % We opt to do a MMF approach to predictions
+    params = GP_params;
+    fprintf('Computing MMF for frac = %d percent \n', frac)
+    cur_frac = frac/100;
+    params.dcore = round((1-cur_frac)*num.pts);
     params.nsparsestages = max(1,ceil((log(params.dcore) - log(num.pts))/log(1-params.fraction)));
     params.nclusters = -ceil(num.pts/params.maxclustersize);
     
@@ -91,85 +105,51 @@ for cur_frac = 1:num.fracs
     switch reg_type
         case 'inv'
             K = MMF(Lap,params);
-            fprintf('Computing MMF inverse for frac %d (%d) \n', cur_frac,num.fracs)
-       	    %K.delete();
-	    %keyboard;
-	     K.invert();
+            fprintf('Computing MMF inverse for frac = %d percent \n', frac)
+            K.invert();
         case 'diffusion'
             K = MMF(-1*num.beta*Lap,params);
-            fprintf('Computing MMF exponential for frac %d (%d) \n', cur_frac,num.fracs)
+            fprintf('Computing MMF exponential for frac = %d percent \n', frac)
             K.exp();
         otherwise
             fprintf('This is a pursuit to nowhere\n')
     end
-	mmf_compute = toc();
-            
+    mmf_compute = toc();
     
-    fprintf('Computing MMF predictions frac %d (%d) \n', cur_frac,num.fracs)
+    
+    fprintf('Computing MMF predictions frac = %d percent \n', frac)
     for cur_draw = 1:num.draws
         for cur_obs = 1:num.obs
             observed_inds = conditions{cur_draw}{cur_obs};
+            num.observed = length(observed_inds);
             unobserved_inds = setdiff(1:num.pts,observed_inds);
             p = sum(y(unobserved_inds)==ids(1))/length(y(unobserved_inds));
             
             f_o = y(observed_inds);
             
             tic();
-
+            
             K_star = zeros(num.pts,length(observed_inds));
             for i = 1:length(observed_inds)
                 e = zeros(num.pts,1); e(observed_inds(i))=1;
                 K_star(:,i) = K.hit(e);
             end
             
-            f_u_mmf = K_star(unobserved_inds,:)*(K_star(observed_inds,:)\f_o);
+            f_u = K_star(unobserved_inds,:)*(K_star(observed_inds,:)\f_o);
             
-            th = prctile(f_u_mmf,p*100);
-            f_u_hat_mmf = ids(1).*(f_u_mmf<=th)+ ids(2).*(f_u_mmf>th);
-            time_store_mmf{cur_frac}(cur_draw,cur_obs) = mmf_compute + toc();
+            th = prctile(f_u,p*100);
+            f_u_hat = ids(1).*(f_u<=th)+ ids(2).*(f_u>th);
+            time_store(cur_draw,cur_obs) = mmf_compute + toc();
             
-            res_store_mmf{cur_frac}(cur_draw,cur_obs) = ...
-                sum(f_u_hat_mmf == y(unobserved_inds))/(num.pts-num.observed);
+            res_store(cur_draw,cur_obs) = ...
+                sum(f_u_hat == y(unobserved_inds))/(num.pts-num.observed);
         end
     end
-	K.delete();
+    K.delete();
 end
 
 
-fprintf('Computing baseline kernel \n')
-tic();
-switch reg_type
-    case 'inv'
-        K = Lap\eye(size(Lap,1));
-    case 'diffusion'
-        [V, D] = eigs(Lap,size(Lap,1)-1);
-        K = V*diag(exp(-1*num.beta*diag(D)))*V';
-end
-ker_comp = toc();
-
-fprintf('Computing baseline predictions \n')
-for cur_draw = 1:num.draws
-    for cur_obs = 1:num.obs
-        observed_inds = conditions{cur_draw}{cur_obs};
-        num.observed = length(observed_inds);
-        unobserved_inds = setdiff(1:num.pts,observed_inds);
-        p = sum(y(unobserved_inds)==ids(1))/length(y(unobserved_inds));
-        
-        f_o = y(observed_inds);
-        
-        tic();
-        
-        f_u = K(unobserved_inds,observed_inds)*(K(observed_inds,observed_inds)\f_o);
-        
-        th = prctile(f_u,p*100);
-        f_u_hat = ids(1).*(f_u<=th)+ ids(2).*(f_u>th);
-        time_store(cur_draw,cur_obs) = toc()+ker_comp;
-        
-        res_store(cur_draw,cur_obs) = ...
-            sum(f_u_hat == y(unobserved_inds))/(num.pts-num.observed);
-    end
-end
 
 save(sprintf('Data/GPR_%s_percData%d_obs%d_draws%d_frac%d_regType%d_%d.mat',...
-    dataset_name, perc_data, num.obs,num.draws, num.fracs, reg_cat, run),...
-    'res_store','res_store_mmf','time_store','time_store_mmf')
+    dataset_name, perc_data, num.obs,num.draws, frac, reg_cat, run),...
+    'res_store','time_store')
