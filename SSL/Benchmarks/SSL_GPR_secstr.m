@@ -62,6 +62,7 @@ switch reg_cat
         fprintf('This is a pursuit to nowhere\n')
 end
 
+fprintf('Defining the conditions for experiment \n')
 % assign conditions
 conditions = cell(num.draws,1);
 for cur_draw = 1:num.draws
@@ -80,6 +81,7 @@ end
 % first do MMF runs and then compare it to the baseline
 params = GP_params;
 for cur_frac = 1:num.fracs
+    fprintf('Computing MMF for frac %d (%d) \n', cur_frac,num.fracs)
     % assume for now we are just doing an inverse regularization
     params.dcore = round((1-grid.fracs(cur_frac))*num.pts);
     params.nsparsestages = max(1,ceil((log(params.dcore) - log(num.pts))/log(1-params.fraction)));
@@ -89,9 +91,11 @@ for cur_frac = 1:num.fracs
     switch reg_type
         case 'inv'
             K = MMF(Lap,params);
+            fprintf('Computing MMF inverse for frac %d (%d) \n', cur_frac,num.fracs)
             K.invert();
         case 'diffusion'
             K = MMF(-1*num.beta*Lap,params);
+            fprintf('Computing MMF exponential for frac %d (%d) \n', cur_frac,num.fracs)
             K.exp();
         otherwise
             fprintf('This is a pursuit to nowhere\n')
@@ -99,6 +103,7 @@ for cur_frac = 1:num.fracs
 	mmf_compute = toc();
             
     
+    fprintf('Computing MMF predictions frac %d (%d) \n', cur_frac,num.fracs)
     for cur_draw = 1:num.draws
         for cur_obs = 1:num.obs
             observed_inds = conditions{cur_draw}{cur_obs};
@@ -127,6 +132,8 @@ for cur_frac = 1:num.fracs
     end
 end
 
+
+fprintf('Computing baseline kernel \n')
 tic();
 switch reg_type
     case 'inv'
@@ -137,6 +144,7 @@ switch reg_type
 end
 ker_comp = toc();
 
+fprintf('Computing baseline predictions \n')
 for cur_draw = 1:num.draws
     for cur_obs = 1:num.obs
         observed_inds = conditions{cur_draw}{cur_obs};
