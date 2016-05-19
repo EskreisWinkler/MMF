@@ -51,7 +51,7 @@ end
 W_Lap = Knn - diag(diag(Knn));
 D_Lap = diag(sum(W_Lap,2));
 Lap = D_Lap - W_Lap;
-clear D_Lap W_Lap;
+clear D_Lap W_Lap Knn;
 
 switch reg_cat
     case 1
