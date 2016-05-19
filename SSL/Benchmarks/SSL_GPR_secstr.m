@@ -33,7 +33,7 @@ num.classes = length(ids);
 num.obs = 10;
 
 grid.observed = round(linspace(num.classes,round(0.02*num.pts), num.obs));
-num.draws = 3;
+num.draws = 1;
 grid.fracs = [0.6 0.8 0.99];
 num.fracs = length(grid.fracs);
 % num.fracs = 10;
