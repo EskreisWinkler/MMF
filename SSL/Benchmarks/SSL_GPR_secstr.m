@@ -1,7 +1,7 @@
 function[] = SSL_GPR_secstr(perc_data,reg_cat,run)
 % First choose a dataset
 rng('shuffle')
-server = 0;
+server = 2;
 if server == 0
     addpath('/Users/jeskreiswinkler/Drive/15fall/Kondor/SSL/Buffalo')
     addpath('/Users/jeskreiswinkler/Drive/15fall/Kondor/SSL/Benchmarks')
