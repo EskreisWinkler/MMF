@@ -1,4 +1,4 @@
-function[] = SSL_GPR_secstr(perc_data,run)
+function[] = SSL_GPR_secstr(perc_data,reg_cat,run)
 % First choose a dataset
 rng('shuffle')
 server = 0;
@@ -34,8 +34,9 @@ num.obs = 10;
 
 grid.observed = round(linspace(num.classes,round(0.02*num.pts), num.obs));
 num.draws = 3;
-grid.fracs = [0.66 0.99];
+grid.fracs = [0.95 0.98 0.99];
 num.fracs = length(grid.fracs);
+num.beta = 0.01;
 
 res_store = zeros(num.draws, num.obs);
 time_store = zeros(num.draws, num.obs);
@@ -51,7 +52,15 @@ W_Lap = Knn - diag(diag(Knn));
 D_Lap = diag(sum(W_Lap,2));
 Lap = D_Lap - W_Lap;
 clear D_Lap W_Lap;
-reg_type = 'inv'; % will uncomment this when we can generalize code a bit
+
+switch reg_cat
+    case 1
+        reg_type = 'inv';
+    case 2
+        reg_type = 'diffusion';
+    otherwise
+        fprintf('This is a pursuit to nowhere\n')
+end
 
 % assign conditions
 conditions = cell(num.draws,1);
@@ -77,10 +86,18 @@ for cur_frac = 1:num.fracs
     params.nclusters = -ceil(num.pts/params.maxclustersize);
     
     tic();
-    K = MMF(Lap,params);
-    K.invert();
+    switch reg_type
+        case 'inv'
+            K = MMF(Lap,params);
+            K.invert();
+        case 'diffusion'
+            K = MMF(-1*num.beta*Lap,params);
+            K.exp();
+        otherwise
+            fprintf('This is a pursuit to nowhere\n')
+    end
+	mmf_compute = toc();
             
-    mmf_compute = toc();
     
     for cur_draw = 1:num.draws
         for cur_obs = 1:num.obs
@@ -110,11 +127,15 @@ for cur_frac = 1:num.fracs
     end
 end
 
-
-keyboard
 tic();
-K = Lap\eye(size(Lap,1));
-inv_comp = toc();
+switch reg_type
+    case 'inv'
+        K = Lap\eye(size(Lap,1));
+    case 'diffusion'
+        [V, D] = eigs(Lap,size(Lap,1)-1);
+        K = V*diag(exp(-1*num.beta*diag(D)))*V';
+end
+ker_comp = toc();
 
 for cur_draw = 1:num.draws
     for cur_obs = 1:num.obs
@@ -131,12 +152,13 @@ for cur_draw = 1:num.draws
         
         th = prctile(f_u,p*100);
         f_u_hat = ids(1).*(f_u<=th)+ ids(2).*(f_u>th);
-        time_store(cur_draw,cur_obs) = toc()+inv_comp;
+        time_store(cur_draw,cur_obs) = toc()+ker_comp;
         
         res_store(cur_draw,cur_obs) = ...
             sum(f_u_hat == y(unobserved_inds))/(num.pts-num.observed);
     end
 end
 
-save(sprintf('Data/GPR_%s_percData%d_obs%d_draws%d_frac%d_%d.mat',dataset_name, perc_data, num.obs,num.draws, num.fracs,run),...
+save(sprintf('Data/GPR_%s_percData%d_obs%d_draws%d_frac%d_regType%d_%d.mat',...
+    dataset_name, perc_data, num.obs,num.draws, num.fracs, reg_cat, run),...
     'res_store','res_store_mmf','time_store','time_store_mmf')
