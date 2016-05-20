@@ -75,7 +75,7 @@ if frac == 0
         ker_comp = toc();
     
     for cur_draw = 1:num.draws
-        for cur_obs = 1%:num.obs
+        for cur_obs = 1:num.obs
             fprintf('Computing baseline predictions for draw num %d and %d observations \n',cur_draw,length(conditions{cur_draw}{cur_obs}));
             observed_inds = conditions{cur_draw}{cur_obs};
             num.observed = length(observed_inds);
@@ -135,7 +135,7 @@ else
     
     fprintf('Computing MMF predictions frac = %d percent \n', frac)
     for cur_draw = 1:num.draws
-        for cur_obs = 1:num.obs
+        for cur_obs = 1%:num.obs
             observed_inds = conditions{cur_draw}{cur_obs};
             num.observed = length(observed_inds);
             unobserved_inds = setdiff(1:num.pts,observed_inds);
