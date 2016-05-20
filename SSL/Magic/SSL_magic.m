@@ -140,6 +140,7 @@ else
             %K_star = K.submatrix(1:num.pts,observed_inds);
             K_star = zeros(num.pts,length(observed_inds));
             for i = 1:length(observed_inds)
+                fprintf('Hang on, you are %d percent there\n', round(i*100/length(observed_inds)));
                 e = zeros(num.pts,1); e(observed_inds(i))=1;
                 K_star(:,i) = K.hit(e);
             end
