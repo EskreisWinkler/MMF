@@ -117,24 +117,24 @@ else
     params.nsparsestages = max(1,ceil((log(params.dcore) - log(num.pts))/log(1-params.fraction)));
     params.nclusters = ceil(num.pts/params.maxclustersize);
 
-    tic();
-    switch reg_type
-        case 'inv'
-            K = MMF(Lap,params);
-            fprintf('Computing MMF inverse for frac = %d percent \n', frac)
-            K.invert();
-        case 'diffusion'
-            K = MMF(-1*num.beta*Lap,params);
-            fprintf('Computing MMF exponential for frac = %d percent \n', frac)
-            K.exp();
-        otherwise
-            fprintf('This is a pursuit to nowhere\n')
-    end
-    mmf_compute = toc();
+%     tic();
+%     switch reg_type
+%         case 'inv'
+%             K = MMF(Lap,params);
+%             fprintf('Computing MMF inverse for frac = %d percent \n', frac)
+%             K.invert();
+%         case 'diffusion'
+%             K = MMF(-1*num.beta*Lap,params);
+%             fprintf('Computing MMF exponential for frac = %d percent \n', frac)
+%             K.exp();
+%         otherwise
+%             fprintf('This is a pursuit to nowhere\n')
+%     end
+%     mmf_compute = toc();
     
     
     fprintf('Computing MMF predictions frac = %d percent \n', frac)
-    for cur_draw = 1:num.draws
+    for cur_draw = 1%:num.draws
         for cur_obs = 1:num.obs
             observed_inds = conditions{cur_draw}{cur_obs};
             num.observed = length(observed_inds);
@@ -145,15 +145,20 @@ else
             
             tic();
             
-            %K_star = K.submatrix(1:num.pts,observed_inds);
-            K_star = zeros(num.pts,length(observed_inds));
-            for i = 1:length(observed_inds)
-                fprintf('Hang on, you are %d percent there\n', round(i*100/length(observed_inds)));
-                e = zeros(num.pts,1); e(observed_inds(i))=1;
-                K_star(:,i) = K.hit(e);
-            end
+%             %K_star = K.submatrix(1:num.pts,observed_inds);
+%             K_star = zeros(num.pts,length(observed_inds));
+%             for i = 1:length(observed_inds)
+%                 fprintf('Hang on, you are %d percent there\n', round(i*100/length(observed_inds)));
+%                 e = zeros(num.pts,1); e(observed_inds(i))=1;
+%                 K_star(:,i) = K.hit(e);
+%             end
             
-            f_u = -K_star(unobserved_inds,:)*(K_star(observed_inds,:)\f_o);
+%            f_u = -K_star(unobserved_inds,:)*(K_star(observed_inds,:)\f_o);
+ 
+            K = MMF(Lap(unobserved_inds,unobserved_inds),params);
+            fprintf('Computing MMF inverse for frac = %d percent \n', frac)
+            K.invert();
+            f_u = K.hit(Lap(unobserved_inds,observed_inds)*f_o);
             
             th = prctile(f_u,p*100);
             f_u_hat = ids(1).*(f_u<=th)+ ids(2).*(f_u>th);
