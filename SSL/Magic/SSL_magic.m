@@ -1,4 +1,4 @@
-function[] = SSL_magic(reg_cat,run)
+function[] = SSL_magic(reg_cat,frac,run)
 % First choose a dataset
 rng('shuffle')
 server = 2;
