@@ -103,7 +103,7 @@ if frac == 0
             
             acc = sum(f_u_hat == y(unobserved_inds))/(num.pts-num.observed);
             
-            %acc = (acc<0.5)*(1-acc)+(acc>=0.5)*acc;
+            acc = (acc<0.5)*(1-acc)+(acc>=0.5)*acc;
             
             res_store(cur_draw,cur_obs) = acc;
         end
@@ -134,8 +134,8 @@ else
     
     
     fprintf('Computing MMF predictions frac = %d percent \n', frac)
-    for cur_draw = 1%:num.draws
-        for cur_obs = num.obs%:num.obs
+    for cur_draw = 1:num.draws
+        for cur_obs = num.obs:num.obs
             observed_inds = conditions{cur_draw}{cur_obs};
             num.observed = length(observed_inds);
             unobserved_inds = setdiff(1:num.pts,observed_inds);
@@ -161,7 +161,7 @@ else
             
             acc = sum(f_u_hat == y(unobserved_inds))/(num.pts-num.observed);
             
-            %acc = (acc<0.5)*(1-acc)+(acc>=0.5)*acc;
+            acc = (acc<0.5)*(1-acc)+(acc>=0.5)*acc;
             
             res_store(cur_draw,cur_obs) = acc;
         end
