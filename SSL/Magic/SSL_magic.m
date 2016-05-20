@@ -1,7 +1,7 @@
 function[] = SSL_magic(reg_cat,frac,run)
 % First choose a dataset
 rng('shuffle')
-server = 2;
+server = 0;
 if server == 0
     addpath('/Users/jeskreiswinkler/Drive/15fall/Kondor/SSL/Buffalo')
     addpath('/Users/jeskreiswinkler/Drive/15fall/Kondor/SSL/Benchmarks')
@@ -60,19 +60,19 @@ end
 
 if frac == 0
     fprintf('Computing baseline kernel \n')
-        tic();
-        switch reg_type
-            case 'inv'
-                % check this works on the cluster.
-                %K = gather(Lap\distributed.speye(size(Lap,1)));
-                %[L, U] = lu(Lap);
-                %K = solve(L,solve(U,eye(size(Lap,1))));
-            case 'diffusion'
-                K = expm(-1*num.beta*Lap);
-                %[V, D] = eigs(Lap,size(Lap,1)-1);
-                %K = V*diag(exp(-1*num.beta*diag(D)))*V';
-        end
-        ker_comp = toc();
+    tic();
+    switch reg_type
+        case 'inv'
+            % check this works on the cluster.
+            %K = gather(Lap\distributed.speye(size(Lap,1)));
+            %[L, U] = lu(Lap);
+            %K = solve(L,solve(U,eye(size(Lap,1))));
+        case 'diffusion'
+            K = expm(-1*num.beta*Lap);
+            %[V, D] = eigs(Lap,size(Lap,1)-1);
+            %K = V*diag(exp(-1*num.beta*diag(D)))*V';
+    end
+    ker_comp = toc();
     
     for cur_draw = 1:num.draws
         for cur_obs = 1:num.obs
@@ -87,15 +87,15 @@ if frac == 0
             tic();
             f_u = -Lap(unobserved_inds,unobserved_inds)\(Lap(unobserved_inds,observed_inds)*f_o);
             
-%             K_star = zeros(num.pts,length(observed_inds));
-%             for i = 1:length(observed_inds)
-%                 fprintf('Hang on, you are %d percent there\n', round(i*100/length(observed_inds)));
-%                 e = zeros(num.pts,1); e(observed_inds(i))=1;
-%                 K_star(:,i) = Lap\e;
-%             end
-%             
-%             %K_star = K(:,observed_inds);
-%             f_u = -K_star(unobserved_inds,:)*(K_star(observed_inds,:)\f_o);
+            %             K_star = zeros(num.pts,length(observed_inds));
+            %             for i = 1:length(observed_inds)
+            %                 fprintf('Hang on, you are %d percent there\n', round(i*100/length(observed_inds)));
+            %                 e = zeros(num.pts,1); e(observed_inds(i))=1;
+            %                 K_star(:,i) = Lap\e;
+            %             end
+            %
+            %             %K_star = K(:,observed_inds);
+            %             f_u = -K_star(unobserved_inds,:)*(K_star(observed_inds,:)\f_o);
             
             th = prctile(f_u,p*100);
             f_u_hat = ids(1).*(f_u<=th)+ ids(2).*(f_u>th);
@@ -116,26 +116,26 @@ else
     params.dcore = round((1-cur_frac)*num.pts);
     params.nsparsestages = max(1,ceil((log(params.dcore) - log(num.pts))/log(1-params.fraction)));
     params.nclusters = ceil(num.pts/params.maxclustersize);
-
-%     tic();
-%     switch reg_type
-%         case 'inv'
-%             K = MMF(Lap,params);
-%             fprintf('Computing MMF inverse for frac = %d percent \n', frac)
-%             K.invert();
-%         case 'diffusion'
-%             K = MMF(-1*num.beta*Lap,params);
-%             fprintf('Computing MMF exponential for frac = %d percent \n', frac)
-%             K.exp();
-%         otherwise
-%             fprintf('This is a pursuit to nowhere\n')
-%     end
-%     mmf_compute = toc();
+    
+    %     tic();
+    %     switch reg_type
+    %         case 'inv'
+    %             K = MMF(Lap,params);
+    %             fprintf('Computing MMF inverse for frac = %d percent \n', frac)
+    %             K.invert();
+    %         case 'diffusion'
+    %             K = MMF(-1*num.beta*Lap,params);
+    %             fprintf('Computing MMF exponential for frac = %d percent \n', frac)
+    %             K.exp();
+    %         otherwise
+    %             fprintf('This is a pursuit to nowhere\n')
+    %     end
+    %     mmf_compute = toc();
     
     
     fprintf('Computing MMF predictions frac = %d percent \n', frac)
     for cur_draw = 1%:num.draws
-        for cur_obs = 1:num.obs
+        for cur_obs = num.obs%1:num.obs
             observed_inds = conditions{cur_draw}{cur_obs};
             num.observed = length(observed_inds);
             unobserved_inds = setdiff(1:num.pts,observed_inds);
@@ -144,21 +144,23 @@ else
             f_o = y(observed_inds);
             
             tic();
-            
-%             %K_star = K.submatrix(1:num.pts,observed_inds);
-%             K_star = zeros(num.pts,length(observed_inds));
-%             for i = 1:length(observed_inds)
-%                 fprintf('Hang on, you are %d percent there\n', round(i*100/length(observed_inds)));
-%                 e = zeros(num.pts,1); e(observed_inds(i))=1;
-%                 K_star(:,i) = K.hit(e);
-%             end
-            
-%            f_u = -K_star(unobserved_inds,:)*(K_star(observed_inds,:)\f_o);
- 
             K = MMF(Lap(unobserved_inds,unobserved_inds),params);
+            keyboard
             fprintf('Computing MMF inverse for frac = %d percent \n', frac)
             K.invert();
-            f_u = K.hit(Lap(unobserved_inds,observed_inds)*f_o);
+            
+            %K_star = K.submatrix(1:num.pts,observed_inds);
+            K_star = zeros(num.pts,length(observed_inds));
+            for i = 1:length(observed_inds)
+                fprintf('Hang on, you are %d percent there\n', round(i*100/length(observed_inds)));
+                e = zeros(num.pts,1); e(observed_inds(i))=1;
+                K_star(:,i) = K.hit(e);
+            end
+            
+            f_u = -K_star(unobserved_inds,:)*(K_star(observed_inds,:)\f_o);
+            keyboard
+            
+            %f_u = K.hit(Lap(unobserved_inds,observed_inds)*f_o);
             
             th = prctile(f_u,p*100);
             f_u_hat = ids(1).*(f_u<=th)+ ids(2).*(f_u>th);
@@ -175,7 +177,7 @@ else
 end
 
 
-fprintf('Everything is done, saving file \n') 
+fprintf('Everything is done, saving file \n')
 save(sprintf('Data/GPR_%s_obs%d_draws%d_frac%d_regType%d_%d.mat',...
     dataset_name, num.obs,num.draws, frac, reg_cat, run),...
     'res_store','time_store')
