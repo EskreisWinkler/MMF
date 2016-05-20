@@ -85,17 +85,17 @@ if frac == 0
             f_o = y(observed_inds);
             
             tic();
-            %f_u = -Lap(unobserved_inds,unobserved_inds)\(Lap(unobserved_inds,observed_inds)*f_o);
+            f_u = -Lap(unobserved_inds,unobserved_inds)\(Lap(unobserved_inds,observed_inds)*f_o);
             
-            K_star = zeros(num.pts,length(observed_inds));
-            for i = 1:length(observed_inds)
-                fprintf('Hang on, you are %d percent there\n', round(i*100/length(observed_inds)));
-                e = zeros(num.pts,1); e(observed_inds(i))=1;
-                K_star(:,i) = Lap\e;
-            end
-            
-            %K_star = K(:,observed_inds);
-            f_u = -K_star(unobserved_inds,:)*(K_star(observed_inds,:)\f_o);
+%             K_star = zeros(num.pts,length(observed_inds));
+%             for i = 1:length(observed_inds)
+%                 fprintf('Hang on, you are %d percent there\n', round(i*100/length(observed_inds)));
+%                 e = zeros(num.pts,1); e(observed_inds(i))=1;
+%                 K_star(:,i) = Lap\e;
+%             end
+%             
+%             %K_star = K(:,observed_inds);
+%             f_u = -K_star(unobserved_inds,:)*(K_star(observed_inds,:)\f_o);
             
             th = prctile(f_u,p*100);
             f_u_hat = ids(1).*(f_u<=th)+ ids(2).*(f_u>th);
