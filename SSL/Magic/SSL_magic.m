@@ -65,6 +65,8 @@ if frac == 0
             case 'inv'
                 % check this works on the cluster.
                 K = gather(Lap\distributed.speye(size(Lap,1)));
+                [L, U] = lu(Lap);
+                K = solve(L,solve(U,eye(size(Lap,1))));
             case 'diffusion'
                 K = expm(-1*num.beta*Lap);
                 %[V, D] = eigs(Lap,size(Lap,1)-1);
