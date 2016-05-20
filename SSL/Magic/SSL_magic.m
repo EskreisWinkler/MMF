@@ -64,7 +64,7 @@ if frac == 0
         switch reg_type
             case 'inv'
                 % check this works on the cluster.
-                K = Lap\distributed.speye(size(Lap,1));
+                K = gather(Lap\distributed.speye(size(Lap,1)));
             case 'diffusion'
                 K = expm(-1*num.beta*Lap);
                 %[V, D] = eigs(Lap,size(Lap,1)-1);
