@@ -65,8 +65,8 @@ if frac == 0
             case 'inv'
                 % check this works on the cluster.
                 %K = gather(Lap\distributed.speye(size(Lap,1)));
-                [L, U] = lu(Lap);
-                K = solve(L,solve(U,eye(size(Lap,1))));
+                %[L, U] = lu(Lap);
+                %K = solve(L,solve(U,eye(size(Lap,1))));
             case 'diffusion'
                 K = expm(-1*num.beta*Lap);
                 %[V, D] = eigs(Lap,size(Lap,1)-1);
@@ -86,6 +86,14 @@ if frac == 0
             
             tic();
             %f_u = -Lap(unobserved_inds,unobserved_inds)\(Lap(unobserved_inds,observed_inds)*f_o);
+            
+            K_star = zeros(num.pts,length(observed_inds));
+            for i = 1:length(observed_inds)
+                fprintf('Hang on, you are %d percent there\n', round(i*100/length(observed_inds)));
+                e = zeros(num.pts,1); e(observed_inds(i))=1;
+                K_star(:,i) = Lap\e;
+            end
+            
             K_star = K(:,observed_inds);
             f_u = -K_star(unobserved_inds,:)*(K_star(observed_inds,:)\f_o);
             
