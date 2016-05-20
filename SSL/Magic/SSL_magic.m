@@ -103,7 +103,7 @@ if frac == 0
             
             acc = sum(f_u_hat == y(unobserved_inds))/(num.pts-num.observed);
             
-            acc = (acc<0.5)*(1-acc)+(acc>=0.5)*acc;
+            %acc = (acc<0.5)*(1-acc)+(acc>=0.5)*acc;
             
             res_store(cur_draw,cur_obs) = acc;
         end
@@ -115,7 +115,7 @@ else
     cur_frac = frac/100;
     params.dcore = round((1-cur_frac)*num.pts);
     params.nsparsestages = max(1,ceil((log(params.dcore) - log(num.pts))/log(1-params.fraction)));
-    params.nclusters = -ceil(num.pts/params.maxclustersize);
+    params.nclusters = ceil(num.pts/params.maxclustersize);
 
     tic();
     switch reg_type
@@ -161,7 +161,7 @@ else
             
             acc = sum(f_u_hat == y(unobserved_inds))/(num.pts-num.observed);
             
-            acc = (acc<0.5)*(1-acc)+(acc>=0.5)*acc;
+            %acc = (acc<0.5)*(1-acc)+(acc>=0.5)*acc;
             
             res_store(cur_draw,cur_obs) = acc;
         end
