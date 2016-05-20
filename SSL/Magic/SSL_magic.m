@@ -84,7 +84,6 @@ if frac == 0
             
             tic();
             %f_u = -Lap(unobserved_inds,unobserved_inds)\(Lap(unobserved_inds,observed_inds)*f_o);
-            keyboard
             K_star = K(:,observed_inds);
             f_u = -K_star(unobserved_inds,:)*(K_star(observed_inds,:)\f_o);
             
