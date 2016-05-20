@@ -134,8 +134,8 @@ else
     
     
     fprintf('Computing MMF predictions frac = %d percent \n', frac)
-    for cur_draw = num.draws%:num.draws
-        for cur_obs = 1%:num.obs
+    for cur_draw = 1%:num.draws
+        for cur_obs = num.obs%:num.obs
             observed_inds = conditions{cur_draw}{cur_obs};
             num.observed = length(observed_inds);
             unobserved_inds = setdiff(1:num.pts,observed_inds);
