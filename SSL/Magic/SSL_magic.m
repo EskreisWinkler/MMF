@@ -94,7 +94,7 @@ if frac == 0
                 K_star(:,i) = Lap\e;
             end
             
-            K_star = K(:,observed_inds);
+            %K_star = K(:,observed_inds);
             f_u = -K_star(unobserved_inds,:)*(K_star(observed_inds,:)\f_o);
             
             th = prctile(f_u,p*100);
