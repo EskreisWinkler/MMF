@@ -134,12 +134,7 @@ else
             
             tic();
             
-            K_star = zeros(num.pts,length(observed_inds));
-            for i = 1:length(observed_inds)
-                fprintf('%d',i)
-                e = zeros(num.pts,1); e(observed_inds(i))=1;
-                K_star(:,i) = K.hit(e);
-            end
+            K_star = K.submatrix(1:num.pts,observed_inds);
             
             f_u = -K_star(unobserved_inds,:)*(K_star(observed_inds,:)\f_o);
             
