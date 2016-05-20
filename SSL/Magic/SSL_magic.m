@@ -99,7 +99,7 @@ if frac == 0
             
             th = prctile(f_u,p*100);
             f_u_hat = ids(1).*(f_u<=th)+ ids(2).*(f_u>th);
-            time_store(cur_draw,cur_obs) = toc()+ker_comp;
+            time_store(cur_draw,cur_obs) = toc();
             
             acc = sum(f_u_hat == y(unobserved_inds))/(num.pts-num.observed);
             
@@ -162,7 +162,7 @@ else
             
             th = prctile(f_u,p*100);
             f_u_hat = ids(1).*(f_u<=th)+ ids(2).*(f_u>th);
-            time_store(cur_draw,cur_obs) = mmf_compute + toc();
+            time_store(cur_draw,cur_obs) = toc();
             
             acc = sum(f_u_hat == y(unobserved_inds))/(num.pts-num.observed);
             
