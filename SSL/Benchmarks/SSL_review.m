@@ -28,7 +28,7 @@ p.draws = draws;
 %p.obs = length(conditions{1});
 
 [Lap, Lap_w] = lap_maker(X,p,'reg');
-Lap = Lap_w;
+%Lap = Lap_w;
 % to hope for really good results, fix number observed to always be 10% of data
 p.num_observed = round(0.1*p.pts);
 
