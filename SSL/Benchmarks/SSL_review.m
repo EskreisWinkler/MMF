@@ -36,7 +36,7 @@ p.num_observed = round(0.1*p.pts);
 % fix a benchmark
 
 tic();
-K = pinv(Lap_w);
+K = pinv(Lap);
 k_compute = toc();
 
 bench_res = zeros(p.draws,1);
