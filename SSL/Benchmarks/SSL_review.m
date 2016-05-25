@@ -82,10 +82,11 @@ for cur_draw = 1:p.draws
                 
                 th = prctile(f_u_pre,prior*100);
                 f_u_hat = p.ids(1)*(f_u_pre<=th)+ p.ids(2)*(f_u_pre>th);
-                time_store(cur_cr,cur_frac,cur_stage) = toc();
+                time_store(cur_cr,cur_frac,cur_stage) = time_store(cur_cr,cur_frac,cur_stage)+ ...
+                    (1/p.draws)*toc();
                 
-                res_store(cur_cr,cur_frac,cur_stage) = ...
-                    sum(f_u_hat == y(unobserved_inds))/(length(unobserved_inds));
+                res_store(cur_cr,cur_frac,cur_stage) = res_store(cur_cr,cur_frac,cur_stage)+...
+                    (1/p.draws)*sum(f_u_hat == y(unobserved_inds))/(length(unobserved_inds));
                 
                 K.delete();
             end
