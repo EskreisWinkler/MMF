@@ -41,7 +41,7 @@ k_compute = toc();
 
 bench_res = zeros(p.draws,1);
 bench_time = zeros(p.draws,1);
-keyboard
+
 for cur_draw = 1:p.draws
     observed_inds = randsample(1:p.pts,p.num_observed);
     unobserved_inds = setdiff(1:p.pts,observed_inds);
