@@ -41,6 +41,7 @@ k_compute = toc();
 
 bench_res = zeros(p.draws,1);
 bench_time = zeros(p.draws,1);
+keyboard
 for cur_draw = 1:p.draws
     observed_inds = randsample(1:p.pts,p.num_observed);
     unobserved_inds = setdiff(1:p.pts,observed_inds);
@@ -70,12 +71,12 @@ for cur_draw = 1:p.draws
                 p.verbosity = 0;
                 
                 tic();
-                K = MMF(Lap,p);
-                K.invert();
+                K_mmf = MMF(Lap,p);
+                K_mmf.invert();
                 K_star = zeros(p.pts,length(observed_inds));
                 for i = 1:length(observed_inds)
                     e = zeros(p.pts,1); e(observed_inds(i))=1;
-                    K_star(:,i) = K.hit(e);
+                    K_star(:,i) = K_mmf.hit(e);
                 end
                 
                 f_u_pre = K_star(unobserved_inds,:)*(K_star(observed_inds,:)\f_o);
