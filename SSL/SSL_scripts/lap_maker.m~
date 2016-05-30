@@ -1,10 +1,10 @@
-function[Lnn,Lw, Lnnw] = lap_maker(M,p,kmat)
+function[Lnn,Lap_w, Lap_wnn] = lap_maker(M,p,kmat)
 
 switch kmat
     case 'nn'
         W_Lap = M - diag(diag(M));
         D_Lap = diag(sum(W_Lap,2));
-        Lnn = D_Lap - W_Lap;
+        Lap = D_Lap - W_Lap;
     otherwise
         W = make_ker(M',p.pts,p.sigma);
         Wnn = zeros(size(W));
@@ -17,13 +17,11 @@ switch kmat
             Wnn(m>c,pt) = 1;
         end
         Lnn_W = Wnn - diag(diag(Wnn));
-        Lnn_D = diag(sum(Lnn_W,2));
-        Lnn = Lnn_D - Lnn_W;
+        Lnn_D = diag(sum(W_Lap,2));
+        Lnn = D_Lap - W_Lap;
         Ww = (W-diag(diag(W)));
         Dw = diag(sum(W,2));
-        Lw = Dw - Ww;
-        Wnnw = Ww.*Lnn_w;
-        Dnnw = diag(sum(W_nnw,2));
-        Lnnw = Dnnw-Wnnw;
+        Lw = Ww-Dw;
+        Wnn
         
 end
