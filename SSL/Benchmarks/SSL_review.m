@@ -23,11 +23,12 @@ addpath_ssl(server);
 
 p = SSL_params(y);
 p.draws = draws;
+p.nn = 3;
 
 %eval(sprintf('load Data/cond/%s-conditions_draws%d_run%d.mat',dataset_name,p.draws,run))
 %p.obs = length(conditions{1});
 
-[Lap, Lap_w] = lap_maker(X,p,'reg');
+[Lap, Lap_w, Lap_wnn] = lap_maker(X,p,'reg');
 %Lap = Lap_w;
 % to hope for really good results, fix number observed to always be 10% of data
 p.num_observed = round(0.1*p.pts);
