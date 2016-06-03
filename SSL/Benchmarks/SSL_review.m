@@ -95,7 +95,7 @@ for cur_draw = 1:p.draws
 end
 
 
-save(sprintf('Data/review_%s_draws%d.mat',dataset_name,draws),'res_store','time_store',...
+save(sprintf('Data/review_%s_graph%d_draws%d.mat',dataset_name,graph_type,draws),'res_store','time_store',...
     'bench_res','bench_time')
 
 
