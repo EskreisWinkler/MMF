@@ -12,4 +12,5 @@ end
 
 addpath(sprintf('%s/SSL/Buffalo/',risi),sprintf('%s/SSL/Benchmarks/',risi));
 addpath(sprintf('%s/GP/GP_param_search/',risi),sprintf('%s/GP/GP_functions/',risi));
+addpath(sprintf('%s/SSL/SSL_scripts/',risi))
 addpath(sprintf('%s',mmf));

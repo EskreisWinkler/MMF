@@ -1,6 +1,18 @@
-function[p] = SSL_params(y)
+function[p] = SSL_params(y,dataset_ind)
 
-p.sigma = 20;
+switch dataset_ind % need to empirically find what works.
+    case 1
+        p.sigma = 1;
+    case 2
+        p.sigma = 90;
+    case 3
+        p.sigma = 3.5;
+    case 4
+        p.sigma = 1;
+    otherwise
+        fprintf('This is not a valid dataset_ind\n')
+end
+
 p.ids = unique(y);
 p.pts = length(y);
 p.classes = length(p.ids);
@@ -12,10 +24,10 @@ p.nn = 3;
 p.beta = 0.01;
 
 % MMF parameters
-p.k = 2; 
+p.k = 2;
 p.fraction = 0.02;
-p.maxclustersize = 500; 
-p.bypass=3; 
+p.maxclustersize = 500;
+p.bypass=3;
 p.minclustersize = 1;
 p.verbosity = 0;
 p.nsparsestages = 1; % This will have some introspection.

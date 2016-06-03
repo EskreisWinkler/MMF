@@ -1,9 +1,10 @@
-function[] =SSL_review(dataset_ind,draws)
+function[] =SSL_review(dataset_ind,graph_type,draws)
 
 % want to investigate dependencies of
 %   (1) core_reduc (dcore),
 %   (2) fraction elimated at each stage,
 %   (3) number of stages.
+%   (4) different graph_types
 
 
 grid_size = 5;
@@ -16,20 +17,17 @@ time_store = zeros(size(res_store));
 % First choose a dataset
 rng('shuffle')
 server = 1;
-addpath('../SSL_scripts/')
 addpath_ssl(server);
 
 [X,y,dataset_name] = load_SSL(dataset_ind);
 
-p = SSL_params(y);
+p = SSL_params(y,dataset_ind);
 p.draws = draws;
 p.nn = 3;
 
 %eval(sprintf('load Data/cond/%s-conditions_draws%d_run%d.mat',dataset_name,p.draws,run))
-%p.obs = length(conditions{1});
-
-[Lap, Lap_w, Lap_wnn] = lap_maker(X,p,'reg');
-%Lap = Lap_w;
+%p.obs = length(conditionas{1});
+[Lap] = lap_maker(X,p,graph_type);
 % to hope for really good results, fix number observed to always be 10% of data
 p.num_observed = round(0.1*p.pts);
 
@@ -60,8 +58,7 @@ for cur_draw = 1:p.draws
     
     bench_res(cur_draw) = ...
         sum(f_u_hat == y(unobserved_inds))/(length(unobserved_inds));
-    
-    
+
     for cur_cr = 1:length(core_reduc_vec)
         for cur_frac = 1:length(fraction_vec)
             for cur_stage = 1:length(stages_vec)
