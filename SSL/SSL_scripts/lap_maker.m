@@ -44,7 +44,6 @@ switch lap_type
         W = make_ker(M',p.pts,p.sigma);
         Ww = (W-diag(diag(W)));
         Ww_vec = reshape(Ww,size(Ww,1)^2,1);
-        keyboard
         Ww_vec = Ww_vec(Ww_vec>0);
         thresh = quantile(Ww_vec,1-p.edge_percent);
         Ww(Ww<thresh) =  0;
