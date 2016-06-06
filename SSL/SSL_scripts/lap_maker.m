@@ -38,8 +38,18 @@ switch lap_type
         
         W = make_ker(M',p.pts,p.sigma);
         Ww = (W-diag(diag(W)));
-        Dw = diag(sum(W,2));
+        Dw = diag(sum(Ww,2));
         Lap = Dw - Ww;
+    case 4
+        W = make_ker(M',p.pts,p.sigma);
+        Ww = (W-diag(diag(W)));
+        Ww_vec = reshape(Ww,size(Ww,1)^2);
+        Ww_vec = We_vec(Ww_vec>0);
+        thresh = quantile(Ww_vec,1-p.edge_percent);
+        Ww(Ww<thesh) =  0;
+        Dw = diag(sum(Ww,2));
+        Lap = Dw - Ww;
+        
     case 0 % this is a scenario where you already have the laplacian made using weights
         W_Lap = M - diag(diag(M));
         D_Lap = diag(sum(W_Lap,2));

@@ -22,6 +22,10 @@ p.classes = length(p.ids);
 p.draws = 3;
 p.nn = 3;
 p.beta = 0.01;
+% for a weighted graph where we threshold weights to be over a certain
+% point, we threshold at a percentile: what proportion of the weights in
+% the complete graph should be preserved
+p.edge_percent = 0.25;
 
 % MMF parameters
 p.k = 2;
