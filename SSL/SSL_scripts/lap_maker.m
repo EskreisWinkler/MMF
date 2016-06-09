@@ -49,7 +49,53 @@ switch lap_type
         Ww(Ww<thresh) =  0;
         Dw = diag(sum(Ww,2));
         Lap = Dw - Ww;
+    case 5 %same as case 1 with weights on diagonal
+        W = make_ker(M',p.pts,p.sigma);
+        Wnn = zeros(size(W));
         
+        for pt  = 1:p.pts
+            m = W(pt,:);
+            c = sort(m);
+            c = c(length(c)-p.nn);
+            Wnn(pt,m>c) = 1;
+            Wnn(m>c,pt) = 1;
+        end
+        Lnn_W = Wnn - diag(diag(Wnn));
+        Lnn_D = diag(sum(Lnn_W,2));
+        Lap = Lnn_D - Lnn_W+ p.lambda*eye(size(W,1));
+    case 6 %same as case 2 with weights on diagonal
+        
+        W = make_ker(M',p.pts,p.sigma);
+        Wnn = zeros(size(W));
+        
+        for pt  = 1:p.pts
+            m = W(pt,:);
+            c = sort(m);
+            c = c(length(c)-p.nn);
+            Wnn(pt,m>c) = 1;
+            Wnn(m>c,pt) = 1;
+        end
+        Lnn_W = Wnn - diag(diag(Wnn));
+        Ww = (W-diag(diag(W)));
+        
+        WnnW = Ww.*Lnn_W;
+        DnnW = diag(sum(WnnW,2));
+        Lap = DnnW-WnnW + p.lambda*eye(size(W,1));
+    case 7 %same as case 3 with weights on diagonal
+        
+        W = make_ker(M',p.pts,p.sigma);
+        Ww = (W-diag(diag(W)));
+        Dw = diag(sum(Ww,2));
+        Lap = Dw - Ww + p.lambda*eye(size(W,1));
+    case 8 %same as case 4 with weights on diagonal
+        W = make_ker(M',p.pts,p.sigma);
+        Ww = (W-diag(diag(W)));
+        Ww_vec = reshape(Ww,size(Ww,1)^2,1);
+        Ww_vec = Ww_vec(Ww_vec>0);
+        thresh = quantile(Ww_vec,1-p.edge_percent);
+        Ww(Ww<thresh) =  0;
+        Dw = diag(sum(Ww,2));
+        Lap = Dw - Ww + p.lambda*eye(size(W,1));
     case 0 % this is a scenario where you already have the laplacian made using weights
         W_Lap = M - diag(diag(M));
         D_Lap = diag(sum(W_Lap,2));
