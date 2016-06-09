@@ -26,8 +26,6 @@ p = SSL_params(y,dataset_ind);
 p.draws = draws;
 p.nn = 3;
 
-%eval(sprintf('load Data/cond/%s-conditions_draws%d_run%d.mat',dataset_name,p.draws,run))
-%p.obs = length(conditionas{1});
 [Lap] = lap_maker(X,p,graph_type);
 % to hope for really good results, fix number observed to always be 10% of data
 p.num_observed = round(0.1*p.pts);
