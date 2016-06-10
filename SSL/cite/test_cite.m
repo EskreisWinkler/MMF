@@ -58,3 +58,5 @@ for cur_core = 1:length(core_vec)
         Lap_mmf.delete();
 end
 
+save('Data/test_cite.mat','core_vec','core_store')
+
