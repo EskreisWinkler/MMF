@@ -5,6 +5,8 @@ function[] =SSL_review(dataset_ind,graph_type,draws)
 %   (2) fraction elimated at each stage,
 %   (3) number of stages.
 %   (4) different graph_types
+%
+% -> As expressed by accuracy and frobenius error.
 
 
 grid_size = 5;
@@ -12,6 +14,7 @@ core_reduc_vec = linspace(0.1,0.99,grid_size);
 fraction_vec = linspace(0.01,0.99,grid_size);
 stages_vec = round(linspace(1,20,grid_size));
 res_store = zeros(length(core_reduc_vec),length(fraction_vec),length(stages_vec));
+frob_store = res_store;
 time_store = zeros(size(res_store));
 
 % First choose a dataset
@@ -85,7 +88,7 @@ for cur_draw = 1:p.draws
                 
                 res_store(cur_cr,cur_frac,cur_stage) = res_store(cur_cr,cur_frac,cur_stage)+...
                     (1/p.draws)*sum(f_u_hat == y(unobserved_inds))/(length(unobserved_inds));
-                
+                frob_store(cur_cr,cur_frac,cur_stage) = K_mmf.froberror;
                 K_mmf.delete();
             end
         end
@@ -94,6 +97,6 @@ end
 
 
 save(sprintf('Data/review_%s_graph%d_draws%d.mat',dataset_name,graph_type,draws),'res_store','time_store',...
-    'bench_res','bench_time')
+    'bench_res','bench_time', 'frob_store')
 
 
