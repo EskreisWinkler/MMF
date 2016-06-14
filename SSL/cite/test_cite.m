@@ -1,6 +1,6 @@
-addpath_ssl(0)
+addpath_ssl(2)
 
-data = csvread('Data/cit-HepTh.csv');
+data = csvread('Data/edcit-HepTh.csv');
 p = SSL_params(1,1);
 c.n = size(data,1);
 
