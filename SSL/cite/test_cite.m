@@ -52,7 +52,6 @@ for cur_core = 1:length(core_vec)
         tic();
         %Lap_mmf = MMF(Lap,p);
         toc();
-        keyboard
         core_store(cur_core) = Lap_mmf.froberror;
         
         Lap_mmf.delete();
