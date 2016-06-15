@@ -26,7 +26,9 @@ p.nn = 3;
 % to hope for really good results, fix number observed to always be 10% of data
 p.num_observed = round(0.1*p.pts);
 
-[V D] = eig(Lap);
+
+
+[V, D] = eig(Lap);
 mmf_store = cell(length(core_reduc_vec),1);
 frob_store = zeros(size(core_reduc_vec));
 % K = V*D*V'
@@ -39,15 +41,22 @@ for cur_cr = 1:length(core_reduc_vec)
     p.verbosity = 0;
     
     Lap_mmf = MMF(Lap,p);
+    
     mmf_store{cur_cr}.V = zeros(size(V));
     mmf_store{cur_cr}.D = zeros(size(V,1),1);
     
+    Lap_temp = zeros(size(V));
     for col = 1:length(mmf_store{cur_cr}.D)
-        mmf_store{cur_cr}.V(:,col) = Lap_mmf.hit(V(:,col));
-        mmf_store{cur_cr}.D(col) = norm(mmf_store{cur_cr}.V(:,col));
+        e_vec = zeros(size(V,1),1); e_vec(col)=1;
+        Lap_temp(:,col) = Lap_mmf.hit(e_vec);
     end
+    
+    [mmf_store{cur_cr}.V, D] = eig(Lap_temp);
+    mmf_store{cur_cr}.D = diag(D);
     frob_store(cur_cr) = Lap_mmf.froberror;
+    
     Lap_mmf.delete();
+    
 end
 
 

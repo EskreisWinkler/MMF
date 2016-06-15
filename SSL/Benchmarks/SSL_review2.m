@@ -48,11 +48,16 @@ for cur_cr = 1:length(core_reduc_vec)
     mmf_store{cur_cr}.V = zeros(size(V));
     mmf_store{cur_cr}.D = zeros(size(V,1),1);
     
+    K_temp = zeros(size(V));
     for col = 1:length(mmf_store{cur_cr}.D)
-        mmf_store{cur_cr}.V(:,col) = K_mmf.hit(V(:,col));
-        mmf_store{cur_cr}.D(col) = norm(mmf_store{cur_cr}.V(:,col));
+        e_vec = zeros(size(V,1),1); e_vec(col)=1;
+        K_temp(:,col) = K_mmf.hit(e_vec);
     end
+    
+    [mmf_store{cur_cr}.V D] = eig(K_temp);
+    mmf_store{cur_cr}.D = diag(D);
     frob_store(cur_cr) = K_mmf.froberror;
+    
     K_mmf.delete();
 end
 
