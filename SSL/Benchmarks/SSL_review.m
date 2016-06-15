@@ -20,7 +20,6 @@ time_store = zeros(size(res_store));
 % First choose a dataset
 rng('shuffle')
 server = 2;
-%addpath('../SSL_scripts/')
 addpath_ssl(server);
 
 [X,y,dataset_name] = load_SSL(dataset_ind);
