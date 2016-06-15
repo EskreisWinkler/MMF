@@ -13,7 +13,7 @@ core_reduc_vec = linspace(0.1,0.99,grid_size);
 
 % First choose a dataset
 rng('shuffle')
-server = 0; % change
+server = 2; % change
 addpath_ssl(server);
 
 [X,y,dataset_name] = load_SSL(dataset_ind);
