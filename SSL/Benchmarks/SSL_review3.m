@@ -1,4 +1,4 @@
-function[] =SSL_review2(dataset_ind,graph_type)
+function[] =SSL_review3(dataset_ind,graph_type)
 
 % want to investigate where we are incurring error as a function of core
 % size -- which singular values are causing us problems? is it high
