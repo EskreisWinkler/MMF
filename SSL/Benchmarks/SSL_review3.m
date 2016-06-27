@@ -31,7 +31,6 @@ p.num_observed = round(0.1*p.pts);
 [V, D] = eig(Lap);
 mmf_store = cell(length(core_reduc_vec),1);
 frob_store = zeros(size(core_reduc_vec));
-% K = V*D*V'
 
 for cur_cr = 1:length(core_reduc_vec)
     p.dcore = round((1-core_reduc_vec(cur_cr))*p.pts);

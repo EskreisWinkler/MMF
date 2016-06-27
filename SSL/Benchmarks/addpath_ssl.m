@@ -1,11 +1,11 @@
 function[] = addpath_ssl(server)
-if server == 0
+if server == 0 %home
     risi = '/Users/jeskreiswinkler/Drive/15fall/Kondor/';
     mmf = '/Users/jeskreiswinkler/mmfc/v4/src/matlab';
-elseif server == 1;
+elseif server == 1; % aitken
     risi = '/net/wallace/ga/eskreiswinkler/MMF/';
     mmf = '/net/wallace/ga/eskreiswinkler/mmfc/v4/src/matlab';
-elseif server==2
+elseif server==2 %rcc
     risi = '/home/eskreiswinkler/MMF/';
     mmf = '/home/eskreiswinkler/mmfc/v4/src/matlab';
 end

@@ -61,6 +61,8 @@ for cur_draw = 1:p.draws
         sum(f_u_hat == y(unobserved_inds))/(length(unobserved_inds));
 
     for cur_cr = 1:length(core_reduc_vec)
+        % make nystrom predictions here:
+        
         for cur_frac = 1:length(fraction_vec)
             for cur_stage = 1:length(stages_vec)
                 p.dcore = round((1-core_reduc_vec(cur_cr))*p.pts);

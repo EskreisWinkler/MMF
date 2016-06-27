@@ -10,7 +10,7 @@
 . /etc/profile
 #module load packages/matlab/r2013a
 
-matlab -nodisplay -nojvm -r 'test_cite; exit;'
+matlab -nodisplay -nojvm -r 'GR_rep; exit;'
 
 echo "Code has finished running." | mail -s "Alert" "jeskreiswinkler@gmail.com"
 
