@@ -54,7 +54,7 @@ for cur_core = 1:length(core_vec)
         err_store(cur_core) = Lap_mmf.froberror;
         Lap_mmf.delete();
 end
-err_store_normed = err_store/
+err_store_normed = err_store/normalization;
 
 save('Data/test_cite.mat','core_vec','core_store')
 
