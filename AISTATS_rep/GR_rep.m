@@ -1,4 +1,4 @@
-addpath_ssl(2) % change
+addpath_ssl(1) % change
 
 data = csvread('Data/ca-GrQc.csv');
 p = SSL_params(1,1);
@@ -56,5 +56,5 @@ for cur_core = 1:length(core_vec)
 end
 err_store_normed = err_store/normalization;
 
-save('Data/test_cite.mat','core_vec','core_store')
+save('Data/test_cite.mat','core_vec','core_store','normalization')
 
