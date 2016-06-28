@@ -1,4 +1,4 @@
-addpath_ssl(0) % change
+addpath_ssl(2) % change
 
 data = csvread('Data/ca-GrQc.csv');
 p = SSL_params(1,1);
