@@ -77,7 +77,7 @@ for cur_cr = 1:length(core_vec)
     mmf_store{cur_cr}.V = zeros(size(V));
     mmf_store{cur_cr}.D = zeros(size(V,1),1);
     
-    L_temp = zeros(Lap);
+    L_temp = zeros(size(Lap));
     for col = 1:length(mmf_store{cur_cr}.D)
         e_vec = zeros(size(V,1),1); e_vec(col)=1;
         L_temp(:,col) = L_mmf.hit(e_vec);
