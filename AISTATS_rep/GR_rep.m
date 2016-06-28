@@ -56,5 +56,40 @@ for cur_core = 1:length(core_vec)
 end
 err_store_normed = err_store/normalization;
 
-save('Data/test_cite.mat','core_vec','core_store','normalization')
+% now work on EVD as an interpretation for what is going on:
+k = 100; 
+[V, D] = eigs(Lap,k,'lm');
+baseline_store.V = V;
+baseline_store.D = diag(D);
+
+
+mmf_store = cell(length(core_vec),1);
+
+for cur_cr = 1:length(core_vec)
+    p.dcore = round((1-core_vec(cur_cr))*p.pts);
+    p.nsparsestages = 6; % based on what I had before.
+    p.nclusters = -ceil(p.pts/p.maxclustersize);
+    p.fraction = 0.3;
+    p.verbosity = 1;
+    
+    L_mmf = MMF(Lap,p);
+    
+    mmf_store{cur_cr}.V = zeros(size(V));
+    mmf_store{cur_cr}.D = zeros(size(V,1),1);
+    
+    L_temp = zeros(Lap);
+    for col = 1:length(mmf_store{cur_cr}.D)
+        e_vec = zeros(size(V,1),1); e_vec(col)=1;
+        L_temp(:,col) = L_mmf.hit(e_vec);
+    end
+    
+    [mmf_store{cur_cr}.V D] = eig(K_temp);
+    mmf_store{cur_cr}.D = diag(D);
+    frob_store(cur_cr) = K_mmf.froberror;
+    
+    K_mmf.delete();
+end
+
+save('Data/GR_rep_fro.mat','core_vec','core_store','normalization')
+save('Data/GR_rep_EVD.mat','core_vec','mmf_store','baseline_store')
 
