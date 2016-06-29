@@ -83,13 +83,13 @@ for cur_cr = 1:length(core_vec)
         L_temp(:,col) = L_mmf.hit(e_vec);
     end
     
-    [mmf_store{cur_cr}.V D] = eig(K_temp);
+    [mmf_store{cur_cr}.V D] = eig(L_temp);
     mmf_store{cur_cr}.D = diag(D);
-    frob_store(cur_cr) = K_mmf.froberror;
+    %frob_store(cur_cr) = L_mmf.froberror;
     
-    K_mmf.delete();
+    L_mmf.delete();
 end
 
-save('Data/GR_rep_fro.mat','core_vec','core_store','normalization')
+save('Data/GR_rep_fro.mat','core_vec','err_store','err_store_normed','normalization')
 save('Data/GR_rep_EVD.mat','core_vec','mmf_store','baseline_store')
 
