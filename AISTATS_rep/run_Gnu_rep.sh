@@ -10,7 +10,7 @@
 . /etc/profile
 #module load packages/matlab/r2013a
 
-matlab -nodisplay -nojvm -r 'GR_rep; exit;'
+matlab -nodisplay -nojvm -r 'Gnu_rep; exit;'
 
 echo "Code has finished running." | mail -s "Alert" "jeskreiswinkler@gmail.com"
 
