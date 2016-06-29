@@ -83,7 +83,7 @@ for cur_cr = 1:length(core_vec)
         L_temp(:,col) = L_mmf.hit(e_vec);
     end
     
-    [mmf_store{cur_cr}.V D] = eig(K_temp);
+    [mmf_store{cur_cr}.V D] = eig(L_temp);
     mmf_store{cur_cr}.D = diag(D);
     %frob_store(cur_cr) = K_mmf.froberror;
     
