@@ -3,8 +3,8 @@
 #$ -cwd
 ##$ -j y
 #$ -S /bin/bash
-#$ -o output/out.txt
-#$ -e output/err.txt
+#$ -o output/GR.out
+#$ -e output/GR.err
 ##$ -t 1-10
 #
 . /etc/profile
