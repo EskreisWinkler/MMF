@@ -59,13 +59,13 @@ for cur_mc = 1:length(max_cluster_vec)
         for cur_frac = 1:length(fraction_vec)
             for cur_stage = 1:length(stages_vec)
                 fprintf('Current parameters: \n')
+                p.maxclustersize = max_cluster_vec(cur_mc);
+                p.nclusters = -ceil(p.pts/p.maxclustersize);
+                fprintf('nclusters = %d \t',p.nclusters)
                 p.dcore = round((1-core_reduc_vec(cur_cr))*p.pts);
                 fprintf('dcore = %d \t',p.dcore)
                 p.nsparsestages = stages_vec(cur_stage);
                 fprintf('stages = %d \t',p.nsparsestages)
-                p.maxclustersize = max_cluster_vec(cur_mc);
-                p.nclusters = -ceil(p.pts/p.maxclustersize);
-                fprintf('nclusters = %d \t',p.nclusters)
                 p.fraction = fraction_vec(cur_frac);
                 fprintf('fraction = %0.2f \t',p.fraction)
                 fprintf('\n\n')
@@ -76,7 +76,7 @@ for cur_mc = 1:length(max_cluster_vec)
                 
                 time_store(cur_mc, cur_cr,cur_frac,cur_stage) = toc();
                 
-                frob_store(cur_mc, cur_cr,cur_frac,cur_stage) = L_mmf.froberror/normalization;
+                frob_store(cur_mc, cur_cr,cur_frac,cur_stage) = L_mmf.froberror/normalization^2;
                 L_mmf.delete();
             end
         end
