@@ -38,7 +38,7 @@ grid_size = 5;
 core_reduc_vec = 0.1 %linspace(0.1,0.99,grid_size);
 fraction_vec = 0.1 %linspace(0.1,0.99,grid_size);
 stages_vec = 5 %round(linspace(1,20,grid_size));
-max_cluster_vec = 200 %round(linspace(20,200,grid_size));
+max_cluster_vec = 20 %round(linspace(20,200,grid_size));
 frob_store = zeros(length(max_cluster_vec), length(core_reduc_vec),length(fraction_vec),length(stages_vec));
 time_store = zeros(size(frob_store));
 
@@ -68,6 +68,7 @@ end
 
 
 save('Data/GR-repL_fro.mat','core_reduc_vec','frob_store','frob_store_normed','normalization')
-save('Data/GR-repL_EVD.mat','core_reduc_vec','mmf_store','baseline_store')
+% hope to add soon!!
+%save('Data/GR-repL_EVD.mat','core_reduc_vec','mmf_store','baseline_store')
 
 
