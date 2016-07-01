@@ -67,7 +67,7 @@ for cur_cr = 1:length(core_reduc_vec)
 end
 
 
-save('Data/GR-repL_fro.mat','core_vec','frob_store','frob_store_normed','normalization')
-save('Data/GR-repL_EVD.mat','core_vec','mmf_store','baseline_store')
+save('Data/GR-repL_fro.mat','core_reduc_vec','frob_store','frob_store_normed','normalization')
+save('Data/GR-repL_EVD.mat','core_reduc_vec','mmf_store','baseline_store')
 
 
