@@ -54,7 +54,7 @@ for cur_cr = 1:length(core_reduc_vec)
             sprintf('1 \n')
             p.dcore = round((1-core_reduc_vec(cur_cr))*p.pts);
             sprintf('2 \n')
-            p.ndensestages = stages_vec(cur_stage);
+            p.nsparsestages = stages_vec(cur_stage);
             sprintf('3 \n')
             p.nclusters = -ceil(p.pts/p.maxclustersize);
             sprintf('4 \n')
