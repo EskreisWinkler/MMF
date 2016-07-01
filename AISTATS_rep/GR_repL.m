@@ -37,30 +37,30 @@ D = diag(sum(W,1));
 Lap = D-W;
 
 grid_size = 5;
-core_reduc_vec = 0.1 %linspace(0.1,0.99,grid_size);
-fraction_vec = 0.1 %linspace(0.1,0.99,grid_size);
-stages_vec = 5 %round(linspace(1,20,grid_size));
-max_cluster_vec = 20 %round(linspace(20,200,grid_size));
+core_reduc_vec = linspace(0.1,0.99,grid_size);
+fraction_vec = linspace(0.1,0.99,grid_size);
+stages_vec = round(linspace(1,20,grid_size));
+max_cluster_vec = round(linspace(20,200,grid_size));
 frob_store = zeros(length(max_cluster_vec), length(core_reduc_vec),length(fraction_vec),length(stages_vec));
 time_store = zeros(size(frob_store));
 
 p = SSL_params(1,1);
-sprintf('Start now \n')
+%sprintf('Start now \n')
 for cur_cr = 1:length(core_reduc_vec)
     % make nystrom predictions here:
     
     for cur_frac = 1:length(fraction_vec)
         for cur_stage = 1:length(stages_vec)
-            sprintf('1 \n')
+            sprintf('Current parameters: \n')
             p.dcore = round((1-core_reduc_vec(cur_cr))*p.pts);
-            sprintf('2 \n')
+            sprintf('dcore = %d \t',p.dcore)
             p.nsparsestages = stages_vec(cur_stage);
-            sprintf('3 \n')
+            sprintf('stages = %d \t',p.nsparsestages)
             p.nclusters = -ceil(p.pts/p.maxclustersize);
-            sprintf('4 \n')
             p.fraction = fraction_vec(cur_frac);
-            sprintf('5 \n')
-            p.verbosity = 1;
+            sprintf('fraction = %0.2f \t',p.fraction)
+            sprintf('\n\n')
+            p.verbosity = 0;
             
             tic();
             L_mmf = MMF(Lap,p);
