@@ -16,7 +16,7 @@ W = spalloc(c.num_nodes,c.num_nodes,3*c.num_edges);
 
 for cur_edge = 1:c.num_edges
     if mod(cur_edge,1000)==0
-        fprintf('cur_edge = %d \n', cur_edge)
+        %fprintf('cur_edge = %d \n', cur_edge)
     end
     i_name= data(cur_edge,1);
     j_name = data(cur_edge,2);
@@ -48,18 +48,17 @@ p = SSL_params(1,1);
 %sprintf('Start now \n')
 for cur_cr = 1:length(core_reduc_vec)
     % make nystrom predictions here:
-    
     for cur_frac = 1:length(fraction_vec)
         for cur_stage = 1:length(stages_vec)
-            sprintf('Current parameters: \n')
+            fprintf('Current parameters: \n')
             p.dcore = round((1-core_reduc_vec(cur_cr))*p.pts);
-            sprintf('dcore = %d \t',p.dcore)
+            fprintf('dcore = %d \t',p.dcore)
             p.nsparsestages = stages_vec(cur_stage);
-            sprintf('stages = %d \t',p.nsparsestages)
+            fprintf('stages = %d \t',p.nsparsestages)
             p.nclusters = -ceil(p.pts/p.maxclustersize);
             p.fraction = fraction_vec(cur_frac);
-            sprintf('fraction = %0.2f \t',p.fraction)
-            sprintf('\n\n')
+            fprintf('fraction = %0.2f \t',p.fraction)
+            fprintf('\n\n')
             p.verbosity = 0;
             
             tic();
