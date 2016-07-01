@@ -35,10 +35,11 @@ D = diag(sum(W,1));
 Lap = D-W;
 
 grid_size = 5;
-core_reduc_vec = linspace(0.1,0.99,grid_size);
-fraction_vec = linspace(0.01,0.99,grid_size);
-stages_vec = round(linspace(1,20,grid_size));
-frob_store = zeros(length(core_reduc_vec),length(fraction_vec),length(stages_vec));
+core_reduc_vec = 0.1 %linspace(0.1,0.99,grid_size);
+fraction_vec = 0.1 %linspace(0.1,0.99,grid_size);
+stages_vec = 5 %round(linspace(1,20,grid_size));
+max_cluster_vec = 200 %round(linspace(20,200,grid_size));
+frob_store = zeros(length(max_cluster_vec), length(core_reduc_vec),length(fraction_vec),length(stages_vec));
 time_store = zeros(size(frob_store));
 
 p = SSL_params(1,1);
@@ -66,7 +67,7 @@ for cur_cr = 1:length(core_reduc_vec)
 end
 
 
-
-save('Data/GR-repL.mat','time_store','frob_store')
+save('Data/GR-repL_fro.mat','core_vec','frob_store','frob_store_normed','normalization')
+save('Data/GR-repL_EVD.mat','core_vec','mmf_store','baseline_store')
 
 
