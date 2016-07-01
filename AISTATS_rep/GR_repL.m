@@ -59,7 +59,7 @@ for cur_cr = 1:length(core_reduc_vec)
             p.fraction = fraction_vec(cur_frac);
             fprintf('fraction = %0.2f \t',p.fraction)
             fprintf('\n\n')
-            p.verbosity = 1;
+            p.verbosity = 0;
             
             tic();
             L_mmf = MMF(Lap,p);
