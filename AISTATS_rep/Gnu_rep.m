@@ -1,6 +1,6 @@
 addpath_ssl(1) % change
 
-data = csvread('Data/p2p-Gnutella06.csv');%%%
+data = csvread('Data/p2p-Gnutella06.csv');
 p = SSL_params(1,1);
 c.num_edges = size(data,1);
 
@@ -14,7 +14,7 @@ W = spalloc(c.num_nodes,c.num_nodes,3*c.num_edges);
 
 for cur_edge = 1:c.num_edges
     if mod(cur_edge,1000)==0
-        fprintf('cur_edge = %d \n', cur_edge)
+        %fprintf('cur_edge = %d \n', cur_edge)
     end
     i_name= data(cur_edge,1);
     j_name = data(cur_edge,2);
