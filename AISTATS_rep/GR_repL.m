@@ -1,3 +1,5 @@
+function[] = GR_repL()
+
 addpath_ssl(1) % change
 
 data = csvread('Data/ca-GrQc.csv');
@@ -43,17 +45,22 @@ frob_store = zeros(length(max_cluster_vec), length(core_reduc_vec),length(fracti
 time_store = zeros(size(frob_store));
 
 p = SSL_params(1,1);
-
+sprintf('Start now \n')
 for cur_cr = 1:length(core_reduc_vec)
     % make nystrom predictions here:
     
     for cur_frac = 1:length(fraction_vec)
         for cur_stage = 1:length(stages_vec)
+            sprintf('1 \n')
             p.dcore = round((1-core_reduc_vec(cur_cr))*p.pts);
+            sprintf('2 \n')
             p.ndensestages = stages_vec(cur_stage);
+            sprintf('3 \n')
             p.nclusters = -ceil(p.pts/p.maxclustersize);
+            sprintf('4 \n')
             p.fraction = fraction_vec(cur_frac);
-            p.verbosity = 0;
+            sprintf('5 \n')
+            p.verbosity = 1;
             
             tic();
             L_mmf = MMF(Lap,p);
