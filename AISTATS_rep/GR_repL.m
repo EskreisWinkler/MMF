@@ -45,7 +45,7 @@ frob_store = zeros(length(max_cluster_vec), length(core_reduc_vec),length(fracti
 time_store = zeros(size(frob_store));
 
 p = SSL_params(1,1);
-%sprintf('Start now \n')
+%fprintf('Start now \n')
 for cur_cr = 1:length(core_reduc_vec)
     % make nystrom predictions here:
     for cur_frac = 1:length(fraction_vec)
@@ -59,7 +59,7 @@ for cur_cr = 1:length(core_reduc_vec)
             p.fraction = fraction_vec(cur_frac);
             fprintf('fraction = %0.2f \t',p.fraction)
             fprintf('\n\n')
-            p.verbosity = 0;
+            p.verbosity = 1;
             
             tic();
             L_mmf = MMF(Lap,p);
