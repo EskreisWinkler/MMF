@@ -39,10 +39,10 @@ for cur_node = 1:c.num_nodes
 end
 p.num_core = 10;
 core_vec = linspace(0.01,0.99,p.num_core);
-err_store = zeros(size(core_vec));
-for cur_core = 1:length(core_vec)
+frob_store = zeros(size(core_vec));
+for cur_cr = 1:length(core_vec)
         
-        p.dcore = round((1-core_vec(cur_core))*c.num_nodes);
+        p.dcore = round((1-core_vec(cur_cr))*c.num_nodes);
         p.ndensestages = 15;
         p.nclusters = -ceil(c.num_nodes/p.maxclustersize);
         p.fraction = 0.3;
@@ -51,10 +51,10 @@ for cur_core = 1:length(core_vec)
         tic();
         Lap_mmf = MMF(Lap,p);
         toc();
-        err_store(cur_core) = Lap_mmf.froberror;
+        frob_store(cur_cr) = Lap_mmf.froberror;
         Lap_mmf.delete();
 end
-err_store_normed = err_store/normalization;
+frob_store_normed = frob_store/(normalization^2);
 
 % now work on EVD as an interpretation for what is going on:
 k = 100; 
@@ -70,7 +70,7 @@ for cur_cr = 1:length(core_vec)
     p.nsparsestages = 6; % based on what I had before.
     p.nclusters = -ceil(p.pts/p.maxclustersize);
     p.fraction = 0.3;
-    p.verbosity = 1;
+    p.verbosity = 0;
     
     L_mmf = MMF(Lap,p);
     
@@ -85,11 +85,11 @@ for cur_cr = 1:length(core_vec)
     
     [mmf_store{cur_cr}.V D] = eig(L_temp);
     mmf_store{cur_cr}.D = diag(D);
-    %frob_store(cur_cr) = K_mmf.froberror;
+    %frob_store(cur_cr) = L_mmf.froberror;
     
-    K_mmf.delete();
+    L_mmf.delete();
 end
 
-save('Data/Gnu_rep_fro.mat','core_vec','err_store','err_store_normed','normalization')
-save('Data/Gnu_rep_EVD.mat','core_vec','mmf_store','baseline_store')
+save('Data/GR_rep_fro.mat','core_vec','frob_store','frob_store_normed','normalization')
+save('Data/GR_rep_EVD.mat','core_vec','mmf_store','baseline_store')
 
