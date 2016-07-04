@@ -31,11 +31,10 @@ tic();
 K = pinv(Lap);
 time = toc();
 [V D] = eig(K);
-mmf_store = cell(length(core_reduc_vec),1);
+%mmf_store = cell(length(core_reduc_vec),1);
 frob_store = zeros(size(core_reduc_vec));
 % K = V*D*V'
 
-keyboard
 for cur_cr = 1:length(core_reduc_vec)
     p.dcore = round((1-core_reduc_vec(cur_cr))*p.pts);
     p.ndensestages = 6; % based on what I had before.
@@ -46,22 +45,27 @@ for cur_cr = 1:length(core_reduc_vec)
     K_mmf = MMF(Lap,p);
     K_mmf.invert();
     
-    mmf_store{cur_cr}.V = zeros(size(V));
-    mmf_store{cur_cr}.D = zeros(size(V,1),1);
+    eval(sprintf('mmf_store%d.V = zeros(size(V));',cur_cr));
+    eval(sprintf('mmf_store%d.D = zeros(size(V,1),1);',cur_cr));
     
     K_temp = zeros(size(V));
-    for col = 1:length(mmf_store{cur_cr}.D)
+    
+    for col = 1:length(diag(D))
+        fprintf('We are %2.2f of the way there\n',col/length(diag(D)))
         e_vec = zeros(size(V,1),1); e_vec(col)=1;
         K_temp(:,col) = K_mmf.hit(e_vec);
     end
     
-    [mmf_store{cur_cr}.V D] = eig(K_temp);
-    mmf_store{cur_cr}.D = diag(D);
+    [Vm D] = eig(K_temp);
+    eval(sprintf('mmf_store%d.V = Vm;',cur_cr));
+    eval(sprintf('mmf_store%d.D = diag(D);',cur_cr));
     frob_store(cur_cr) = K_mmf.froberror;
     
     K_mmf.delete();
 end
 
 
-save(sprintf('Data/jonjonreview2_%s_graph%d.mat',dataset_name,graph_type),'V','D',...
-    'mmf_store','core_reduc_vec', 'frob_store')
+
+save(sprintf('Data/review2_%s_graph%d.mat',dataset_name,graph_type),'V','D',...
+    'core_reduc_vec', 'frob_store',...
+    'mmf_store1','mmf_store2','mmf_store3','mmf_store4','mmf_store5')
