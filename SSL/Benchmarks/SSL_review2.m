@@ -35,6 +35,7 @@ mmf_store = cell(length(core_reduc_vec),1);
 frob_store = zeros(size(core_reduc_vec));
 % K = V*D*V'
 
+keyboard
 for cur_cr = 1:length(core_reduc_vec)
     p.dcore = round((1-core_reduc_vec(cur_cr))*p.pts);
     p.ndensestages = 6; % based on what I had before.
@@ -62,5 +63,5 @@ for cur_cr = 1:length(core_reduc_vec)
 end
 
 
-save(sprintf('Data/review2_%s_graph%d.mat',dataset_name,graph_type),'V','D',...
+save(sprintf('Data/jonjonreview2_%s_graph%d.mat',dataset_name,graph_type),'V','D',...
     'mmf_store','core_reduc_vec', 'frob_store')
