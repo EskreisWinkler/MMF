@@ -13,7 +13,8 @@ grid_size = 5;
 core_reduc_vec = linspace(0.1,0.99,grid_size);
 fraction_vec = linspace(0.01,0.99,grid_size);
 stages_vec = round(linspace(1,20,grid_size));
-res_store = zeros(length(core_reduc_vec),length(fraction_vec),length(stages_vec));
+max_cluster_vec = round(linspace(20,200,grid_size));
+res_store = zeros(length(core_reduc_vec),length(fraction_vec),length(stages_vec),length(max_cluster_vec));
 frob_store = res_store;
 time_store = zeros(size(res_store));
 
@@ -59,38 +60,38 @@ for cur_draw = 1:p.draws
     
     bench_res(cur_draw) = ...
         sum(f_u_hat == y(unobserved_inds))/(length(unobserved_inds));
-
-    for cur_cr = 1:length(core_reduc_vec)
-        % make nystrom predictions here:
-        
-        for cur_frac = 1:length(fraction_vec)
-            for cur_stage = 1:length(stages_vec)
-                p.dcore = round((1-core_reduc_vec(cur_cr))*p.pts);
-                p.ndensestages = stages_vec(cur_stage);
-                p.nclusters = -ceil(p.pts/p.maxclustersize);
-                p.fraction = fraction_vec(cur_frac);
-                p.verbosity = 0;
-                
-                tic();
-                K_mmf = MMF(Lap,p);
-                K_mmf.invert();
-                K_star = zeros(p.pts,length(observed_inds));
-                for i = 1:length(observed_inds)
-                    e = zeros(p.pts,1); e(observed_inds(i))=1;
-                    K_star(:,i) = K_mmf.hit(e);
+    for cur_mc = 1:length(max_cluster_vec)
+        for cur_cr = 1:length(core_reduc_vec)
+            % make nystrom predictions here:
+            for cur_frac = 1:length(fraction_vec)
+                for cur_stage = 1:length(stages_vec)
+                    p.dcore = round((1-core_reduc_vec(cur_cr))*p.pts);
+                    p.nsparsestages = stages_vec(cur_stage);
+                    p.maxclustersize = max_cluster_vec(cur_mc)
+                    p.nclusters = -ceil(p.pts/p.maxclustersize);
+                    p.fraction = fraction_vec(cur_frac);
+                    p.verbosity = 0;
+                    tic();
+                    K_mmf = MMF(Lap,p);
+                    K_mmf.invert();
+                    K_star = zeros(p.pts,length(observed_inds));
+                    for i = 1:length(observed_inds)
+                        e = zeros(p.pts,1); e(observed_inds(i))=1;
+                        K_star(:,i) = K_mmf.hit(e);
+                    end
+                    
+                    f_u_pre = K_star(unobserved_inds,:)*(K_star(observed_inds,:)\f_o);
+                    
+                    th = prctile(f_u_pre,prior*100);
+                    f_u_hat = p.ids(1)*(f_u_pre<=th)+ p.ids(2)*(f_u_pre>th);
+                    time_store(cur_mc, cur_cr,cur_frac,cur_stage) = time_store(cur_mc, cur_cr,cur_frac,cur_stage)+ ...
+                        (1/p.draws)*toc();
+                    
+                    res_store(cur_mc,cur_cr,cur_frac,cur_stage) = res_store(cur_mc, cur_cr,cur_frac,cur_stage)+...
+                        (1/p.draws)*sum(f_u_hat == y(unobserved_inds))/(length(unobserved_inds));
+                    frob_store(cur_mc, cur_cr,cur_frac,cur_stage) = K_mmf.froberror;
+                    K_mmf.delete();
                 end
-                
-                f_u_pre = K_star(unobserved_inds,:)*(K_star(observed_inds,:)\f_o);
-                
-                th = prctile(f_u_pre,prior*100);
-                f_u_hat = p.ids(1)*(f_u_pre<=th)+ p.ids(2)*(f_u_pre>th);
-                time_store(cur_cr,cur_frac,cur_stage) = time_store(cur_cr,cur_frac,cur_stage)+ ...
-                    (1/p.draws)*toc();
-                
-                res_store(cur_cr,cur_frac,cur_stage) = res_store(cur_cr,cur_frac,cur_stage)+...
-                    (1/p.draws)*sum(f_u_hat == y(unobserved_inds))/(length(unobserved_inds));
-                frob_store(cur_cr,cur_frac,cur_stage) = K_mmf.froberror;
-                K_mmf.delete();
             end
         end
     end
