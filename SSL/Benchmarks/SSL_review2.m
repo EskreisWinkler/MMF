@@ -51,7 +51,7 @@ for cur_cr = 1:length(core_reduc_vec)
     K_temp = zeros(size(V));
     
     for col = 1:length(diag(D))
-        fprintf('We are %2.2f of the way there\n',col/length(diag(D)))
+        %fprintf('We are %2.2f of the way there\n',col/length(diag(D)))
         e_vec = zeros(size(V,1),1); e_vec(col)=1;
         K_temp(:,col) = K_mmf.hit(e_vec);
     end
@@ -68,4 +68,4 @@ end
 
 save(sprintf('Data/review2_%s_graph%d.mat',dataset_name,graph_type),'V','D',...
     'core_reduc_vec', 'frob_store',...
-    'mmf_store1','mmf_store2','mmf_store3','mmf_store4','mmf_store5')
+    'mmf_store1','mmf_store2','mmf_store3','mmf_store4','mmf_store5') % assuming a grid of 5
