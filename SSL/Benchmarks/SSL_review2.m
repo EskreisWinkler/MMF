@@ -30,7 +30,16 @@ p.num_observed = round(0.1*p.pts);
 tic();
 K = pinv(Lap);
 time = toc();
-[V D] = eig(K);
+p.num_eigs = 20;
+[V, D] = eig(K);
+
+evals = [real(diag(D)) (1:size(D,1))'];
+evals_sort = sort(evals,1); % low to high
+benchmark.D = evals_sort(:,1);
+V = V(:,evals_sort(:,2));
+benchmark.V_lo = V(:,1:p.num_eigs);
+benchmark.V_hi = V(:,(end-p.num_eigs+1):end);
+% need to select the biggest ones:
 %mmf_store = cell(length(core_reduc_vec),1);
 frob_store = zeros(size(core_reduc_vec));
 % K = V*D*V'
@@ -51,14 +60,18 @@ for cur_cr = 1:length(core_reduc_vec)
     K_temp = zeros(size(V));
     
     for col = 1:length(diag(D))
-        %fprintf('We are %2.2f of the way there\n',col/length(diag(D)))
+        fprintf('We are %2.2f of the way there\n',col/length(diag(D)))
         e_vec = zeros(size(V,1),1); e_vec(col)=1;
         K_temp(:,col) = K_mmf.hit(e_vec);
     end
     
-    [Vm D] = eig(K_temp);
-    eval(sprintf('mmf_store%d.V = Vm;',cur_cr));
-    eval(sprintf('mmf_store%d.D = diag(D);',cur_cr));
+    [V D] = eig(K_temp);
+    evals = [real(diag(D)) (1:size(D,1))'];
+    evals_sort = sort(evals,1); 
+    eval(sprintf('mmf_store%d.D = evals_sort(:,1);',cur_cr));
+    V = V(:,evals_sort(:,2));
+    eval(sprintf('mmf_store%d.V_lo = V(:,1:p.num_eigs);',cur_cr));
+    eval(sprintf('mmf_store%d.V_hi = V(:,(end-p.num_eigs+1):end);;',cur_cr));
     frob_store(cur_cr) = K_mmf.froberror;
     
     K_mmf.delete();
