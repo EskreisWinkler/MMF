@@ -72,7 +72,7 @@ for cur_draw = 1:p.draws
                     fprintf('Current Num Stages: %d\t',p.nsparsestages)
                     p.maxclustersize = max_cluster_vec(cur_mc);
                     fprintf('Current Num Stages: %d\t',p.maxclustersize)
-                    p.nclusters = -ceil(p.pts/p.maxclustersize);
+                    p.nclusters = ceil(p.pts/p.maxclustersize);
                     fprintf('Current Cluster Size: %d\t',p.nclusters)
                     
                     p.fraction = fraction_vec(cur_frac);
