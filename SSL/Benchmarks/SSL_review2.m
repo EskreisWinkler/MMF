@@ -75,10 +75,12 @@ for cur_cr = 1:length(core_reduc_vec)
     frob_store(cur_cr) = K_mmf.froberror;
     
     K_mmf.delete();
+
+	keyboard
 end
 
 
 
-save(sprintf('Data/review2_%s_graph%d.mat',dataset_name,graph_type),'V','D',...
+save(sprintf('Data/review2_%s_graph%d.mat',dataset_name,graph_type),'benchmark',...
     'core_reduc_vec', 'frob_store',...
     'mmf_store1','mmf_store2','mmf_store3','mmf_store4','mmf_store5') % assuming a grid of 5

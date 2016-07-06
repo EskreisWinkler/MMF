@@ -65,11 +65,19 @@ for cur_draw = 1:p.draws
             % make nystrom predictions here:
             for cur_frac = 1:length(fraction_vec)
                 for cur_stage = 1:length(stages_vec)
+                    
                     p.dcore = round((1-core_reduc_vec(cur_cr))*p.pts);
+                    fprintf('Current Core Size: %d\t',p.dcore)
                     p.nsparsestages = stages_vec(cur_stage);
-                    p.maxclustersize = max_cluster_vec(cur_mc)
+                    fprintf('Current Num Stages: %d\t',p.nsparsestages)
+                    p.maxclustersize = max_cluster_vec(cur_mc);
+                    fprintf('Current Num Stages: %d\t',p.maxclustersize)
                     p.nclusters = -ceil(p.pts/p.maxclustersize);
+                    fprintf('Current Cluster Size: %d\t',p.nclusters)
+                    
                     p.fraction = fraction_vec(cur_frac);
+                    fprintf('Current Fraction: %0.2f\t',p.fraction)
+                    fprintf('\n\n')
                     p.verbosity = 0;
                     tic();
                     K_mmf = MMF(Lap,p);
@@ -98,7 +106,6 @@ for cur_draw = 1:p.draws
 end
 
 
-save(sprintf('Data/review_%s_graph%d_draws%d.mat',dataset_name,graph_type,draws),'res_store','time_store',...
-    'bench_res','bench_time', 'frob_store')
+save(sprintf('Data/review_%s_graph%d_draws%d_INNERP.mat',dataset_name,graph_type,draws),'res_store','time_store','bench_res','bench_time', 'frob_store')
 
 
