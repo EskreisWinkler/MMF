@@ -75,8 +75,6 @@ for cur_cr = 1:length(core_reduc_vec)
     frob_store(cur_cr) = K_mmf.froberror;
     
     K_mmf.delete();
-
-	keyboard
 end
 
 
