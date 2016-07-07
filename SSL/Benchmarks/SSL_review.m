@@ -16,7 +16,7 @@ fraction_vec = [0.2 0.4 0.6];
 stages_vec = round(linspace(1,10,grid_size));
 max_cluster_vec = round(linspace(20,200,grid_size));
 max_cluster_vec = [20 100 200];
-res_store = zeros(length(core_reduc_vec),length(fraction_vec),length(stages_vec),length(max_cluster_vec));
+res_store = zeros(length(max_cluster_vec),length(core_reduc_vec),length(fraction_vec),length(stages_vec));
 frob_store = res_store;
 time_store = zeros(size(res_store));
 
@@ -68,17 +68,21 @@ for cur_draw = 1:p.draws
             for cur_frac = 1:length(fraction_vec)
                 for cur_stage = 1:length(stages_vec)
                     
-                    p.dcore = round((1-core_reduc_vec(cur_cr))*p.pts);
-                    fprintf('Current Core Size: %d\t',p.dcore)
-                    p.ndensestages = stages_vec(cur_stage);
-                    fprintf('Current Num Stages: %d\t',p.ndensestages)
                     p.maxclustersize = max_cluster_vec(cur_mc);
                     p.nclusters = round(p.pts/p.maxclustersize);
                     fprintf('Current Num Clusters: %d\t',round(p.pts/p.maxclustersize))
+                    
+                    p.dcore = round((1-core_reduc_vec(cur_cr))*p.pts);
+                    fprintf('Current Core Size: %d\t',p.dcore)
+                    
                     p.fraction = fraction_vec(cur_frac);
                     fprintf('Current Fraction: %0.2f\t',p.fraction)
+                    
+                    p.ndensestages = stages_vec(cur_stage);
+                    fprintf('Current Num Stages: %d\t',p.ndensestages)
+                    
                     fprintf('\n')
-                    p.verbosity = 1;
+                    p.verbosity = 0;
                     tic();
                     
                     K_mmf = MMF(Lap,p);
@@ -86,7 +90,7 @@ for cur_draw = 1:p.draws
                     K_star = zeros(p.pts,length(observed_inds));
                     for i = 1:length(observed_inds)
                         if mod(i,100)==0
-                            fprintf('We are %0.2f$ of the way there \n', i/ length(observed_inds));
+                            %fprintf('We are %0.2f of the way there \n', i/ length(observed_inds));
                         end
                         e = zeros(p.pts,1); e(observed_inds(i))=1;
                         K_star(:,i) = K_mmf.hit(e);
