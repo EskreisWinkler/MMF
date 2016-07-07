@@ -73,6 +73,7 @@ for cur_draw = 1:p.draws
                     p.ndensestages = stages_vec(cur_stage);
                     fprintf('Current Num Stages: %d\t',p.ndensestages)
                     p.maxclustersize = max_cluster_vec(cur_mc);
+                    p.nclusters = round(p.pts/p.maxclustersize);
                     fprintf('Current Num Clusters: %d\t',round(p.pts/p.maxclustersize))
                     p.fraction = fraction_vec(cur_frac);
                     fprintf('Current Fraction: %0.2f\t',p.fraction)
