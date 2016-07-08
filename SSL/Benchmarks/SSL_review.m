@@ -22,7 +22,7 @@ time_store = zeros(size(res_store));
 
 % First choose a dataset
 rng('shuffle')
-server = 2;
+server = 1;
 addpath_ssl(server);
 
 [X,y,dataset_name] = load_SSL(dataset_ind);
