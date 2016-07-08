@@ -28,6 +28,9 @@ addpath_ssl(server);
 
 [X,y,dataset_name] = load_SSL(dataset_ind);
 
+s = sprintf('output/review_data%s_graph%d.out',dataset_name,graph_type);
+fileID = fopen(s,'w');
+
 p = SSL_params(y,dataset_ind);
 p.draws = draws;
 p.nn = 3;
@@ -71,21 +74,21 @@ for cur_draw = 1:p.draws
                     
                     p.maxclustersize = max_cluster_vec(cur_mc);
                     p.nclusters = round(p.pts/p.maxclustersize);
-                    fprintf('Current Num Clusters: %d\t',round(p.pts/p.maxclustersize))
+                    fprintf(fileID,'Current Num Clusters: %d\t',round(p.pts/p.maxclustersize));
                     
                     p.dcore = round((1-core_reduc_vec(cur_cr))*p.pts);
-                    fprintf('Current Core Size: %d\t',p.dcore)
+                    fprintf(fileID,'Current Core Size: %d\t',p.dcore);
                     
                     p.fraction = fraction_vec(cur_frac);
-                    fprintf('Current Fraction: %0.2f\t',p.fraction)
+                    fprintf(fileID,'Current Fraction: %0.2f\t',p.fraction);
                     
                     p.ndensestages = stages_vec(cur_stage);
-                    fprintf('Current Num Stages: %d\t',p.ndensestages)
+                    fprintf(fileID,'Current Num Stages: %d\t',p.ndensestages);
                     
-                    fprintf('\n')
+                    fprintf(fileID,'\n');
                     p.verbosity = 0;
                     tic();
-                    
+
                     K_mmf = MMF(Lap,p);
                     K_mmf.invert();
                     K_star = zeros(p.pts,length(observed_inds));
@@ -113,6 +116,7 @@ for cur_draw = 1:p.draws
         end
     end
 end
+fclose(fileID);
 
 
 save(sprintf('Data/review_%s_graph%d_draws%d_INNERP.mat',dataset_name,graph_type,draws),'res_store','time_store','bench_res','bench_time', 'frob_store')
