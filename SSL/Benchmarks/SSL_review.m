@@ -1,4 +1,4 @@
-function[] =SSL_review(dataset_ind,graph_type,draws)
+function[] =SSL_review(dataset_ind,graph_type)
 
 % want to investigate dependencies of
 %   (1) core_reduc (dcore),
@@ -8,6 +8,7 @@ function[] =SSL_review(dataset_ind,graph_type,draws)
 %
 % -> As expressed by accuracy and frobenius error.
 
+draws=5;
 
 grid_size = 5;
 core_reduc_vec = linspace(0.1,0.99,grid_size);
