@@ -19,16 +19,20 @@ max_cluster_vec = round(linspace(20,200,grid_size));
 max_cluster_vec = [20 100 200];
 res_store = zeros(length(max_cluster_vec),length(core_reduc_vec),length(fraction_vec),length(stages_vec));
 frob_store = res_store;
+frob_store_rel = frob_store;
+actual_core_size = frob_store;
+actual_stages = frob_store;
 time_store = zeros(size(res_store));
+stages_store = cell(length(max_cluster_vec),length(core_reduc_vec),length(fraction_vec),length(stages_vec));
 
 % First choose a dataset
 rng('shuffle')
-server = 1;
+server = 2; % change
 addpath_ssl(server);
 
 [X,y,dataset_name] = load_SSL(dataset_ind);
 
-s = sprintf('output/review_data%s_graph%d.out',dataset_name,graph_type);
+s = sprintf('output/review_%s_graph%d.out',dataset_name,graph_type);
 fileID = fopen(s,'w');
 
 p = SSL_params(y,dataset_ind);
@@ -88,7 +92,7 @@ for cur_draw = 1:p.draws
                     fprintf(fileID,'\n');
                     p.verbosity = 0;
                     tic();
-
+                    
                     K_mmf = MMF(Lap,p);
                     K_mmf.invert();
                     K_star = zeros(p.pts,length(observed_inds));
@@ -109,7 +113,25 @@ for cur_draw = 1:p.draws
                     
                     res_store(cur_mc,cur_cr,cur_frac,cur_stage) = res_store(cur_mc, cur_cr,cur_frac,cur_stage)+...
                         (1/p.draws)*sum(f_u_hat == y(unobserved_inds))/(length(unobserved_inds));
-                    frob_store(cur_mc, cur_cr,cur_frac,cur_stage) = K_mmf.froberror;
+                    frob_store(cur_mc, cur_cr,cur_frac,cur_stage) = K_mmf.diagnostic.frob_error;
+                    frob_store_rel(cur_mc, cur_cr,cur_frac,cur_stage) = K_mmf.diagnostic.rel_error;
+                    
+                    % store core sizes
+                    actual_core_size(cur_mc, cur_cr,cur_frac,cur_stage) = K_mmf.diagnostic.core_size;
+                    % store distribution of clusters
+                    actual_stages(cur_mc, cur_cr,cur_frac,cur_stage) = size(K_mmf.diagnostic.stages,1);
+                    for i = 1:actual_stages(cur_mc, cur_cr,cur_frac,cur_stage)
+                        if i==1
+                            s_tot = sprintf('a%d',i);
+                        else
+                            s = sprintf(',a%d',i);
+                            s_tot =  sprintf('%s%s',s_tot,s);
+                        end
+                        s = sprintf('[%s] = K_mmf.diagnostic.stages.cluster_sizes;',s_tot);
+                        eval(s);
+                        s = sprintf('stages_store{cur_mc, cur_cr,cur_frac,cur_stage}= [%s];d',s_tot);
+                        eval(s);
+                    end
                     K_mmf.delete();
                 end
             end
@@ -119,6 +141,8 @@ end
 fclose(fileID);
 
 
-save(sprintf('Data/review_%s_graph%d_draws%d_INNERP.mat',dataset_name,graph_type,draws),'res_store','time_store','bench_res','bench_time', 'frob_store')
+save(sprintf('Data/review_%s_graph%d_draws%d_INNERP.mat',dataset_name,graph_type,draws),'res_store','time_store','bench_res','bench_time', 'frob_store',...
+        'frob_store_rel','actual_core_size','actual_stages','stages_stores',...
+        'core_reduc_vec', 'fraction_vec','stages_vec','max_cluster_vec')
 
 
