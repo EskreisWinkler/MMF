@@ -113,7 +113,6 @@ for cur_draw = 1:p.draws
                     
                     res_store(cur_mc,cur_cr,cur_frac,cur_stage) = res_store(cur_mc, cur_cr,cur_frac,cur_stage)+...
                         (1/p.draws)*sum(f_u_hat == y(unobserved_inds))/(length(unobserved_inds));
-                    keyboard
                     frob_store(cur_mc, cur_cr,cur_frac,cur_stage) = K_mmf.diagnostic.frob_error;
                     frob_store_rel(cur_mc, cur_cr,cur_frac,cur_stage) = K_mmf.diagnostic.rel_error;
                     
