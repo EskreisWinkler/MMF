@@ -97,9 +97,9 @@ for cur_draw = 1:p.draws
                     K_mmf.invert();
                     K_star = zeros(p.pts,length(observed_inds));
                     for i = 1:length(observed_inds)
-                        if mod(i,100)==0
+                        %if mod(i,100)==0
                             %fprintf('We are %0.2f of the way there \n', i/ length(observed_inds));
-                        end
+                        %end
                         e = zeros(p.pts,1); e(observed_inds(i))=1;
                         K_star(:,i) = K_mmf.hit(e);
                     end
@@ -113,6 +113,7 @@ for cur_draw = 1:p.draws
                     
                     res_store(cur_mc,cur_cr,cur_frac,cur_stage) = res_store(cur_mc, cur_cr,cur_frac,cur_stage)+...
                         (1/p.draws)*sum(f_u_hat == y(unobserved_inds))/(length(unobserved_inds));
+                    keyboard
                     frob_store(cur_mc, cur_cr,cur_frac,cur_stage) = K_mmf.diagnostic.frob_error;
                     frob_store_rel(cur_mc, cur_cr,cur_frac,cur_stage) = K_mmf.diagnostic.rel_error;
                     
