@@ -128,9 +128,9 @@ for cur_draw = 1:p.draws
                             s_tot =  sprintf('%s%s',s_tot,s);
                         end
                         s = sprintf('[%s] = K_mmf.diagnostic.stages.cluster_sizes;',s_tot);
-                        eval(s);
+                        %eval(s);
                         s = sprintf('stages_store{cur_mc, cur_cr,cur_frac,cur_stage}= [%s];',s_tot);
-                        eval(s);
+                        %eval(s);
                     end
                     K_mmf.delete();
                 end
