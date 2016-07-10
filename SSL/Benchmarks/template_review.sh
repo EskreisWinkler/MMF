@@ -7,4 +7,4 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=12
 
-LD_PRELOAD="/software/gcc-4.9-el6-x86_64/lib64/libstdc++.so.6" matlab -nodisplay -nojvm -r "addpath('/home/eskreiswinkler/MMF/SSL/Benchmarks'); SSL_review(%1%,%2%,%3%); exit;" 
+LD_PRELOAD="/software/gcc-4.9-el6-x86_64/lib64/libstdc++.so.6" matlab -nodisplay -nojvm -r "addpath('/home/eskreiswinkler/MMF/SSL/Benchmarks'); SSL_review(%1%,%2%); exit;" 
