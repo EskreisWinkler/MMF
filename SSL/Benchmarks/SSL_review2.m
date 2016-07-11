@@ -8,6 +8,7 @@ function[] =SSL_review2(dataset_ind,graph_type)
 
 
 grid_size = 20;
+grid_size = 1;
 core_reduc_vec = linspace(0.1,0.99,grid_size);
 
 
@@ -75,6 +76,6 @@ for i = 1:length(core_reduc_vec)
     end
 end
 
-term1 = sprintf('Data/review2_%s_graph%d.mat',dataset_name,graph_type);
-s = sprintf('save(%s,\''benchmark\'',\''core_reduc_vec\'',\''frob_store\'',%s);',term1,s_tot)
+term1 = sprintf('\''Data/review2_%s_graph%d.mat\''',dataset_name,graph_type);
+s = sprintf('save(%s,\''benchmark\'',\''core_reduc_vec\'',\''frob_store\'',%s);',term1,s_tot);
 eval(s);
