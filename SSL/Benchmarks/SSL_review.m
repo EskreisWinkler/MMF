@@ -132,7 +132,7 @@ for cur_draw = 1:p.draws
                         s = sprintf('stages_store{cur_mc, cur_cr,cur_frac,cur_stage}= [%s];',s_tot);
                         %eval(s);
                     end
-                    K_mmf.delete();
+                    %K_mmf.delete();
                 end
             end
         end
