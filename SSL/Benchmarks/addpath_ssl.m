@@ -8,6 +8,7 @@ elseif server == 1; % aitken
 elseif server==2 %rcc
     risi = '/home/eskreiswinkler/MMF/';
     mmf = '/home/eskreiswinkler/mmfc/release1.0/pMMF/matlab/';
+    mmf = '/home/eskreiswinkler/mmfc/v4/src/matlab/';
 end
 
 addpath(sprintf('%sSSL/Buffalo/',risi),sprintf('%s/SSL/Benchmarks/',risi));
