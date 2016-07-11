@@ -7,7 +7,7 @@ function[] =SSL_review2(dataset_ind,graph_type)
 % as expressed by projection of response onto different e-vecs of spectrum
 
 
-grid_size = 5;
+grid_size = 20;
 core_reduc_vec = linspace(0.1,0.99,grid_size);
 
 
@@ -30,7 +30,7 @@ p.num_observed = round(0.1*p.pts);
 tic();
 K = pinv(Lap);
 time = toc();
-p.num_eigs = 20;
+p.num_eigs = 50;
 [V, D] = eig(K);
 
 evals = [real(diag(D)) (1:size(D,1))'];
@@ -54,20 +54,9 @@ for cur_cr = 1:length(core_reduc_vec)
     K_mmf = MMF(Lap,p);
     K_mmf.invert();
     
-    eval(sprintf('mmf_store%d.V = zeros(size(V));',cur_cr));
-    eval(sprintf('mmf_store%d.D = zeros(size(V,1),1);',cur_cr));
-    
-    K_temp = zeros(size(V));
-    
-    for col = 1:length(diag(D))
-        fprintf('We are %2.2f of the way there\n',col/length(diag(D)))
-        e_vec = zeros(size(V,1),1); e_vec(col)=1;
-        K_temp(:,col) = K_mmf.hit(e_vec);
-    end
-    
-    [V D] = eig(K_temp);
+    [V, D] = eig(K_mmf.recontruction);
     evals = [real(diag(D)) (1:size(D,1))'];
-    evals_sort = sort(evals,1); 
+    evals_sort = sort(evals,1);
     eval(sprintf('mmf_store%d.D = evals_sort(:,1);',cur_cr));
     V = V(:,evals_sort(:,2));
     eval(sprintf('mmf_store%d.V_lo = V(:,1:p.num_eigs);',cur_cr));
@@ -77,8 +66,15 @@ for cur_cr = 1:length(core_reduc_vec)
     K_mmf.delete();
 end
 
+for i = 1:length(core_reduc_vec)
+    if i==1
+        s_tot = sprintf('\''mmf_store%d\''',i);
+    else
+        s = sprintf(',\''mmf_store%d\''',i);
+        s_tot =  sprintf('%s%s',s_tot,s);
+    end
+end
 
-
-save(sprintf('Data/review2_%s_graph%d.mat',dataset_name,graph_type),'benchmark',...
-    'core_reduc_vec', 'frob_store',...
-    'mmf_store1','mmf_store2','mmf_store3','mmf_store4','mmf_store5') % assuming a grid of 5
+term1 = sprintf('Data/review2_%s_graph%d.mat',dataset_name,graph_type);
+s = sprintf('save(%s,\''benchmark\'',\''core_reduc_vec\'',\''frob_store\'',%s);',term1,s_tot)
+eval(s);
