@@ -73,64 +73,63 @@ for cur_draw = 1:p.draws
         for cur_cr = 1:length(core_reduc_vec)
             % make nystrom predictions here:
             for cur_frac = 1:length(fraction_vec)
-                    
-                    p.maxclustersize = max_cluster_vec(cur_mc);
-                    p.nclusters = round(p.pts/p.maxclustersize);
-                    fprintf(fileID,'Current Num Clusters: %d\t',round(p.pts/p.maxclustersize));
-                    
-                    p.dcore = round((1-core_reduc_vec(cur_cr))*p.pts);
-                    fprintf(fileID,'Current Core Size: %d\t',p.dcore);
-                    
-                    p.fraction = fraction_vec(cur_frac);
-                    fprintf(fileID,'Current Fraction: %0.2f\t',p.fraction);
-                    
-                    
-                    
-                    fprintf(fileID,'\n');
-                    p.verbosity = 2;
-                    tic();
-                    
-                    K_mmf = MMF(Lap,p);
-                    K_mmf.invert();
-                    K_star = zeros(p.pts,length(observed_inds));
-                    for i = 1:length(observed_inds)
-                        %if mod(i,100)==0
-                            %fprintf('We are %0.2f of the way there \n', i/ length(observed_inds));
-                        %end
-                        e = zeros(p.pts,1); e(observed_inds(i))=1;
-                        K_star(:,i) = K_mmf.hit(e);
-                    end
-                    
-                    f_u_pre = K_star(unobserved_inds,:)*(K_star(observed_inds,:)\f_o);
-                    
-                    th = prctile(f_u_pre,prior*100);
-                    f_u_hat = p.ids(1)*(f_u_pre<=th)+ p.ids(2)*(f_u_pre>th);
-                    time_store(cur_mc, cur_cr,cur_frac) = time_store(cur_mc, cur_cr,cur_frac)+ ...
-                        (1/p.draws)*toc();
-                    
-                    res_store(cur_mc,cur_cr,cur_frac) = res_store(cur_mc,cur_cr,cur_frac)+...
-                        (1/p.draws)*sum(f_u_hat == y(unobserved_inds))/(length(unobserved_inds));
-                    frob_store(cur_mc, cur_cr,cur_frac) = K_mmf.diagnostic.frob_error;
-                    frob_store_rel(cur_mc, cur_cr,cur_frac) = K_mmf.diagnostic.rel_error;
-                    
-                    % store core sizes
-                    actual_core_size(cur_mc, cur_cr,cur_frac) = K_mmf.diagnostic.core_size;
-                    % store distribution of clusters
-                    actual_stages(cur_mc, cur_cr,cur_frac) = size(K_mmf.diagnostic.stages,1);
-                    for i = 1:actual_stages(cur_mc, cur_cr,cur_frac)
-                        if i==1
-                            s_tot = sprintf('a%d',i);
-                        else
-                            s = sprintf(',a%d',i);
-                            s_tot =  sprintf('%s%s',s_tot,s);
-                        end
-                        s = sprintf('[%s] = K_mmf.diagnostic.stages.cluster_sizes;',s_tot);
-                        eval(s);
-                        s = sprintf('stages_store{cur_mc, cur_cr,cur_frac}= [%s];',s_tot);
-                        eval(s);
-                    end
-                    %K_mmf.delete();
+                
+                p.maxclustersize = max_cluster_vec(cur_mc);
+                p.nclusters = round(p.pts/p.maxclustersize);
+                fprintf(fileID,'Current Num Clusters: %d\t',round(p.pts/p.maxclustersize));
+                
+                p.dcore = round((1-core_reduc_vec(cur_cr))*p.pts);
+                fprintf(fileID,'Current Core Size: %d\t',p.dcore);
+                
+                p.fraction = fraction_vec(cur_frac);
+                fprintf(fileID,'Current Fraction: %0.2f\t',p.fraction);
+                
+                
+                
+                fprintf(fileID,'\n');
+                p.verbosity = 2;
+                tic();
+                
+                K_mmf = MMF(Lap,p);
+                K_mmf.invert();
+                K_star = zeros(p.pts,length(observed_inds));
+                for i = 1:length(observed_inds)
+                    %if mod(i,100)==0
+                    %fprintf('We are %0.2f of the way there \n', i/ length(observed_inds));
+                    %end
+                    e = zeros(p.pts,1); e(observed_inds(i))=1;
+                    K_star(:,i) = K_mmf.hit(e);
                 end
+                
+                f_u_pre = K_star(unobserved_inds,:)*(K_star(observed_inds,:)\f_o);
+                
+                th = prctile(f_u_pre,prior*100);
+                f_u_hat = p.ids(1)*(f_u_pre<=th)+ p.ids(2)*(f_u_pre>th);
+                time_store(cur_mc, cur_cr,cur_frac) = time_store(cur_mc, cur_cr,cur_frac)+ ...
+                    (1/p.draws)*toc();
+                
+                res_store(cur_mc,cur_cr,cur_frac) = res_store(cur_mc,cur_cr,cur_frac)+...
+                    (1/p.draws)*sum(f_u_hat == y(unobserved_inds))/(length(unobserved_inds));
+                frob_store(cur_mc, cur_cr,cur_frac) = K_mmf.diagnostic.frob_error;
+                frob_store_rel(cur_mc, cur_cr,cur_frac) = K_mmf.diagnostic.rel_error;
+                
+                % store core sizes
+                actual_core_size(cur_mc, cur_cr,cur_frac) = K_mmf.diagnostic.core_size;
+                % store distribution of clusters
+                actual_stages(cur_mc, cur_cr,cur_frac) = size(K_mmf.diagnostic.stages,1);
+                for i = 1:actual_stages(cur_mc, cur_cr,cur_frac)
+                    if i==1
+                        s_tot = sprintf('a%d',i);
+                    else
+                        s = sprintf(',a%d',i);
+                        s_tot =  sprintf('%s%s',s_tot,s);
+                    end
+                    s = sprintf('[%s] = K_mmf.diagnostic.stages.cluster_sizes;',s_tot);
+                    eval(s);
+                    s = sprintf('stages_store{cur_mc, cur_cr,cur_frac}= [%s];',s_tot);
+                    eval(s);
+                end
+                %K_mmf.delete();
             end
         end
     end
@@ -143,6 +142,6 @@ fclose(fileID);
 %        'core_reduc_vec', 'fraction_vec','max_cluster_vec')
 
 save(sprintf('Data/review_%s_graph%d_draws%d_INNERP.mat',dataset_name,graph_type,draws),'res_store','time_store','bench_res','bench_time', 'frob_store',...
-        'frob_store_rel','actual_core_size','actual_stages','stages_store',...
-        'core_reduc_vec', 'fraction_vec','max_cluster_vec')
+    'frob_store_rel','actual_core_size','actual_stages','stages_store',...
+    'core_reduc_vec', 'fraction_vec','max_cluster_vec')
 
