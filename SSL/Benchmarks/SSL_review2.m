@@ -53,8 +53,8 @@ for cur_cr = 1:length(core_reduc_vec)
     
     K_mmf = MMF(Lap,p);
     K_mmf.invert();
-    
-    [V, D] = eig(K_mmf.recontruction);
+
+    [V, D] = eig(K_mmf.reconstruction());
     evals = [real(diag(D)) (1:size(D,1))'];
     evals_sort = sort(evals,1);
     eval(sprintf('mmf_store%d.D = evals_sort(:,1);',cur_cr));
