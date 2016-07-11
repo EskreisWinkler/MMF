@@ -113,13 +113,13 @@ for cur_draw = 1:p.draws
                     
                     res_store(cur_mc,cur_cr,cur_frac,cur_stage) = res_store(cur_mc, cur_cr,cur_frac,cur_stage)+...
                         (1/p.draws)*sum(f_u_hat == y(unobserved_inds))/(length(unobserved_inds));
-                    frob_store(cur_mc, cur_cr,cur_frac,cur_stage) = K_mmf.diagnostic.frob_error;
-                    frob_store_rel(cur_mc, cur_cr,cur_frac,cur_stage) = K_mmf.diagnostic.rel_error;
+                    %frob_store(cur_mc, cur_cr,cur_frac,cur_stage) = K_mmf.diagnostic.frob_error;
+                    %frob_store_rel(cur_mc, cur_cr,cur_frac,cur_stage) = K_mmf.diagnostic.rel_error;
                     
                     % store core sizes
-                    actual_core_size(cur_mc, cur_cr,cur_frac,cur_stage) = K_mmf.diagnostic.core_size;
+                    %actual_core_size(cur_mc, cur_cr,cur_frac,cur_stage) = K_mmf.diagnostic.core_size;
                     % store distribution of clusters
-                    actual_stages(cur_mc, cur_cr,cur_frac,cur_stage) = size(K_mmf.diagnostic.stages,1);
+                    %actual_stages(cur_mc, cur_cr,cur_frac,cur_stage) = size(K_mmf.diagnostic.stages,1);
                     for i = 1:actual_stages(cur_mc, cur_cr,cur_frac,cur_stage)
                         if i==1
                             s_tot = sprintf('a%d',i);
