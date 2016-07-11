@@ -14,16 +14,15 @@ grid_size = 5;
 core_reduc_vec = linspace(0.1,0.99,grid_size);
 fraction_vec = linspace(0.1,0.99,grid_size);
 fraction_vec = [0.2 0.4 0.6];
-stages_vec = round(linspace(1,10,grid_size));
 max_cluster_vec = round(linspace(20,200,grid_size));
 max_cluster_vec = [20 100 200];
-res_store = zeros(length(max_cluster_vec),length(core_reduc_vec),length(fraction_vec),length(stages_vec));
+res_store = zeros(length(max_cluster_vec),length(core_reduc_vec),length(fraction_vec));
 frob_store = res_store;
 frob_store_rel = frob_store;
 actual_core_size = frob_store;
 actual_stages = frob_store;
 time_store = zeros(size(res_store));
-stages_store = cell(length(max_cluster_vec),length(core_reduc_vec),length(fraction_vec),length(stages_vec));
+stages_store = cell(length(max_cluster_vec),length(core_reduc_vec),length(fraction_vec));
 
 % First choose a dataset
 rng('shuffle')
@@ -74,7 +73,6 @@ for cur_draw = 1:p.draws
         for cur_cr = 1:length(core_reduc_vec)
             % make nystrom predictions here:
             for cur_frac = 1:length(fraction_vec)
-                for cur_stage = 1:length(stages_vec)
                     
                     p.maxclustersize = max_cluster_vec(cur_mc);
                     p.nclusters = round(p.pts/p.maxclustersize);
@@ -86,11 +84,10 @@ for cur_draw = 1:p.draws
                     p.fraction = fraction_vec(cur_frac);
                     fprintf(fileID,'Current Fraction: %0.2f\t',p.fraction);
                     
-                    p.ndensestages = stages_vec(cur_stage);
-                    fprintf(fileID,'Current Num Stages: %d\t',p.ndensestages);
+                    
                     
                     fprintf(fileID,'\n');
-                    p.verbosity = 0;
+                    p.verbosity = 2;
                     tic();
                     
                     K_mmf = MMF(Lap,p);
@@ -108,19 +105,19 @@ for cur_draw = 1:p.draws
                     
                     th = prctile(f_u_pre,prior*100);
                     f_u_hat = p.ids(1)*(f_u_pre<=th)+ p.ids(2)*(f_u_pre>th);
-                    time_store(cur_mc, cur_cr,cur_frac,cur_stage) = time_store(cur_mc, cur_cr,cur_frac,cur_stage)+ ...
+                    time_store(cur_mc, cur_cr,cur_frac) = time_store(cur_mc, cur_cr,cur_frac)+ ...
                         (1/p.draws)*toc();
                     
-                    res_store(cur_mc,cur_cr,cur_frac,cur_stage) = res_store(cur_mc, cur_cr,cur_frac,cur_stage)+...
+                    res_store(cur_mc,cur_cr,cur_frac) = res_store(cur_mc,cur_cr,cur_frac)+...
                         (1/p.draws)*sum(f_u_hat == y(unobserved_inds))/(length(unobserved_inds));
-                    %frob_store(cur_mc, cur_cr,cur_frac,cur_stage) = K_mmf.diagnostic.frob_error;
-                    %frob_store_rel(cur_mc, cur_cr,cur_frac,cur_stage) = K_mmf.diagnostic.rel_error;
+                    frob_store(cur_mc, cur_cr,cur_frac) = K_mmf.diagnostic.frob_error;
+                    frob_store_rel(cur_mc, cur_cr,cur_frac) = K_mmf.diagnostic.rel_error;
                     
                     % store core sizes
-                    %actual_core_size(cur_mc, cur_cr,cur_frac,cur_stage) = K_mmf.diagnostic.core_size;
+                    actual_core_size(cur_mc, cur_cr,cur_frac) = K_mmf.diagnostic.core_size;
                     % store distribution of clusters
-                    %actual_stages(cur_mc, cur_cr,cur_frac,cur_stage) = size(K_mmf.diagnostic.stages,1);
-                    for i = 1:actual_stages(cur_mc, cur_cr,cur_frac,cur_stage)
+                    actual_stages(cur_mc, cur_cr,cur_frac) = size(K_mmf.diagnostic.stages,1);
+                    for i = 1:actual_stages(cur_mc, cur_cr,cur_frac)
                         if i==1
                             s_tot = sprintf('a%d',i);
                         else
@@ -128,9 +125,9 @@ for cur_draw = 1:p.draws
                             s_tot =  sprintf('%s%s',s_tot,s);
                         end
                         s = sprintf('[%s] = K_mmf.diagnostic.stages.cluster_sizes;',s_tot);
-                        %eval(s);
-                        s = sprintf('stages_store{cur_mc, cur_cr,cur_frac,cur_stage}= [%s];',s_tot);
-                        %eval(s);
+                        eval(s);
+                        s = sprintf('stages_store{cur_mc, cur_cr,cur_frac}= [%s];',s_tot);
+                        eval(s);
                     end
                     %K_mmf.delete();
                 end
@@ -143,9 +140,9 @@ fclose(fileID);
 
 %save(sprintf('Data/review_%s_graph%d_draws%d_INNERP.mat',dataset_name,graph_type,draws),'res_store','time_store','bench_res','bench_time', 'frob_store',...
 %        'frob_store_rel','actual_core_size','actual_stages','stages_stores',...
-%        'core_reduc_vec', 'fraction_vec','stages_vec','max_cluster_vec')
+%        'core_reduc_vec', 'fraction_vec','max_cluster_vec')
 
 save(sprintf('Data/review_%s_graph%d_draws%d_INNERP.mat',dataset_name,graph_type,draws),'res_store','time_store','bench_res','bench_time', 'frob_store',...
         'frob_store_rel','actual_core_size','actual_stages','stages_store',...
-        'core_reduc_vec', 'fraction_vec','stages_vec','max_cluster_vec')
+        'core_reduc_vec', 'fraction_vec','max_cluster_vec')
 
