@@ -8,7 +8,7 @@ function[] =SSL_review2(dataset_ind,graph_type)
 
 
 grid_size = 20;
-grid_size = 1;
+%grid_size = 1;
 core_reduc_vec = linspace(0.1,0.99,grid_size);
 
 
