@@ -87,7 +87,7 @@ for cur_draw = 1:p.draws
                 
                 
                 fprintf(fileID,'\n');
-                p.verbosity = 4;
+                p.verbosity = 1;
                 tic();
                 
                 K_mmf = MMF(Lap,p);
