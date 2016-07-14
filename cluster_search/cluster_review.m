@@ -28,9 +28,9 @@ stages_store = cell(length(clustering_method_vec),length(bypass_vec),length(core
 param_store = cell(length(clustering_method_vec),length(bypass_vec),length(core_reduc_vec),length(max_cluster_vec));
 % First choose a dataset
 rng('shuffle')
-server = 0;
+%server = 0;
 
-addpath_mmf(server);
+%addpath_mmf(server);
 server = 2; % change
 addpath_mmf(server);
 
@@ -92,7 +92,7 @@ for cur_cl = 1:length(clustering_method_vec)
                 
                 params_store{cur_cl,cur_by,cur_cr,cur_mc} = [p.clustering_method p.bypass p.dcore p.maxclustersize];
                 p.verbosity = 0;
-                keyboard 
+
                 tic();
                 M_mmf = MMF(M,p);
                 
