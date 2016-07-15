@@ -25,15 +25,16 @@ actual_core_size = frob_store;
 actual_stages = frob_store;
 time_store = zeros(size(frob_store));
 stages_store = cell(length(clustering_method_vec),length(bypass_vec),length(core_reduc_vec),length(max_cluster_vec));
+stages_store2= cell(length(clustering_method_vec),length(bypass_vec),length(core_reduc_vec),length(max_cluster_vec));
 param_store = cell(length(clustering_method_vec),length(bypass_vec),length(core_reduc_vec),length(max_cluster_vec));
 % First choose a dataset
 rng('shuffle')
-%server = 0;
 
 %addpath_mmf(server);
 server = 2; % change
 addpath_mmf(server);
-
+server = 0; % change
+addpath_mmf(server);
 
 if dataset_ind>=1 && dataset_ind<2
     s = sprintf('load Data/digit1_lap%d',mod(dataset_ind*10,10));
@@ -105,6 +106,7 @@ for cur_cl = 1:length(clustering_method_vec)
                 actual_core_size(cur_cl,cur_by,cur_cr,cur_mc) = M_mmf.diagnostic.core_size;
                 % store distribution of clusters
                 actual_stages(cur_cl,cur_by,cur_cr,cur_mc) = size(M_mmf.diagnostic.stages,1);
+                stages_store2{cur_cl,cur_by,cur_cr,cur_mc} = cell(actual_stages(cur_cl,cur_by,cur_cr,cur_mc),1);
                 for i = 1:actual_stages(cur_cl,cur_by,cur_cr,cur_mc)
                     
                     if i==1
@@ -120,6 +122,10 @@ for cur_cl = 1:length(clustering_method_vec)
                 eval(s);
                 s = sprintf('stages_store{cur_cl,cur_by,cur_cr,cur_mc}= [%s];',s_tot2);
                 eval(s);
+                for i = 1:actual_stages(cur_cl,cur_by,cur_cr,cur_mc)
+                    s = sprintf('stages_store2{cur_cl,cur_by,cur_cr,cur_mc}{i} = a%d;',i);
+                    eval(s);
+                end
                 %M_mmf.delete();
             end
         end
@@ -133,5 +139,5 @@ fclose(fileID);
 %        'core_reduc_vec', 'fraction_vec','max_cluster_vec')
 
 save(sprintf('Data/review_data%d-%d.mat',floor(dataset_ind),mod(dataset_ind*10,10)),'time_store','frob_store','frob_store_rel',...
-    'actual_core_size','actual_stages','stages_store', 'params_store',...
+    'actual_core_size','actual_stages','stages_store', 'stages_store2','params_store',...
     'clustering_method_vec', 'bypass_vec','max_cluster_vec','core_reduc_vec')
