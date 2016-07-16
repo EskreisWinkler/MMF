@@ -1,4 +1,4 @@
-addpath_ssl(2) % change
+addpath_ssl(1) % change
 
 p = AISTATS_params;
 
