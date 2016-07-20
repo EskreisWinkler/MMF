@@ -37,16 +37,16 @@ server = 0; % change
 addpath_mmf(server);
 
 if dataset_ind>=1 && dataset_ind<2
-    s = sprintf('load Data/digit1_lap%d',mod(dataset_ind*10,10));
+    s = sprintf('load Data/digit1_lap%d',round(mod(dataset_ind*10,10)));
     eval(s)
 elseif dataset_ind>=2&& dataset_ind<3
-    s = sprintf('load Data/coil_lap%d',mod(dataset_ind*10,10));
+    s = sprintf('load Data/coil_lap%d',round(mod(dataset_ind*10,10)));
     eval(s)
 elseif dataset_ind>=3 && dataset_ind<4
-    s = sprintf('load Data/usps_lap%d',mod(dataset_ind*10,10));
+    s = sprintf('load Data/usps_lap%d',round(mod(dataset_ind*10,10)));
     eval(s)
 elseif dataset_ind>=4 && dataset_ind<5
-    s = sprintf('load Data/text_lap%d',mod(dataset_ind*10,10));
+    s = sprintf('load Data/text_lap%d',round(mod(dataset_ind*10,10)));
     eval(s)
 elseif dataset_ind==5
     load Data/ca-GrQc
@@ -87,7 +87,9 @@ for cur_cl = 1:length(clustering_method_vec)
                 
                 p.maxclustersize = max_cluster_vec(cur_mc);
                 fprintf(fileID,'Current Max Cluster: %d\t',p.maxclustersize);
-                
+                % we can impose a number of clusters so that we insure we
+                % compare apples to apples in different clustering methods
+                p.nclusters = round(size(M,1)/p.maxclustersize);
                 
                 fprintf(fileID,'\n');
                 

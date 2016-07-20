@@ -16,7 +16,7 @@ eval(s)
 % frob_store
 %%%%%%%%%%%%
 figure(1)
-% (clustering_method_vec,bypass_vec,core_reduc_vec,max_cluster_vec)
+% (clustering_method,bypass_vec,core_reduc_vec,max_cluster_vec)
 
 cur_cr=2;
 for cur_cl = 1:length(clustering_method_vec)
@@ -36,7 +36,7 @@ end
 xlabel('Maximum Cluster Size')
 eval(sprintf('legend(%s)',l))
 
-saveas(gcf,sprintf('figs/plot1_data%d-%d.png',floor(dataset_ind),mod(dataset_ind*10,10)));
+saveas(gcf,sprintf('figs/plot1_data%d-%d.png',round(floor(dataset_ind)),round(mod(dataset_ind*10,10))));
 
 %%%%%%%%%%%%%%%%
 % frob_store_rel
@@ -63,7 +63,7 @@ xlabel('Maximum Cluster Size')
 ylabel('Normalized Frobenius Error')
 eval(sprintf('legend(%s)',l))
 
-saveas(gcf,sprintf('figs/plot1_data%d-%d.png',floor(dataset_ind),mod(dataset_ind*10,10)));
+saveas(gcf,sprintf('figs/plot1_data%d-%d.png',round(floor(dataset_ind)),round(mod(dataset_ind*10,10))));
 
 
 %%%%%%%%%%%%
@@ -93,7 +93,7 @@ ylabel('Time to compute MMF (s)')
 eval(sprintf('legend(%s)',l))
 
 
-saveas(gcf,sprintf('figs/plot3_data%d-%d.png',floor(dataset_ind),mod(dataset_ind*10,10)));
+saveas(gcf,sprintf('figs/plot3_data%d-%d.png',round(floor(dataset_ind)),round(mod(dataset_ind*10,10))));
 
 %%%%%%%%%%%%%
 %stages_store
@@ -121,7 +121,7 @@ for cur_cl = 1:length(clustering_method_vec)
 end
 
 
-saveas(gcf,sprintf('figs/plot4_data%d-%d.png',floor(dataset_ind),mod(dataset_ind*10,10)));
+saveas(gcf,sprintf('figs/plot4_data%d-%d.png',round(floor(dataset_ind)),round(mod(dataset_ind*10,10))));
 
 
 %%%%%%%%%%%%%%
@@ -151,4 +151,37 @@ for cur_cl = 1:length(clustering_method_vec)
 end
 
 
-saveas(gcf,sprintf('figs/plot4_data%d-%d.png',floor(dataset_ind),mod(dataset_ind*10,10)));
+saveas(gcf,sprintf('figs/plot4_data%d-%d.png',round(floor(dataset_ind)),round(mod(dataset_ind*10,10))));
+
+
+figure(6)
+
+cur_mc = 1;
+cur_cr = 2;
+
+m_size = 10;
+l_width = 3;
+for cur_cl = 1:length(clustering_method_vec)
+    for cur_by = 1:length(bypass_vec)
+        cur_t = reshape(time_store(cur_cl,cur_by,cur_cr,:),[1 length(max_cluster_vec)]);
+        %cur_t = reshape(time_store(cur_cl,cur_by,cur_cr,cur_mc),[1 1]);
+        cur_f = reshape(frob_store_rel(cur_cl,cur_by,cur_cr,:),[1 length(max_cluster_vec)]);
+        %cur_f = reshape(frob_store_rel(cur_cl,cur_by,cur_cr,cur_mc),[1 1]);
+        if cur_cl==1 && cur_by==1
+            plot(cur_t,cur_f,'*-','MarkerSize',m_size,'LineWidth',l_width)
+            l = sprintf('\''Cl=%d, Bypass=%d\''',clustering_method_vec(cur_cl),bypass_vec(cur_by));
+        else
+            hold on
+            plot(cur_t,cur_f,'*-','MarkerSize',m_size,'LineWidth',l_width)
+            hold off
+            l = sprintf('%s,\''Cl=%d, Bypass=%d\''',l, clustering_method_vec(cur_cl),bypass_vec(cur_by));
+        end
+    end
+end
+xlabel('Time (s)')
+ylabel('Relative Error in Square Frob norm')
+eval(sprintf('legend(%s)',l))
+
+
+saveas(gcf,sprintf('figs/plot6_data%d-%d.png',round(floor(dataset_ind)),round(mod(dataset_ind*10,10))));
+
