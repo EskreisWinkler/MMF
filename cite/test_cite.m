@@ -13,7 +13,7 @@ data_sub = data(1:c.num_edges,:);
 
 c.node_ids = unique([data_sub(:,1); data_sub(:,2)]);
 c.num_nodes = length(c.node_ids);
-keyboard
+
 W = spalloc(c.num_nodes,c.num_nodes,2*c.num_edges);
 
 for cur_edge = 1:c.num_edges
