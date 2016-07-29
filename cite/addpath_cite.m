@@ -1,13 +1,13 @@
-function[] = addpath_ssl(server)
+function[] = addpath_cite(server)
 if server == 0
     risi = '/Users/jeskreiswinkler/Drive/15fall/Kondor/';
-    mmf = '/Users/jeskreiswinkler/mmfc/v4/src/matlab';
+    mmf = '/Users/jeskreiswinkler/mmfc/release1.0/pMMF/';
 elseif server == 1;
     risi = '/net/wallace/ga/eskreiswinkler/MMF/';
-    mmf = '/net/wallace/ga/eskreiswinkler/mmfc/v4/src/matlab';
+    mmf = '/net/wallace/ga/eskreiswinkler/mmfc/release1.0/pMMF/';
 elseif server==2
     risi = '/home/eskreiswinkler/MMF/';
-    mmf = '/home/eskreiswinkler/mmfc/v4/src/matlab';
+    mmf = '/home/eskreiswinkler/mmfc/release1.0/pMMF/';
 end
 
 addpath(sprintf('%s/SSL/Buffalo/',risi),sprintf('%s/SSL/Benchmarks/',risi));
