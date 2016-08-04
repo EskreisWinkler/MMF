@@ -1,4 +1,4 @@
-function[] = ex1()
+function[] = ex1(server)
 c.n_clusters = 1;
 c.n_per_cluster = 20;
 c.intercluster_wt = 1;
@@ -28,7 +28,7 @@ E = E+E';
 L = diag(sum(E,1))-E;
 
 cd ..
-addpath_factor(1);
+addpath_factor(server);
 p = factor_params;
 p.dcore = 1;
 p.fraction = 0.5;
