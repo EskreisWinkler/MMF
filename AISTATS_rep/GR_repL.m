@@ -64,10 +64,10 @@ for cur_mc = 1:length(max_cluster_vec)
                 fprintf('nclusters = %d \t',p.nclusters)
                 p.dcore = round((1-core_reduc_vec(cur_cr))*p.pts);
                 fprintf('dcore = %d \t',p.dcore)
-                p.nsparsestages = stages_vec(cur_stage);
-                fprintf('stages = %d \t',p.nsparsestages)
                 p.fraction = fraction_vec(cur_frac);
                 fprintf('fraction = %0.2f \t',p.fraction)
+                p.nsparsestages = stages_vec(cur_stage);
+                fprintf('stages = %d \t',p.nsparsestages)
                 fprintf('\n\n')
                 p.verbosity = 0;
                 
@@ -83,7 +83,8 @@ for cur_mc = 1:length(max_cluster_vec)
     end
 end
 
-save(ds_save_frob,'time_store','frob_store','normalization')
+save(ds_save_frob,'time_store','frob_store','normalization','core_reduc_vec',...
+    'fraction_vec','stages_vec','max_cluster_vec')
 % hope to add soon!!
 %save('Data/GR-repL_EVD.mat','core_reduc_vec','mmf_store','baseline_store')
 

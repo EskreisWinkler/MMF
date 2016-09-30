@@ -1,4 +1,4 @@
-addpath_ssl(1) % change
+addpath_AISTATS(0) % change
 
 p = AISTATS_params;
 
@@ -19,10 +19,9 @@ for cur_cl = 1:length(clustering_method_vec)
         tic();
         M_mmf = MMF(M,p);
         time_store(cur_cl,cur_cr) = toc();
-        frob_store(cur_cl,cur_cr) = M_mmf.froberror;
-        
+        frob_store(cur_cl,cur_cr) = M_mmf.diagnostic.rel_error;
     end
 end
 
-save('Data/GR_rep_fro.mat','core_vec','time_store','frob_store','core_vec','clustering_method_vec')
+save('Data/GR_rep.mat','core_vec','time_store','frob_store','core_vec','clustering_method_vec')
 
